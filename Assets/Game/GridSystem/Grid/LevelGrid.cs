@@ -41,11 +41,11 @@ public class LevelGrid : MonoBehaviour {
             for (int x = 0; x < Generator.grid.GetLength(0); x++) {
                 GridPosition gridPosition = new GridPosition(x, z);
                 GridObject gridObject = new GridObject(GridSystem, gridPosition, Generator.grid[x, z]);
-                Transform debugObjTransform = Instantiate(gridDebugObjectPrefab, GridSystem.GetWorldPosition(gridPosition), Quaternion.Euler(0,0,0));
+                Transform debugObjTransform = Instantiate(gridDebugObjectPrefab, GridSystem.GetWorldPosition(gridPosition), Quaternion.identity);
                 DEBUG_GridObject debugObj = debugObjTransform.GetComponent<DEBUG_GridObject>();
                 debugObj.SetGridObject(gridObject);
                 if (debugObjTransform != null) {
-                    debugObjTransform.rotation = Quaternion.Euler(0, 0, 0);
+                    //debugObjTransform.rotation = Quaternion.Euler(0, 0, 0);
                     debugObjTransform.SetParent(this.transform);
                     debugObjTransform.gameObject.layer = LayerMask.NameToLayer("Grid");
                 }

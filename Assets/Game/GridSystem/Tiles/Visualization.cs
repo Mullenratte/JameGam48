@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Visualization : MonoBehaviour
 {
+    [SerializeField]public bool visualizeGrid = true;
     [SerializeField]public int width;
     [SerializeField]public int depth;
     [SerializeField]public int yOffset;
@@ -20,6 +21,7 @@ public class Visualization : MonoBehaviour
 
     void OnDrawGizmos()
     {
+        if (!visualizeGrid) return;
         if (generator?.grid == null) return;
 
         float size = 0.4f;

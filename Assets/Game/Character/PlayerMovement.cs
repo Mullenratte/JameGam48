@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour {
     private GridPosition gridPosition;
     private Dictionary<Direction, GridPosition> directionMapping;
     private Direction currentDirection;
+    private Direction enteredFrom; //im Spieler speichern, von wo er ein neues Tile betreten hat, um die Brücken Logik zu steuern
 
     [SerializeField] float moveSpeed;
     bool isMoving;
