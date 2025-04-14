@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour {
     bool isMoving;
 
     private void Start() {
-        transform.position = LevelGrid.Instance.GridSystem.GetWorldPosition(new GridPosition(LevelGrid.Instance.GridSystem.GetWidth() / 2, LevelGrid.Instance.GridSystem.GetWidth() / 8));
+        transform.position = LevelGrid.Instance.GridSystem.GetWorldPosition(new GridPosition(LevelGrid.Instance.GridSystem.GetWidth() / 2, 0));
         this.gridPosition = LevelGrid.Instance.GridSystem.GetGridPosition(transform.position);
 
 

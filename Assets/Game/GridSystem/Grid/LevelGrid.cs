@@ -12,6 +12,7 @@ public class LevelGrid : MonoBehaviour {
     public GridSystem GridSystem { get; private set; }
 
     [SerializeField] Transform debug_tilePrefab1, debug_tilePrefab2;
+    [SerializeField] private Transform gridDebugObjectPrefab;
 
     private void Awake() {
         if (Instance == null) {
@@ -24,7 +25,7 @@ public class LevelGrid : MonoBehaviour {
     }
 
 
-    [SerializeField] private Transform gridDebugObjectPrefab;
+
 
 
 
@@ -40,6 +41,10 @@ public class LevelGrid : MonoBehaviour {
                 Transform debugObjTransform = Instantiate(gridDebugObjectPrefab, GridSystem.GetWorldPosition(gridPosition), Quaternion.identity);
                 DEBUG_GridObject debugObj = debugObjTransform.GetComponent<DEBUG_GridObject>();
                 debugObj.SetGridObject(gridObject);
+                if (debugObjTransform != null) {
+                    debugObjTransform.SetParent(this.transform);
+                    debugObjTransform.gameObject.layer = LayerMask.NameToLayer("Grid");
+                }
             }
         }
 
