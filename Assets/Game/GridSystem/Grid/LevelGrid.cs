@@ -10,6 +10,8 @@ public class LevelGrid : MonoBehaviour {
 
     [SerializeField] Transform debug_tilePrefab1, debug_tilePrefab2;
 
+
+
     private void Awake() {
         if (Instance == null) {
             Instance = this;

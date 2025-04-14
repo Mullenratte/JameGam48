@@ -29,6 +29,27 @@ public class PlayerMovement : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.S)) {
             direction = new GridPosition(0, -1);
         }
+
+        //GridPosition newPos = gridPosition + direction;
+        //if (!isMoving && LevelGrid.Instance.GridSystem.IsValidGridPosition(newPos)) {
+        //    Debug.Log("currentPos: " + gridPosition);
+        //    Debug.Log("newPos: " + newPos);
+        //    isMoving = true;
+        //}
+        //if (isMoving) {
+        //    transform.position = Vector3.Lerp(LevelGrid.Instance.GridSystem.GetWorldPosition(this.gridPosition), LevelGrid.Instance.GridSystem.GetWorldPosition(newPos), Time.deltaTime * moveSpeed);
+            
+        //    if (LevelGrid.Instance.GridSystem.GetGridPosition(transform.position) == newPos) {
+        //        this.gridPosition = newPos;
+        //        isMoving = false;
+        //        Debug.Log(isMoving);
+        //    }
+        //}
+
+
+
+
+
     }
 
     void TryMoveOneTile() {
