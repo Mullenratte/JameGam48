@@ -14,7 +14,7 @@ public class CameraScrolling : MonoBehaviour
         cam.transform.position = new Vector3(LevelGrid.Instance.GridSystem.GetWidth() / 2, cam.transform.position.y, cam.transform.position.z);
     }
 
-    private void Update() {
-        cam.transform.position += Vector3.forward * Time.deltaTime * _scrollSpeed;
-    }
+    //private void Update() {
+    //    cam.transform.position += Vector3.forward * Time.deltaTime * _scrollSpeed;
+    //}
 }
