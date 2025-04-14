@@ -31,7 +31,11 @@ public class LevelGrid : MonoBehaviour {
                     gridObj = GridSystem.CreateObjectAtGridPos(gridPos, debug_tilePrefab2);
                 }
 
-                gridObj?.SetParent(this.transform);
+                if (gridObj != null) { 
+                    gridObj.SetParent(this.transform);
+                    gridObj.gameObject.layer = LayerMask.NameToLayer("Grid");
+                }
+
             }
         }
     }
