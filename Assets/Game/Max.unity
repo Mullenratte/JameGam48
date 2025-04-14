@@ -866,6 +866,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   width: 30
   depth: 40
+  yOffset: 0
   startXs: 
 --- !u!4 &1915976377
 Transform:
@@ -1110,6 +1111,10 @@ PrefabInstance:
     - target: {fileID: 367309316525677478, guid: 202e8750a5109524b96e2ceb44a6bc6b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1507262268764262839, guid: 202e8750a5109524b96e2ceb44a6bc6b, type: 3}
+      propertyPath: yOffset
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2655453450124476327, guid: 202e8750a5109524b96e2ceb44a6bc6b, type: 3}
       propertyPath: startXs.Array.size

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2382979155484449797}
   - component: {fileID: 2655453450124476327}
+  - component: {fileID: 1507262268764262839}
   m_Layer: 0
   m_Name: Grid
   m_TagString: Untagged
@@ -47,8 +48,26 @@ MonoBehaviour:
   width: 30
   height: 40
   cellSize: 1
+  startXs: 
   debug_tilePrefab1: {fileID: 6429520386177305233, guid: ddb069e44fe09364793c9248050f5e49, type: 3}
   debug_tilePrefab2: {fileID: 6429520386177305233, guid: b4a550d5771e63f46a0370d446f64ccf, type: 3}
+  gridDebugObjectPrefab: {fileID: 0}
+--- !u!114 &1507262268764262839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 303626089677680771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a04635c3a563344b8cd6ff0ef33866c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  width: 0
+  depth: 0
+  yOffset: 2
+  startXs: 
 --- !u!1 &3995971741427922156
 GameObject:
   m_ObjectHideFlags: 0

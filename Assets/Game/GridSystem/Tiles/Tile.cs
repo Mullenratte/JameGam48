@@ -103,4 +103,34 @@ public class Tile
         throw new InvalidOperationException("Unerwartete Kombination");
     }
 
-}
+    public int GetTileType()
+    {
+        if (north == null && east == null && south == null && west == null) return 0; // No connections
+
+        if (north != null && east == null && south == null && west == null) return 1; // North connection only
+        if (north == null && east != null && south == null && west == null) return 2; // East connection only
+        if (north == null && east == null && south != null && west == null) return 3; // South connection only
+        if (north == null && east == null && south == null && west != null) return 4; // West connection only
+
+        if (north != null && east != null && south == null && west == null) return 5; // North and East connections
+        if (north == null && east != null && south != null && west == null) return 6; // East and South connections
+        if (north == null && east == null && south != null && west != null) return 7; // South and West connections
+        if (north != null && east == null && south == null && west != null) return 8; // North and West connections
+
+        if (north == null && east != null && south == null && west != null) return 9; // East and West connections
+        if (north != null && east == null && south != null && west == null) return 10; // North and South connections
+
+        if (north != null && east != null && south != null && west == null) return 11; // North, East and South connections
+        if (north == null && east != null && south != null && west != null) return 12; // East, South and West connections
+        if (north != null && east == null && south != null && west != null) return 13; // North, South and West connections
+        if (north != null && east != null && south == null && west != null) return 14; // North, East and West connections
+
+        if (!hasBridge) return 15;
+        if (this.bridgeVisual == BridgeOrientation.NSOver_EWUnder) return 16; // Bridge over NS
+        if (this.bridgeVisual == BridgeOrientation.EWOver_NSUnder) return 17; // Bridge over EW
+
+        throw new InvalidOperationException("Unerwartete Kombination");
+    }
+        
+
+    }

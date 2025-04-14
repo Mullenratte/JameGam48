@@ -5,14 +5,17 @@ public class Visualization : MonoBehaviour
 {
     [SerializeField]public int width;
     [SerializeField]public int depth;
+    [SerializeField]public int yOffset;
     [SerializeField]public List<int> startXs = new List<int> {};
     private PathGenerator generator;
 
+    public PathGenerator Generator { get => generator; set => generator = value; }
+
     void Start()
     {
-        generator = new PathGenerator(width, depth);
-        generator.GeneratePaths(startXs);
-        Debug.Log("Grid generated!");
+        //generator = new PathGenerator(width, depth);
+        //generator.GeneratePaths(startXs);
+        //Debug.Log("Grid generated!");
     }
 
     void OnDrawGizmos()
@@ -25,7 +28,7 @@ public class Visualization : MonoBehaviour
             for (int z = 0; z < generator.depth; z++)
             {
                 Tile tile = generator.grid[x, z];
-                Vector3 center = new Vector3(x, 0, z);
+                Vector3 center = new Vector3(x, yOffset, z);
 
                 if (z == 0)
                 {
