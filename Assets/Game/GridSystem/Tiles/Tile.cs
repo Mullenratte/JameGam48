@@ -1,5 +1,9 @@
+using NUnit.Framework.Internal;
+using System;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.InputSystem.EnhancedTouch;
 
 public enum Direction { North, East, South, West }
 
@@ -57,12 +61,12 @@ public class Tile
         enteredFrom.Add(fromDir);
 
         if (enteredFrom.Count == 4)
-        {            
-            hasBridge = Random.Range(0f, 1f) < 0.5f;
+        {
+            hasBridge = UnityEngine.Random.Range(0f, 1f) < 0.5f;
 
             if (hasBridge)
-            {                
-                bridgeVisual = Random.Range(0, 2) == 0
+            {
+                bridgeVisual = UnityEngine.Random.Range(0, 2) == 0
                     ? BridgeOrientation.NSOver_EWUnder
                     : BridgeOrientation.EWOver_NSUnder;
             }
@@ -77,4 +81,26 @@ public class Tile
             bridgeVisual = BridgeOrientation.None;
         }
     }
+
+    public int GetTileTypeIndex()
+    {
+        int baseValue = 0;
+
+        if (north != null) baseValue |= 1 << 0;
+        if (east != null) baseValue |= 1 << 1;
+        if (south != null) baseValue |= 1 << 2;
+        if (west != null) baseValue |= 1 << 3;
+
+        if (baseValue != 15)
+        {
+            return baseValue;
+        }
+
+        if (!hasBridge) return 15;
+        if (hasBridge && bridgeVisual != BridgeOrientation.EWOver_NSUnder) return 16;
+        if (hasBridge && bridgeVisual == BridgeOrientation.EWOver_NSUnder) return 17;
+
+        throw new InvalidOperationException("Unerwartete Kombination");
+    }
+
 }

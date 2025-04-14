@@ -5,6 +5,7 @@ using UnityEngine;
 public class DEBUG_GridObject : MonoBehaviour {
     private GridObject gridObject;
     [SerializeField] private Color n1_c, n2_c, n3_c, n4_c;
+    public Sprite[] sprites;
 
     private Color activeColor;
     MeshRenderer _meshRenderer;
@@ -26,10 +27,8 @@ public class DEBUG_GridObject : MonoBehaviour {
             case 3: activeColor = n3_c; break;
             case 4: activeColor = n4_c; break;
         }
-
         _meshRenderer.material.color = activeColor;
     }
-
     private void Awake() {
         _meshRenderer = GetComponent<MeshRenderer>();
     }
