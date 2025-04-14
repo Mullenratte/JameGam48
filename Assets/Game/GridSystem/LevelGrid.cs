@@ -2,33 +2,37 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelGrid : MonoBehaviour {
+    public static LevelGrid Instance;
+
     [SerializeField] int width, height;
     [SerializeField] float cellSize;
-    private GridSystem gridSystem;
+    public GridSystem GridSystem { get; private set; }
 
     [SerializeField] Transform debug_tilePrefab1, debug_tilePrefab2;
 
     private void Awake() {
-        gridSystem = new GridSystem(width, height, cellSize);
+        if (Instance == null) {
+            Instance = this;
+        } else {
+            Destroy(gameObject);
+        }
+
+        GridSystem = new GridSystem(width, height, cellSize);
     }
 
     private void Start() {
-        for (int z = 0; z < gridSystem.GetHeight(); z++) {
-            for (int x = 0; x < gridSystem.GetWidth(); x++) {
+        for (int z = 0; z < GridSystem.GetHeight(); z++) {
+            for (int x = 0; x < GridSystem.GetWidth(); x++) {
                 GridPosition gridPos = new GridPosition(x, z);
                 Transform gridObj;
                 if (x % 2 == 0 && z % 2 != 0 || x % 2 != 0 && z % 2 == 0) {
-                    gridObj = gridSystem.CreateObjectAtGridPos(gridPos, debug_tilePrefab1);
+                    gridObj = GridSystem.CreateObjectAtGridPos(gridPos, debug_tilePrefab1);
                 } else {
-                    gridObj = gridSystem.CreateObjectAtGridPos(gridPos, debug_tilePrefab2);
+                    gridObj = GridSystem.CreateObjectAtGridPos(gridPos, debug_tilePrefab2);
                 }
 
                 gridObj?.SetParent(this.transform);
             }
         }
-
-
-        transform.position += new Vector3(-width / 2, 0, -height / 2);
-
     }
 }
