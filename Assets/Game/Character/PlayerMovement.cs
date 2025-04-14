@@ -1,10 +1,12 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
 
     private GridPosition gridPosition;
-    private GridPosition direction;
+    private Dictionary<Direction, GridPosition> directionMapping;
+    private Direction currentDirection;
 
     [SerializeField] float moveSpeed;
     bool isMoving;
@@ -12,23 +14,30 @@ public class PlayerMovement : MonoBehaviour {
     private void Start() {
         transform.position = LevelGrid.Instance.GridSystem.GetWorldPosition(new GridPosition(LevelGrid.Instance.GridSystem.GetWidth() / 2, LevelGrid.Instance.GridSystem.GetWidth() / 8));
         this.gridPosition = LevelGrid.Instance.GridSystem.GetGridPosition(transform.position);
-        this.direction = new GridPosition(1, 0);
+
+
+        directionMapping = new Dictionary<Direction, GridPosition>();
+        directionMapping.Add(Direction.North, new GridPosition(0, 1));
+        directionMapping.Add(Direction.South, new GridPosition(0, -1));
+        directionMapping.Add(Direction.West, new GridPosition(-1, 0));
+        directionMapping.Add(Direction.East, new GridPosition(1, 0));
+        this.currentDirection = Direction.East;
     }
 
     private void Update() {
         TryMoveOneTile();
 
         if (Input.GetKeyDown(KeyCode.A)) {
-            direction = new GridPosition(-1, 0);
+            currentDirection = Direction.West;
         }
         if (Input.GetKeyDown(KeyCode.D)) {
-            direction = new GridPosition(1, 0);
+            currentDirection = Direction.East;
         }
         if (Input.GetKeyDown(KeyCode.W)) {
-            direction = new GridPosition(0, 1);
+            currentDirection = Direction.North;
         }
         if (Input.GetKeyDown(KeyCode.S)) {
-            direction = new GridPosition(0, -1);
+            currentDirection = Direction.South;
         }
 
         //GridPosition newPos = gridPosition + direction;
@@ -54,13 +63,19 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     void TryMoveOneTile() {
-        if (isMoving) return;
+        if (isMoving
+            || !CanMoveInDirection(currentDirection)) return;
 
-        GridPosition newPos = gridPosition + direction;
+        GridPosition newPos = gridPosition + directionMapping[currentDirection];
         if (LevelGrid.Instance.GridSystem.IsValidGridPosition(newPos)) {
             this.gridPosition = newPos;
             StartCoroutine(LerpToNewTile(newPos));
         }
+    }
+
+    bool CanMoveInDirection(Direction dir) {
+        var neighborConnections = LevelGrid.Instance.Generator.grid[gridPosition.x, gridPosition.z].GetConnections();
+        return neighborConnections.ContainsKey(dir);
     }
 
     IEnumerator LerpToNewTile(GridPosition newPos) {
