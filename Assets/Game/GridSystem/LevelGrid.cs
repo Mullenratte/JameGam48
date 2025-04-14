@@ -26,5 +26,9 @@ public class LevelGrid : MonoBehaviour {
                 gridObj?.SetParent(this.transform);
             }
         }
+
+
+        transform.position += new Vector3(-width / 2, 0, -height / 2);
+
     }
 }
