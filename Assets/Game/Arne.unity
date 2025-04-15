@@ -640,6 +640,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2655453450124476327, guid: 202e8750a5109524b96e2ceb44a6bc6b, type: 3}
+      propertyPath: flyPrefab
+      value: 
+      objectReference: {fileID: 3110303992313591602, guid: fd4070140be43a045bec61ee7ab95648, type: 3}
+    - target: {fileID: 2655453450124476327, guid: 202e8750a5109524b96e2ceb44a6bc6b, type: 3}
       propertyPath: startXs.Array.size
       value: 5
       objectReference: {fileID: 0}
