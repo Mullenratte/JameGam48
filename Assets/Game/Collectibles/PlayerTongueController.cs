@@ -93,7 +93,8 @@ public class PlayerTongueController : MonoBehaviour {
 
         // stop when at max radius or when target is reached
         if (Vector3.Distance(_lineRenderer.GetPosition(1), mouthTransform.position) >= config.range
-            || Vector3.Distance(_lineRenderer.GetPosition(1), tongueTarget) < 0.01f) {
+            || Vector3.Distance(_lineRenderer.GetPosition(1), tongueTarget) < 0.01f
+            || attachedObject) {
             currentState = TongueState.Retracting;
             return;
         }
@@ -111,6 +112,7 @@ public class PlayerTongueController : MonoBehaviour {
 
         if (Vector3.Distance(_lineRenderer.GetPosition(1), mouthTransform.position) < 0.1f) {
             _lineRenderer.enabled = false;
+            attachedObject = null;
             currentState = TongueState.Default;
         }
     }
