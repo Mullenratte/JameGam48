@@ -1,111 +1,118 @@
+using System;
 using System.Collections;
 using System.Drawing;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerTongueController : MonoBehaviour {
 
     [SerializeField] TongueConfigSO config;
-    private Vector3 lookDir;
-    [SerializeField] Transform tongueTransform;
 
+    [SerializeField] Transform mouthTransform;
     Vector3 mouseWorldPosOnGrid;
-    [SerializeField] GameObject debugObj;
+    [SerializeField] Transform tongueTip;
+    Vector3 tongueTarget;
+    LineRenderer _lineRenderer;
+
+    GameObject attachedObject;
+
+    public enum TongueState {
+        Default,
+        Shooting,
+        Retracting
+    }
+
+    TongueState currentState;
+
+    private void Awake() {
+        _lineRenderer = GetComponent<LineRenderer>();
+
+
+    }
+
+    private void Start() {
+        _lineRenderer.SetPosition(0, mouthTransform.position);   // Always follow frog mouth
+        _lineRenderer.SetPosition(1, mouthTransform.position);
+
+        currentState = TongueState.Default;
+        tongueTip.GetComponent<SphereCollider>().radius = config.thickness;
+        tongueTip.GetComponent<TongueCollider>().OnTriggerEntered += TongueCollider_OnTriggerEntered;
+    }
+
+    private void TongueCollider_OnTriggerEntered(Collider obj) {
+        if (obj.TryGetComponent<ILickable>(out ILickable lickable)) {
+            attachedObject = obj.gameObject;
+            lickable.TriggerOnLickedAction();
+        }
+    }
 
     private void Update() {
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
 
         if (Physics.Raycast(ray, out RaycastHit hit, 1 << LayerMask.NameToLayer("Grid"))) {
             mouseWorldPosOnGrid = new Vector3(hit.point.x, 0, hit.point.z);
-            debugObj.transform.position = mouseWorldPosOnGrid;
-            lookDir = new Vector3(mouseWorldPosOnGrid.x - tongueTransform.position.x, 0, mouseWorldPosOnGrid.z - tongueTransform.position.z).normalized;
         }
 
+        switch (currentState) {
+            case TongueState.Default:
+                ExecuteDefaultState();
+                break;
+            case TongueState.Shooting:
+                ExecuteShootingState();
+                break;
+            case TongueState.Retracting:
+                ExecuteRetractingState();
+                break;
+            default:
+                break;
+        }
 
     }
 
-    private void FixedUpdate() {
+    private void ExecuteDefaultState() {
         if (Input.GetKeyDown(KeyCode.Mouse0)) {
-            dist = Mathf.Min(config.radius, Mathf.Abs(mouseWorldPosOnGrid.z - tongueTransform.position.z));
-            RaycastHit[] hits = Physics.SphereCastAll(tongueTransform.position, config.thickness, lookDir, config.radius, ~LayerMask.GetMask("Grid", "Player"));
-            
-            foreach (RaycastHit hit in hits) {
-                Debug.Log(hit.collider.name);
-                if (hit.collider.TryGetComponent<ILickable>(out ILickable target)) {
-                    target.TriggerOnLickedAction();
-                    StartCoroutine(DragTargetIn(hit.collider.gameObject));
-                }
-
-
-        }
-        }
-
-    }
-
-    IEnumerator DragTargetIn(GameObject target) {
-        Vector3 startPos = target.transform.position;
-        Vector3 endPos = tongueTransform.position;
-        float t = 0;
-        while (t < 1) {
-            t += Time.deltaTime * config.snapSpeed / 2;
-
-            if (t > 1) {
-                t = 1;
-            }
-
-            target.transform.position = Vector3.Lerp(startPos, endPos, t);
-            yield return null;
-
-        }
-
-        Destroy(target.gameObject);
-
-    }
-
-    float dist;
-
-    void OnDrawGizmos() {
-        Gizmos.color = UnityEngine.Color.red;
-        Vector3 origin = tongueTransform.position;
-        Vector3 end = origin + lookDir.normalized * dist;
-
-        // Draw the start and end spheres
-        Gizmos.DrawWireSphere(origin, config.thickness);
-        Gizmos.DrawWireSphere(end, config.thickness);
-
-        // Draw lines between the edges of the start and end spheres
-        DrawConnectingLines(origin, end, config.thickness);
-    }
-
-    void DrawConnectingLines(Vector3 start, Vector3 end, float radius) {
-        Vector3[] offsets = new Vector3[]
-        {
-            Vector3.up,
-            Vector3.down,
-            Vector3.left,
-            Vector3.right,
-            Vector3.forward,
-            Vector3.back
-        };
-
-        foreach (var offset in offsets) {
-            Vector3 startOffset = start + offset * radius;
-            Vector3 endOffset = end + offset * radius;
-            Gizmos.DrawLine(startOffset, endOffset);
+            tongueTarget = new Vector3(mouseWorldPosOnGrid.x, mouthTransform.position.y, mouseWorldPosOnGrid.z);
+            _lineRenderer.SetPosition(0, mouthTransform.position);
+            _lineRenderer.SetPosition(1, mouthTransform.position);
+            currentState = TongueState.Shooting;
         }
     }
 
 
 
-}
+    private void ExecuteShootingState() {
+        // Update LineRenderer positions
+        _lineRenderer.enabled = true;
+        tongueTip.GetComponent<SphereCollider>().enabled = true;
 
-[CreateAssetMenu(fileName = "TongueConfigSO", menuName = "Scriptable Objects/TongueConfigSO")]
-public class TongueConfigSO : ScriptableObject {
-    public float radius;
-    public float thickness;
-    public float snapSpeed;
+        _lineRenderer.SetPosition(0, mouthTransform.position);
+        _lineRenderer.SetPosition(1, Vector3.MoveTowards(_lineRenderer.GetPosition(1), tongueTarget, config.snapSpeed * Time.deltaTime));
+        tongueTip.transform.position = _lineRenderer.GetPosition(1);
 
 
+        // stop when at max radius or when target is reached
+        if (Vector3.Distance(_lineRenderer.GetPosition(1), mouthTransform.position) >= config.range
+            || Vector3.Distance(_lineRenderer.GetPosition(1), tongueTarget) < 0.01f) {
+            currentState = TongueState.Retracting;
+            return;
+        }
+    }
 
+    private void ExecuteRetractingState() {
+        tongueTip.GetComponent<SphereCollider>().enabled = false;
+        tongueTip.position = _lineRenderer.GetPosition(0);
+
+        _lineRenderer.SetPosition(1, Vector3.MoveTowards(_lineRenderer.GetPosition(1), mouthTransform.position, config.retractSpeed * Time.deltaTime));
+        if (attachedObject != null) {
+            attachedObject.transform.position = _lineRenderer.GetPosition(1);
+        }
+
+
+        if (Vector3.Distance(_lineRenderer.GetPosition(1), mouthTransform.position) < 0.1f) {
+            _lineRenderer.enabled = false;
+            currentState = TongueState.Default;
+        }
+    }
 }
 
