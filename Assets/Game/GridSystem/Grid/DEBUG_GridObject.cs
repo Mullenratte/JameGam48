@@ -41,11 +41,13 @@ public class DEBUG_GridObject : MonoBehaviour {
 
         switch (tileTypeIndex)
         {
+            // Free tile
             case 0:
                 _spriteRenderer.sprite = sprites[0];
                 spriteDisplayObject.SetZRotation(0f);
                 break;
 
+            // Deadend tiles
             case 1:
                 _spriteRenderer.sprite = sprites[1];
                 spriteDisplayObject.SetZRotation(0f);
@@ -63,6 +65,7 @@ public class DEBUG_GridObject : MonoBehaviour {
                 spriteDisplayObject.SetZRotation(270f);
                 break;
 
+            // Corner tiles
             case 5:
                 _spriteRenderer.sprite = sprites[2];
                 spriteDisplayObject.SetZRotation(0f);
@@ -80,6 +83,7 @@ public class DEBUG_GridObject : MonoBehaviour {
                 spriteDisplayObject.SetZRotation(270f);
                 break;
 
+            // Straight tiles
             case 9:
                 _spriteRenderer.sprite = sprites[3];
                 spriteDisplayObject.SetZRotation(0f);
@@ -89,6 +93,7 @@ public class DEBUG_GridObject : MonoBehaviour {
                 spriteDisplayObject.SetZRotation(90f);
                 break;
 
+            // T-junction tiles
             case 11:
                 _spriteRenderer.sprite = sprites[4];
                 spriteDisplayObject.SetZRotation(0f);
@@ -106,11 +111,13 @@ public class DEBUG_GridObject : MonoBehaviour {
                 spriteDisplayObject.SetZRotation(270f);
                 break;
 
+            // Intersection tile
             case 15:
                 _spriteRenderer.sprite = sprites[5];
                 spriteDisplayObject.SetZRotation(0f);
                 break;
 
+            // Bridge tiles
             case 16:
                 _spriteRenderer.sprite = sprites[6];
                 spriteDisplayObject.SetZRotation(0f);
@@ -119,8 +126,18 @@ public class DEBUG_GridObject : MonoBehaviour {
                 _spriteRenderer.sprite = sprites[6];
                 spriteDisplayObject.SetZRotation(90f);
                 break;
+            
+            // Blocked tiles
             case 18:
                 _spriteRenderer.sprite = sprites[7];
+                spriteDisplayObject.SetZRotation(0f);
+                break;
+            case 19:
+                _spriteRenderer.sprite = sprites[8];
+                spriteDisplayObject.SetZRotation(0f);
+                break;
+            case 20:
+                _spriteRenderer.sprite = sprites[0];
                 spriteDisplayObject.SetZRotation(0f);
                 break;
 

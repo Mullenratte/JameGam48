@@ -46,12 +46,14 @@ public class PathGenerator
     public Tile[,] GeneratePaths(List<int> startXs, int startZ)
     {
         InitGrid();
-        ScatterSpawns();
+        ScatterBlocks(startXs);
         foreach (int x in startXs)
         {
             Vector3Int start = new Vector3Int(x, 0, startZ);
             GenerateFlowAwarePathFrom(start);
         }
+        OverwriteFreeTiles();
+        startNextGeneration = Random.Range(depth - 3, depth);
         return CopyGrid(grid);
     }
 
@@ -74,18 +76,57 @@ public class PathGenerator
     }
 
 
-    private void ScatterSpawns()
+    private void ScatterBlocks(List<int> Xs)
     {
         for (int x = 0; x < width; x++)
         {
             for (int z = 0; z < depth; z++)
             {
+                if (z == 1 && Xs.Contains(x))
+                {
+                    continue;
+                }
+                Tile tile = grid[x, z];
                 if (Random.Range(0f, 1f) < 0.1f)
                 {
-                    grid[x, z].isSpawn = true;
+                    tile.isBlocked = true;
+                }else {
+                    tile.blockType = 0; 
                 }
             }
         }
+    }
+
+    private void OverwriteFreeTiles()
+    {
+        for (int x = 0; x < width; x++)
+        {
+            for (int z = 0; z < depth; z++)
+            {
+                Tile tile = grid[x, z];
+                if (tile.GetConnections().Count == 0)
+                {
+                    tile.isBlocked = true;
+                    if(HasStreetNeighbour(tile.gridPosition))
+                    {
+                        tile.blockType = Random.Range(0, 4); // 0 = none, 1 = fly-spawn, 2 = item-spawn, 3 = deco element spawn
+                    }
+                    else
+                    {
+                        tile.blockType = 0; // 0 = none
+                    }
+                }
+            }
+        }
+    }
+
+    public bool HasStreetNeighbour(Vector3Int pos)
+    {
+        if (InBounds(pos + Vector3Int.forward) && grid[pos.x, pos.z + 1].GetConnections().Count > 0) return true;
+        if (InBounds(pos + Vector3Int.back) && grid[pos.x, pos.z - 1].GetConnections().Count > 0) return true;
+        if (InBounds(pos + Vector3Int.right) && grid[pos.x + 1, pos.z].GetConnections().Count > 0) return true;
+        if (InBounds(pos + Vector3Int.left) && grid[pos.x - 1, pos.z].GetConnections().Count > 0) return true;
+        return false;
     }
 
     private void GeneratePathFrom(Vector3Int start)
@@ -157,7 +198,7 @@ public class PathGenerator
                 if (visited.Contains(next) && Random.Range(0f, 1f) < 0.9f) continue;
 
                 var tile = grid[next.x, next.z];
-                if (tile.isSpawn) continue; // skip spawn tiles
+                if (tile.isBlocked) continue; // skip spawn tiles
                 if (tile.GetConnections().Count >= 3) continue;
 
                 int score = Score(direction, next, start);

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem.EnhancedTouch;
+using UnityEngine.Splines;
 
 public enum Direction { North, East, South, West, none}
 
@@ -21,7 +22,8 @@ public class Tile
 
     public HashSet<Direction> enteredFrom = new HashSet<Direction>();
     public bool hasBridge = false;
-    public bool isSpawn;
+    public bool isBlocked = false;
+    public int blockType = -1; // 0 = none, 1 = fly-spawn, 2 = item-spawn, 3 = deco element spawn
     public BridgeOrientation bridgeVisual = BridgeOrientation.None;
 
     public Dictionary<Direction, Tile> GetConnections()
@@ -106,12 +108,11 @@ public class Tile
 
     public int GetTileType()
     {
-        // simple checks first
-        if (isSpawn) return 18; // Spawn tile
+        // simple checks first -> no connections 
+        if (isBlocked && blockType == 0) return 0; // Free tile
+        if (isBlocked) return (17 + blockType); // Spawn tile
 
         // complex checks later
-        if (north == null && east == null && south == null && west == null) return 0; // No connections
-
         if (north != null && east == null && south == null && west == null) return 1; // North connection only
         if (north == null && east != null && south == null && west == null) return 2; // East connection only
         if (north == null && east == null && south != null && west == null) return 3; // South connection only

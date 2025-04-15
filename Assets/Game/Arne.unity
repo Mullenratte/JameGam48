@@ -536,7 +536,7 @@ MonoBehaviour:
   m_StreamingVersion: 20241001
   m_LegacyPriority: 0
   Target:
-    TrackingTarget: {fileID: 567318425}
+    TrackingTarget: {fileID: 0}
     LookAtTarget: {fileID: 0}
     CustomLookAtTarget: 0
   Lens:
@@ -632,11 +632,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1507262268764262839, guid: 202e8750a5109524b96e2ceb44a6bc6b, type: 3}
       propertyPath: visualizeGrid
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2655453450124476327, guid: 202e8750a5109524b96e2ceb44a6bc6b, type: 3}
       propertyPath: startXs.Array.size
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2655453450124476327, guid: 202e8750a5109524b96e2ceb44a6bc6b, type: 3}
       propertyPath: gridDebugObjectPrefab
@@ -644,11 +644,23 @@ PrefabInstance:
       objectReference: {fileID: 6429520386177305233, guid: 9057eda6ce032ac4da440c51ba3999f1, type: 3}
     - target: {fileID: 2655453450124476327, guid: 202e8750a5109524b96e2ceb44a6bc6b, type: 3}
       propertyPath: 'startXs.Array.data[0]'
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2655453450124476327, guid: 202e8750a5109524b96e2ceb44a6bc6b, type: 3}
       propertyPath: 'startXs.Array.data[1]'
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2655453450124476327, guid: 202e8750a5109524b96e2ceb44a6bc6b, type: 3}
+      propertyPath: 'startXs.Array.data[2]'
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2655453450124476327, guid: 202e8750a5109524b96e2ceb44a6bc6b, type: 3}
+      propertyPath: 'startXs.Array.data[3]'
       value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2655453450124476327, guid: 202e8750a5109524b96e2ceb44a6bc6b, type: 3}
+      propertyPath: 'startXs.Array.data[4]'
+      value: 23
       objectReference: {fileID: 0}
     - target: {fileID: 3995971741427922156, guid: 202e8750a5109524b96e2ceb44a6bc6b, type: 3}
       propertyPath: m_Layer
@@ -684,40 +696,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 8438782168578330459, guid: 202e8750a5109524b96e2ceb44a6bc6b, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 760991502}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7419226056025744974, guid: 202e8750a5109524b96e2ceb44a6bc6b, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 567318427}
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 202e8750a5109524b96e2ceb44a6bc6b, type: 3}
---- !u!4 &567318425 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8438782168578330459, guid: 202e8750a5109524b96e2ceb44a6bc6b, type: 3}
-  m_PrefabInstance: {fileID: 567318424}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &567318426 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7419226056025744974, guid: 202e8750a5109524b96e2ceb44a6bc6b, type: 3}
-  m_PrefabInstance: {fileID: 567318424}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &567318427
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 567318426}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 037431bd2d5038a41bc7d493afff2a5b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  config: {fileID: 11400000, guid: 5db351a6cf5560a468c11190f1647278, type: 2}
-  tongueTransform: {fileID: 760991502}
-  debugObj: {fileID: 1982848650}
 --- !u!1 &620104960
 GameObject:
   m_ObjectHideFlags: 0
@@ -887,37 +868,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &760991501
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 760991502}
-  m_Layer: 3
-  m_Name: Tongue
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &760991502
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 760991501}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.619, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 567318425}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1543130053
 PrefabInstance:
