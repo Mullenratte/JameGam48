@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: NormalFly
   m_EditorClassIdentifier: 
   size: 0.2
+  flyRadius: 5
   points: 100

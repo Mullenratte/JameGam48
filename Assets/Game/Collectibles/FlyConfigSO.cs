@@ -4,5 +4,7 @@ using UnityEngine;
 public class FlyConfigSO : ScriptableObject
 {
     public float size;
+    public float flyRadius;
+    public float maxSpeed;
     public int points;
 }

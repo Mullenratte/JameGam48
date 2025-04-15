@@ -55,6 +55,7 @@ public class LevelGrid : MonoBehaviour {
                 {
                     Transform flyObjTransform = Instantiate(flyPrefab, GridSystem.GetWorldPosition(gridPosition), Quaternion.identity);
                 }
+
             }
         }
 

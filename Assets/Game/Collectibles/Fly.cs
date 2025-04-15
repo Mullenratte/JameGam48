@@ -7,7 +7,9 @@ public class Fly : MonoBehaviour, ILickable
     public Vector3 position;
     public Vector3 velocity;
     public Vector3 acceleration;
-    bool isEaten = false;   
+    bool isEaten = false;
+
+    private Vector3 spawnPosition;
 
     [SerializeField] FlyConfigSO[] configs;
 
@@ -27,9 +29,10 @@ public class Fly : MonoBehaviour, ILickable
 
     void Start()
     {
+        // Set spawn position
+        spawnPosition = transform.position;
         position = transform.position;
         position.y = 0.5f;
-        transform.position = position;
         transform.localScale = new Vector3(config.size, config.size, config.size);
     }
 
@@ -38,12 +41,37 @@ public class Fly : MonoBehaviour, ILickable
     {
         if (isEaten) return;
 
-        // Update position
+        // Fly Brain
+        FlyMovement();
 
+        // Update position
+        transform.position = position;
     }
 
     void FlyMovement()
     {
+        Vector3 randomDirection = new Vector3(
+            Random.Range(-1f, 1f),
+            Random.Range(-1f, 1f), 
+            Random.Range(-1f, 1f)
+        ).normalized;
 
+        // Calculate acceleration
+        acceleration = randomDirection * Time.deltaTime;
+
+        Vector3 toCenter = spawnPosition - position;
+        if (toCenter.magnitude > config.flyRadius)
+        {
+            acceleration += toCenter.normalized;
+        }
+
+        // Calculate velocity
+        velocity += acceleration;
+        velocity = Vector3.ClampMagnitude(velocity, config.maxSpeed);
+
+        // Update position
+        position += velocity * Time.deltaTime;
+
+        acceleration = Vector3.zero;
     }
 }
