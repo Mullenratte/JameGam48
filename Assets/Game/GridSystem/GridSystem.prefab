@@ -120,7 +120,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5790306859903806658
 Transform:
   m_ObjectHideFlags: 0
@@ -130,7 +130,7 @@ Transform:
   m_GameObject: {fileID: 5563422867438419336}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.501, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: -2.87}
   m_LocalScale: {x: 100, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -309,13 +309,53 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 8222686950610692273, guid: cd3fa1d4a049c19459dbb7df859bf31b, type: 3}
+      propertyPath: moveSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8602884310531733905, guid: cd3fa1d4a049c19459dbb7df859bf31b, type: 3}
+      propertyPath: capsuleColl
+      value: 
+      objectReference: {fileID: 331603117244687049}
+    m_RemovedComponents:
+    - {fileID: 4140347590157703869, guid: cd3fa1d4a049c19459dbb7df859bf31b, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5452354656405779691, guid: cd3fa1d4a049c19459dbb7df859bf31b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 331603117244687049}
   m_SourcePrefab: {fileID: 100100000, guid: cd3fa1d4a049c19459dbb7df859bf31b, type: 3}
 --- !u!4 &4180367619785926591 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2681483320662194295, guid: cd3fa1d4a049c19459dbb7df859bf31b, type: 3}
   m_PrefabInstance: {fileID: 2248752984837513160}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &6097745531576363811 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5452354656405779691, guid: cd3fa1d4a049c19459dbb7df859bf31b, type: 3}
+  m_PrefabInstance: {fileID: 2248752984837513160}
+  m_PrefabAsset: {fileID: 0}
+--- !u!136 &331603117244687049
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6097745531576363811}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 15
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
