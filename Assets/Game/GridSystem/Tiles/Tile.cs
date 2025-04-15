@@ -23,7 +23,7 @@ public class Tile
     public HashSet<Direction> enteredFrom = new HashSet<Direction>();
     public bool hasBridge = false;
     public bool isBlocked = false;
-    public int blockType = -1; // 0 = none, 1 = fly-spawn, 2 = item-spawn, 3 = deco element spawn
+    public int blockType = 0; // 0 = none, 1 = fly-spawn, 2 = item-spawn, 3 = deco element spawn
     public BridgeOrientation bridgeVisual = BridgeOrientation.None;
 
     public Dictionary<Direction, Tile> GetConnections()

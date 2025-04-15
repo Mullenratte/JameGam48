@@ -107,9 +107,23 @@ public class PathGenerator
                 if (tile.GetConnections().Count == 0)
                 {
                     tile.isBlocked = true;
-                    if(HasStreetNeighbour(tile.gridPosition))
+                    if (z == 0 || z == depth - 1) continue; // skip first and last row, but set to blocked
+                    if (HasStreetNeighbour(tile.gridPosition))
                     {
-                        tile.blockType = Random.Range(0, 4); // 0 = none, 1 = fly-spawn, 2 = item-spawn, 3 = deco element spawn
+                        // Verteilung:
+                        // 0 = none          -> 40 %
+                        // 3 = deco element  -> 40 %
+                        // 1 = fly-spawn     -> 15 %
+                        // 2 = item-spawn    -> 5 %
+                        float r = Random.value;
+                        if (r < 0.4f)
+                            tile.blockType = 0;
+                        else if (r < 0.8f)
+                            tile.blockType = 3;
+                        else if (r < 0.95f)
+                            tile.blockType = 1;
+                        else
+                            tile.blockType = 2;
                     }
                     else
                     {
