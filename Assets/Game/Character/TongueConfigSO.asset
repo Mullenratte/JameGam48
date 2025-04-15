@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TongueConfigSO
   range: 8
   thickness: 2
-  snapSpeed: 15
+  snapSpeed: 12
   retractSpeed: 25

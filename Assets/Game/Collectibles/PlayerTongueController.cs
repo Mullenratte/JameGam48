@@ -13,6 +13,7 @@ public class PlayerTongueController : MonoBehaviour {
     Vector3 mouseWorldPosOnGrid;
     [SerializeField] Transform tongueTip;
     Vector3 tongueTarget;
+    [SerializeField] CapsuleCollider capsuleColl;
     LineRenderer _lineRenderer;
 
     GameObject attachedObject;
@@ -27,8 +28,6 @@ public class PlayerTongueController : MonoBehaviour {
 
     private void Awake() {
         _lineRenderer = GetComponent<LineRenderer>();
-
-
     }
 
     private void Start() {
@@ -36,7 +35,7 @@ public class PlayerTongueController : MonoBehaviour {
         _lineRenderer.SetPosition(1, mouthTransform.position);
 
         currentState = TongueState.Default;
-        tongueTip.GetComponent<SphereCollider>().radius = config.thickness;
+        capsuleColl.radius = config.thickness;
         tongueTip.GetComponent<TongueCollider>().OnTriggerEntered += TongueCollider_OnTriggerEntered;
     }
 
@@ -84,7 +83,7 @@ public class PlayerTongueController : MonoBehaviour {
     private void ExecuteShootingState() {
         // Update LineRenderer positions
         _lineRenderer.enabled = true;
-        tongueTip.GetComponent<SphereCollider>().enabled = true;
+        capsuleColl.enabled = true;
 
         _lineRenderer.SetPosition(0, mouthTransform.position);
         _lineRenderer.SetPosition(1, Vector3.MoveTowards(_lineRenderer.GetPosition(1), tongueTarget, config.snapSpeed * Time.deltaTime));
@@ -101,7 +100,7 @@ public class PlayerTongueController : MonoBehaviour {
     }
 
     private void ExecuteRetractingState() {
-        tongueTip.GetComponent<SphereCollider>().enabled = false;
+        capsuleColl.enabled = false;
         tongueTip.position = _lineRenderer.GetPosition(0);
 
         _lineRenderer.SetPosition(0, mouthTransform.position);

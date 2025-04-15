@@ -467,6 +467,34 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 1
+--- !u!1 &791007551 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6097745531576363811, guid: 202e8750a5109524b96e2ceb44a6bc6b, type: 3}
+  m_PrefabInstance: {fileID: 5708151052878251360}
+  m_PrefabAsset: {fileID: 0}
+--- !u!136 &791007554
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 791007551}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 15
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -638,7 +666,7 @@ Transform:
   m_GameObject: {fileID: 1639008815}
   serializedVersion: 2
   m_LocalRotation: {x: 0.5, y: 0.5, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: 7.13, y: 1.04, z: 7.33}
+  m_LocalPosition: {x: 7.13, y: 0.52, z: 7.33}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -922,14 +950,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: GridSystem
       objectReference: {fileID: 0}
+    - target: {fileID: 7518400448530785881, guid: 202e8750a5109524b96e2ceb44a6bc6b, type: 3}
+      propertyPath: capsuleColl
+      value: 
+      objectReference: {fileID: 791007554}
     - target: {fileID: 7866089647434446713, guid: 202e8750a5109524b96e2ceb44a6bc6b, type: 3}
       propertyPath: moveSpeed
       value: 10
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2756296287583749493, guid: 202e8750a5109524b96e2ceb44a6bc6b, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6097745531576363811, guid: 202e8750a5109524b96e2ceb44a6bc6b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 791007554}
   m_SourcePrefab: {fileID: 100100000, guid: 202e8750a5109524b96e2ceb44a6bc6b, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
