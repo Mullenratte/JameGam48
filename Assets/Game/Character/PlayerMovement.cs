@@ -23,6 +23,25 @@ public class PlayerMovement : MonoBehaviour {
         directionMapping.Add(Direction.West, new GridPosition(-1, 0));
         directionMapping.Add(Direction.East, new GridPosition(1, 0));
         this.currentDirection = Direction.East;
+
+        Item_SpeedBoost.OnActionTriggered += Item_SpeedBoost_OnActionTriggered;
+    }
+
+    private void Item_SpeedBoost_OnActionTriggered(object sender, ItemConfigSO_SpeedBoost e) {
+        StartCoroutine(HandleSpeedBoost(e));
+    }
+
+    IEnumerator HandleSpeedBoost(ItemConfigSO_SpeedBoost config) {
+        float t = 0;
+        float duration = config.duration;
+        float originalMoveSpeed = this.moveSpeed;
+        this.moveSpeed = this.moveSpeed * config.speedMultiplier;
+
+        while (t < duration) {
+            t += Time.deltaTime;
+            yield return null;
+        }
+        this.moveSpeed = originalMoveSpeed;
     }
 
     private void Update() {

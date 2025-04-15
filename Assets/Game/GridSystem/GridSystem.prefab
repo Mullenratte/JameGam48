@@ -52,6 +52,7 @@ MonoBehaviour:
   debug_tilePrefab1: {fileID: 6429520386177305233, guid: ddb069e44fe09364793c9248050f5e49, type: 3}
   debug_tilePrefab2: {fileID: 6429520386177305233, guid: b4a550d5771e63f46a0370d446f64ccf, type: 3}
   gridDebugObjectPrefab: {fileID: 6429520386177305233, guid: 9057eda6ce032ac4da440c51ba3999f1, type: 3}
+  flyPrefab: {fileID: 3110303992313591602, guid: fd4070140be43a045bec61ee7ab95648, type: 3}
 --- !u!114 &1507262268764262839
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -130,7 +131,7 @@ Transform:
   m_GameObject: {fileID: 5563422867438419336}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -2.87}
+  m_LocalPosition: {x: 0, y: 1, z: -5.83}
   m_LocalScale: {x: 100, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -170,7 +171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baa90c365192c854c9889b4ed0a958af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scrollSpeed: 0.85
+  _scrollSpeed: 1.2
 --- !u!1 &9139229082622339345
 GameObject:
   m_ObjectHideFlags: 0
@@ -222,7 +223,7 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
+  m_DynamicOccludee: 0
   m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
@@ -311,7 +312,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8222686950610692273, guid: cd3fa1d4a049c19459dbb7df859bf31b, type: 3}
       propertyPath: moveSpeed
-      value: 10
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8602884310531733905, guid: cd3fa1d4a049c19459dbb7df859bf31b, type: 3}
       propertyPath: capsuleColl
