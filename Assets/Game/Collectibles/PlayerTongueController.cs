@@ -104,6 +104,7 @@ public class PlayerTongueController : MonoBehaviour {
         tongueTip.GetComponent<SphereCollider>().enabled = false;
         tongueTip.position = _lineRenderer.GetPosition(0);
 
+        _lineRenderer.SetPosition(0, mouthTransform.position);
         _lineRenderer.SetPosition(1, Vector3.MoveTowards(_lineRenderer.GetPosition(1), mouthTransform.position, config.retractSpeed * Time.deltaTime));
         if (attachedObject != null) {
             attachedObject.transform.position = _lineRenderer.GetPosition(1);
