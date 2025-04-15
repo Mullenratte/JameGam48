@@ -5,7 +5,7 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem.EnhancedTouch;
 
-public enum Direction { North, East, South, West }
+public enum Direction { North, East, South, West, none}
 
 public enum BridgeOrientation
 {
