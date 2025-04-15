@@ -561,7 +561,7 @@ GameObject:
   - component: {fileID: 1639008819}
   - component: {fileID: 1639008818}
   - component: {fileID: 1639008817}
-  - component: {fileID: 1639008816}
+  - component: {fileID: 1639008821}
   m_Layer: 0
   m_Name: Dummy Item
   m_TagString: Untagged
@@ -569,18 +569,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1639008816
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1639008815}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e27b0194b1be25840b3b766f4b2b635d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!136 &1639008817
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -672,6 +660,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 90}
+--- !u!114 &1639008821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1639008815}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a835550bd47c1a444bb297da31f9788f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  config: {fileID: 11400000, guid: aaf864f1749e8db4eb07b2ba14750a83, type: 2}
 --- !u!1 &1915976375
 GameObject:
   m_ObjectHideFlags: 0
@@ -949,6 +950,14 @@ PrefabInstance:
     - target: {fileID: 5137124322098467968, guid: 202e8750a5109524b96e2ceb44a6bc6b, type: 3}
       propertyPath: m_Name
       value: GridSystem
+      objectReference: {fileID: 0}
+    - target: {fileID: 5563422867438419336, guid: 202e8750a5109524b96e2ceb44a6bc6b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5790306859903806658, guid: 202e8750a5109524b96e2ceb44a6bc6b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2.87
       objectReference: {fileID: 0}
     - target: {fileID: 7518400448530785881, guid: 202e8750a5109524b96e2ceb44a6bc6b, type: 3}
       propertyPath: capsuleColl

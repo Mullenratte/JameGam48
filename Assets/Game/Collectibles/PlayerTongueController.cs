@@ -42,7 +42,6 @@ public class PlayerTongueController : MonoBehaviour {
     private void TongueCollider_OnTriggerEntered(Collider obj) {
         if (obj.TryGetComponent<ILickable>(out ILickable lickable)) {
             attachedObject = obj.gameObject;
-            lickable.TriggerOnLickedAction();
         }
     }
 
@@ -112,7 +111,10 @@ public class PlayerTongueController : MonoBehaviour {
 
         if (Vector3.Distance(_lineRenderer.GetPosition(1), mouthTransform.position) < 0.1f) {
             _lineRenderer.enabled = false;
-            attachedObject = null;
+            if (attachedObject) {
+                attachedObject.GetComponent<ILickable>().TriggerOnLickedAction();
+                attachedObject = null;
+            }
             currentState = TongueState.Default;
         }
     }

@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
@@ -10,9 +9,9 @@ public class BaseItem : MonoBehaviour, ILickable {
         startPos = transform.position;
     }
 
-    public void TriggerOnLickedAction() {
+    public virtual void TriggerOnLickedAction() {
         Debug.Log("collected " + this.name);
-        //Destroy(gameObject);
+
     }
 }
 
