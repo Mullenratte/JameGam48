@@ -13,6 +13,7 @@ public class LevelGrid : MonoBehaviour {
 
     [SerializeField] Transform debug_tilePrefab1, debug_tilePrefab2;
     [SerializeField] private Transform gridDebugObjectPrefab;
+    [SerializeField] private Transform flyPrefab;
 
     private void Awake() {
         if (Instance == null) {
@@ -52,7 +53,7 @@ public class LevelGrid : MonoBehaviour {
 
                 if (grid[x,z].blockType == Tile.BlockType.FlySpawn)
                 {
-                    //Transform flyObjTransform = Instantiate(flyPrefab, GridSystem.GetWorldPosition(gridPosition), Quaternion.identity);
+                    Transform flyObjTransform = Instantiate(flyPrefab, GridSystem.GetWorldPosition(gridPosition), Quaternion.identity);
                 }
             }
         }
