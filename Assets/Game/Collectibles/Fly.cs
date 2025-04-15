@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Fly : BaseItem
+public class Fly : MonoBehaviour, ILickable
 {
     // Start is called once before the first execution of Update after the BaseItem is created
     public Vector3 position;
@@ -8,6 +8,16 @@ public class Fly : BaseItem
     public Vector3 acceleration;
 
     FlyConfigSO config;
+
+    public void TriggerOnLickedAction()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    void Awake()
+    {
+        // config laden
+    }
 
     void Start()
     {

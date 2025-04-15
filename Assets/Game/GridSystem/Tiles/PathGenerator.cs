@@ -117,17 +117,17 @@ public class PathGenerator
                         // 2 = item-spawn    -> 5 %
                         float r = Random.value;
                         if (r < 0.4f)
-                            tile.blockType = 0;
+                            tile.blockType = Tile.BlockType.None;
                         else if (r < 0.8f)
-                            tile.blockType = 3;
+                            tile.blockType = Tile.BlockType.DecoElementSpawn;
                         else if (r < 0.95f)
-                            tile.blockType = 1;
+                            tile.blockType = Tile.BlockType.FlySpawn;
                         else
-                            tile.blockType = 2;
+                            tile.blockType = Tile.BlockType.ItemSpawn;
                     }
                     else
                     {
-                        tile.blockType = 0; // 0 = none
+                        tile.blockType = Tile.BlockType.None; // 0 = none
                     }
                 }
             }

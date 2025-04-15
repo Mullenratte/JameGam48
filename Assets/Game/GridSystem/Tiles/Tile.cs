@@ -23,7 +23,15 @@ public class Tile
     public HashSet<Direction> enteredFrom = new HashSet<Direction>();
     public bool hasBridge = false;
     public bool isBlocked = false;
-    public int blockType = 0; // 0 = none, 1 = fly-spawn, 2 = item-spawn, 3 = deco element spawn
+    public BlockType blockType = BlockType.None; // 0 = none, 1 = fly-spawn, 2 = item-spawn, 3 = deco element spawn
+    public enum BlockType
+    {
+        None,
+        FlySpawn,
+        ItemSpawn,
+        DecoElementSpawn
+    }
+
     public BridgeOrientation bridgeVisual = BridgeOrientation.None;
 
     public Dictionary<Direction, Tile> GetConnections()
@@ -109,8 +117,8 @@ public class Tile
     public int GetTileType()
     {
         // simple checks first -> no connections 
-        if (isBlocked && blockType == 0) return 0; // Free tile
-        if (isBlocked) return (17 + blockType); // Spawn tile
+        if (isBlocked && blockType == BlockType.None) return 0; // Free tile
+        if (isBlocked) return (17 + (int) blockType); // Spawn tile
 
         // complex checks later
         if (north != null && east == null && south == null && west == null) return 1; // North connection only

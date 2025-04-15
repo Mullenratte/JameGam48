@@ -50,7 +50,7 @@ public class LevelGrid : MonoBehaviour {
                     debugObjTransform.gameObject.layer = LayerMask.NameToLayer("Grid");
                 }
 
-                if (grid[x,z].blockType == 1)
+                if (grid[x,z].blockType == Tile.BlockType.FlySpawn)
                 {
                     //Transform flyObjTransform = Instantiate(flyPrefab, GridSystem.GetWorldPosition(gridPosition), Quaternion.identity);
                 }
