@@ -119,6 +119,10 @@ public class DEBUG_GridObject : MonoBehaviour {
                 _spriteRenderer.sprite = sprites[6];
                 spriteDisplayObject.SetZRotation(90f);
                 break;
+            case 18:
+                _spriteRenderer.sprite = sprites[7];
+                spriteDisplayObject.SetZRotation(0f);
+                break;
 
             default:
                 Debug.LogError("Invalid tile type index: " + tileTypeIndex);
