@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,6 +15,8 @@ public class LevelGrid : MonoBehaviour {
     [SerializeField] Transform debug_tilePrefab1, debug_tilePrefab2;
     [SerializeField] private Transform gridDebugObjectPrefab;
     [SerializeField] private Transform flyPrefab;
+
+    [SerializeField] private List<BaseItem> items = new List<BaseItem>();
 
     private void Awake() {
         if (Instance == null) {
@@ -56,6 +59,11 @@ public class LevelGrid : MonoBehaviour {
                     Transform flyObjTransform = Instantiate(flyPrefab, GridSystem.GetWorldPosition(gridPosition), Quaternion.identity);
                 }
 
+                if (grid[x, z].blockType == Tile.BlockType.ItemSpawn) {
+                    int rnd = UnityEngine.Random.Range(0, items.Count);
+                    Transform itemTransform = Instantiate(items[rnd].gameObject.transform, GridSystem.GetWorldPosition(gridPosition), Quaternion.identity);
+                    itemTransform.position += Vector3.up;
+                }
             }
         }
 
