@@ -46,9 +46,13 @@ public class LevelGrid : MonoBehaviour {
                 DEBUG_GridObject debugObj = debugObjTransform.GetComponent<DEBUG_GridObject>();
                 debugObj.SetGridObject(gridObject);
                 if (debugObjTransform != null) {
-                    //debugObjTransform.rotation = Quaternion.Euler(0, 0, 0);
                     debugObjTransform.SetParent(this.transform);
                     debugObjTransform.gameObject.layer = LayerMask.NameToLayer("Grid");
+                }
+
+                if (grid[x,z].blockType == 1)
+                {
+                    //Transform flyObjTransform = Instantiate(flyPrefab, GridSystem.GetWorldPosition(gridPosition), Quaternion.identity);
                 }
             }
         }
