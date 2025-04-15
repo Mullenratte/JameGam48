@@ -82,7 +82,7 @@ public class PathGenerator
         {
             for (int z = 0; z < depth; z++)
             {
-                if (z == 1 && Xs.Contains(x))
+                if (z < 2 && Xs.Contains(x))
                 {
                     continue;
                 }
