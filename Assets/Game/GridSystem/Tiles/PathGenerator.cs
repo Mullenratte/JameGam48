@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PathGenerator
@@ -40,6 +41,51 @@ public class PathGenerator
         }
 
         startNextGeneration = Random.Range(depth - 3, depth);
+    }
+
+    public Tile[,] GeneratePaths(List<int> startXs, int startZ)
+    {
+        InitGrid();
+        ScatterSpawns();
+        foreach (int x in startXs)
+        {
+            Vector3Int start = new Vector3Int(x, 0, startZ);
+            GenerateFlowAwarePathFrom(start);
+        }
+        return CopyGrid(grid);
+    }
+
+    // return a copy of the grid, not the reference
+    private Tile[,] CopyGrid(Tile[,] original)
+    {
+        int width = original.GetLength(0);
+        int depth = original.GetLength(1);
+        Tile[,] copy = new Tile[width, depth];
+
+        for (int x = 0; x < width; x++)
+        {
+            for (int z = 0; z < depth; z++)
+            {
+                copy[x, z] = original[x, z];
+            }
+        }
+
+        return copy;
+    }
+
+
+    private void ScatterSpawns()
+    {
+        for (int x = 0; x < width; x++)
+        {
+            for (int z = 0; z < depth; z++)
+            {
+                if (Random.Range(0f, 1f) < 0.1f)
+                {
+                    grid[x, z].isSpawn = true;
+                }
+            }
+        }
     }
 
     private void GeneratePathFrom(Vector3Int start)
@@ -111,6 +157,7 @@ public class PathGenerator
                 if (visited.Contains(next) && Random.Range(0f, 1f) < 0.9f) continue;
 
                 var tile = grid[next.x, next.z];
+                if (tile.isSpawn) continue; // skip spawn tiles
                 if (tile.GetConnections().Count >= 3) continue;
 
                 int score = Score(direction, next, start);

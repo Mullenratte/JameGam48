@@ -21,6 +21,7 @@ public class Tile
 
     public HashSet<Direction> enteredFrom = new HashSet<Direction>();
     public bool hasBridge = false;
+    public bool isSpawn;
     public BridgeOrientation bridgeVisual = BridgeOrientation.None;
 
     public Dictionary<Direction, Tile> GetConnections()
@@ -105,6 +106,10 @@ public class Tile
 
     public int GetTileType()
     {
+        // simple checks first
+        if (isSpawn) return 18; // Spawn tile
+
+        // complex checks later
         if (north == null && east == null && south == null && west == null) return 0; // No connections
 
         if (north != null && east == null && south == null && west == null) return 1; // North connection only
@@ -125,12 +130,10 @@ public class Tile
         if (north != null && east == null && south != null && west != null) return 13; // North, South and West connections
         if (north != null && east != null && south == null && west != null) return 14; // North, East and West connections
 
-        if (!hasBridge) return 15;
+        if (!hasBridge) return 15; // No bridge
         if (this.bridgeVisual == BridgeOrientation.NSOver_EWUnder) return 16; // Bridge over NS
         if (this.bridgeVisual == BridgeOrientation.EWOver_NSUnder) return 17; // Bridge over EW
 
         throw new InvalidOperationException("Unerwartete Kombination");
     }
-        
-
-    }
+}

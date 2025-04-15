@@ -31,16 +31,17 @@ public class LevelGrid : MonoBehaviour {
 
     private void Start() {
         Generator = new PathGenerator(width, height);
-        Generator.GeneratePaths(startXs);
+        //Generator.GeneratePaths(startXs);
+        Tile[,] grid = Generator.GeneratePaths(startXs, 0);
         Debug.Log("Grid generated!");
 
         Visualization visualization = GetComponent<Visualization>();
         visualization.Generator = Generator;
 
-        for (int z = 0; z < Generator.grid.GetLength(1); z++) {
-            for (int x = 0; x < Generator.grid.GetLength(0); x++) {
+        for (int z = 0; z < grid.GetLength(1); z++) {
+            for (int x = 0; x < grid.GetLength(0); x++) {
                 GridPosition gridPosition = new GridPosition(x, z);
-                GridObject gridObject = new GridObject(GridSystem, gridPosition, Generator.grid[x, z]);
+                GridObject gridObject = new GridObject(GridSystem, gridPosition, grid[x, z]);
                 Transform debugObjTransform = Instantiate(gridDebugObjectPrefab, GridSystem.GetWorldPosition(gridPosition), Quaternion.identity);
                 DEBUG_GridObject debugObj = debugObjTransform.GetComponent<DEBUG_GridObject>();
                 debugObj.SetGridObject(gridObject);
