@@ -146,7 +146,7 @@ public class PlayerMovement : MonoBehaviour {
             }
         }
 
-        var neighborConnections = LevelGrid.Instance.Generator.grid[gridPosition.x, gridPosition.z].GetConnections();
+        var neighborConnections = LevelGrid.Instance.GetTileGrid()[gridPosition.x, gridPosition.z].GetConnections();
         return neighborConnections.ContainsKey(dir);
     }
 
