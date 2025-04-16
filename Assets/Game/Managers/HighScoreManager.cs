@@ -1,10 +1,16 @@
+using TMPro;
 using UnityEngine;
 
 public class HighScoreManager : MonoBehaviour
 {
     public static HighScoreManager Instance;
+
+    [SerializeField] TMP_Text scoreText;
+
     private int score;
     private int highScore;
+    private string highScoreName;
+
 
     public int Score
     {
@@ -16,6 +22,7 @@ public class HighScoreManager : MonoBehaviour
         if(Instance == null)
         {
             Instance = this;
+            LoadHighscore();
         }
         else
         {
@@ -23,16 +30,15 @@ public class HighScoreManager : MonoBehaviour
         }
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        ResetScore();
+        if (scoreText != null) scoreText.text = "Score: " + score;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        if (scoreText != null) scoreText.text = "Score: " + score;
     }
 
     public void ResetScore()
@@ -46,12 +52,36 @@ public class HighScoreManager : MonoBehaviour
         Debug.Log("Score: " + score);
     }
 
-    public void SetHighscore()
+    public bool SetHighscore()
     {
         if (score > highScore)
         {
             highScore = score;
-            Debug.Log("New Highscore: " + highScore);
+            return true;
         }
+        return false;
+    }
+
+    public int GetHighscore()
+    {
+        return highScore;
+    }
+
+    public void SetHighscoreName(string name)
+    {
+        highScoreName = name;
+    }
+
+    public void LoadHighscore()
+    {
+        highScore = PlayerPrefs.GetInt("Highscore", 0);
+        highScoreName = PlayerPrefs.GetString("HighscoreName", "<no name>");
+    }
+
+    public void SaveHighscore()
+    {
+        PlayerPrefs.SetInt("Highscore", highScore);
+        PlayerPrefs.SetString("HighscoreName", highScoreName);
+        PlayerPrefs.Save();
     }
 }

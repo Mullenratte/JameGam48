@@ -23,6 +23,7 @@ public class Fly : MonoBehaviour, ILickable
 
         // Add points to the score
         HighScoreManager.Instance.AddScore(config.points);
+        Destroy(gameObject);
     }
 
     void Awake()
