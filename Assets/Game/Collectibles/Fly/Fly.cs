@@ -18,8 +18,11 @@ public class Fly : MonoBehaviour, ILickable
 
     public void TriggerOnLickedAction()
     {
-        Debug.Log("collected " + this.name + ": +" + config.points + " points");
+        if(isEaten) return;
         isEaten = true;
+
+        // Add points to the score
+        HighScoreManager.Instance.AddScore(config.points);
     }
 
     void Awake()
