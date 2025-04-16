@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameOverZone : MonoBehaviour {
@@ -46,6 +47,11 @@ public class GameOverZone : MonoBehaviour {
     private void OnTriggerEnter(Collider other) {
         if (other.TryGetComponent<PlayerMovement>(out _)) {
             GameManager.Instance.EndGame();
+        }
+
+        if (other.TryGetComponent<ILickable>(out _))
+        {
+            Destroy(other.gameObject);
         }
     }
 
