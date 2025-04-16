@@ -53,6 +53,9 @@ MonoBehaviour:
   debug_tilePrefab2: {fileID: 6429520386177305233, guid: b4a550d5771e63f46a0370d446f64ccf, type: 3}
   gridDebugObjectPrefab: {fileID: 6429520386177305233, guid: 9057eda6ce032ac4da440c51ba3999f1, type: 3}
   flyPrefab: {fileID: 3110303992313591602, guid: fd4070140be43a045bec61ee7ab95648, type: 3}
+  items:
+  - {fileID: 4145291427937277733, guid: 497e73d34b90c4d42b2cdeec0d16c74f, type: 3}
+  - {fileID: 1639113645858368962, guid: 0c173073963a14941a80ee2591df51e3, type: 3}
 --- !u!114 &1507262268764262839
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -312,7 +315,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8222686950610692273, guid: cd3fa1d4a049c19459dbb7df859bf31b, type: 3}
       propertyPath: moveSpeed
-      value: 8
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8222686950610692273, guid: cd3fa1d4a049c19459dbb7df859bf31b, type: 3}
+      propertyPath: maxInputBufferTime
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 8602884310531733905, guid: cd3fa1d4a049c19459dbb7df859bf31b, type: 3}
       propertyPath: capsuleColl
