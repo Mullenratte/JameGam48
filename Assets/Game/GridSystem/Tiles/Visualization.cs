@@ -1,16 +1,26 @@
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 
 public class Visualization : MonoBehaviour
 {
     [SerializeField]public bool visualizeGrid = true;
+    [SerializeField]public bool visualizeGridPos = true;
     [SerializeField]public int yOffset;
     private PathGenerator generator;
+    private GUIStyle handleTextStyle = new GUIStyle();
 
 
     public PathGenerator Generator { get => generator; set => generator = value; }
 
+    private void Awake()
+    {
+        handleTextStyle.normal.textColor = Color.black;
+        handleTextStyle.fontSize = 14;
+        handleTextStyle.fontStyle = FontStyle.Bold;
+        handleTextStyle.alignment = TextAnchor.MiddleCenter;
+    }
     void Start()
     {
     }
@@ -30,7 +40,7 @@ public class Visualization : MonoBehaviour
             for (int z = 0; z < depth; z++)
             {
                 Tile tile = grid[x, z];
-                Vector3 center = new Vector3(x, yOffset, z);
+                Vector3 center = new Vector3(tile.gridPosition.x, yOffset, tile.gridPosition.z);
 
                 switch(tile.VisType)
                 {
@@ -48,6 +58,7 @@ public class Visualization : MonoBehaviour
                         break;
                 }
 
+                if (visualizeGridPos) Handles.Label(center + Vector3.up + Vector3.back * 0.01f, tile.gridPosition.ToString(), this.handleTextStyle);
                 Gizmos.DrawWireCube(center, Vector3.one * size);
 
                 Gizmos.color = Color.green;

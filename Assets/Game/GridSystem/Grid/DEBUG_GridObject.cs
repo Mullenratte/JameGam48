@@ -3,14 +3,14 @@ using TMPro;
 using UnityEngine;
 
 public class DEBUG_GridObject : MonoBehaviour {
-    private GridObject gridObject;
     [SerializeField] private Color n1_c, n2_c, n3_c, n4_c;
+    
+    private GridObject gridObject;    
     public Sprite[] sprites;
-
     private Color activeColor;
-    MeshRenderer _meshRenderer;
 
     GameObject spriteDisplayObject;
+    MeshRenderer _meshRenderer;
     SpriteRenderer _spriteRenderer;
 
     public void SetGridObject(GridObject gridObject) {
@@ -151,6 +151,19 @@ public class DEBUG_GridObject : MonoBehaviour {
         _meshRenderer = GetComponent<MeshRenderer>();
         this.spriteDisplayObject = transform.Find("SpriteDisplay").gameObject;
         _spriteRenderer = this.spriteDisplayObject.GetComponent<SpriteRenderer>();
+    }
+
+    private void Update()
+    {
+        Vector3 zonePosition = GameOverZone.Instance.GetPosition();
+        if (zonePosition.z > transform.position.z)
+        {
+            if (gridObject.GetGridPosition().x == LevelGrid.Instance.GetWidth() - 1)
+            {
+                //LevelGrid.Instance.RemoveFirstRow(); -> TODO: Fix Player Movement when used
+            }
+            Destroy(gameObject);
+        } 
     }
 }
 

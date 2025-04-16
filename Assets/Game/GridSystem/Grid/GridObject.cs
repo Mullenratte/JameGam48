@@ -8,4 +8,9 @@ public class GridObject {
         this.gridPosition = gridPosition;
         this.tile = tile;
     }
+
+    public GridPosition GetGridPosition()
+    {
+        return gridPosition;
+    }
 }

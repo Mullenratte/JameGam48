@@ -14,6 +14,7 @@ public class LevelGrid : MonoBehaviour {
     private List<int> connectXs = new List<int> { };
 
     public GridSystem GridSystem { get; private set; }
+    public int zOffset = 0; // Offset for the Z position of the grid objects
 
     private Tile[,] tileGrid;
     private Visualization visualization;
@@ -121,6 +122,19 @@ public class LevelGrid : MonoBehaviour {
         GenerateObjects(oldDepth);
     }
 
+    public void RemoveFirstRow()
+    {
+        Tile[,] newGrid = new Tile[tileGrid.GetLength(0), tileGrid.GetLength(1) - 1];
+        for (int x = 0; x < tileGrid.GetLength(0); x++)
+        {
+            for (int z = 1; z < tileGrid.GetLength(1); z++)
+            {
+                newGrid[x, z - 1] = tileGrid[x, z];
+            }
+        }
+        tileGrid = newGrid;
+    }
+
     Tile[,] CombineTileGrids(Tile[,] original, Tile[,] toAppend)
     {
         int originalRows = original.GetLength(0);
@@ -163,5 +177,10 @@ public class LevelGrid : MonoBehaviour {
     public List<int> GetConnectXs()
     {
         return connectXs;
+    }
+
+    public int GetWidth()
+    {
+        return tileGrid.GetLength(0);
     }
 }

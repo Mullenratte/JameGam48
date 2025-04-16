@@ -698,7 +698,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2655453450124476327, guid: 202e8750a5109524b96e2ceb44a6bc6b, type: 3}
       propertyPath: depth
-      value: 40
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 2655453450124476327, guid: 202e8750a5109524b96e2ceb44a6bc6b, type: 3}
       propertyPath: flyPrefab
@@ -1026,10 +1026,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   visualizeGrid: 1
-  width: 30
-  depth: 40
   yOffset: 0
-  startXs: 
 --- !u!4 &1634929316
 Transform:
   m_ObjectHideFlags: 0

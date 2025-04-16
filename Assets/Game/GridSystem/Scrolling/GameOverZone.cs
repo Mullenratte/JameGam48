@@ -1,10 +1,22 @@
 using UnityEngine;
 
 public class GameOverZone : MonoBehaviour {
+    public static GameOverZone Instance;
     [SerializeField] float _scrollSpeed;
 
     bool paused = false;
     float pauseTimer;
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     private void Start() {
         Effect_TimeStopper.OnActionTriggered += Effect_TimeStopper_OnActionTriggered;
@@ -26,10 +38,14 @@ public class GameOverZone : MonoBehaviour {
         }
     }
 
+    public Vector3 GetPosition()
+    {
+        return transform.position;
+    }
+
     private void OnTriggerEnter(Collider other) {
         if (other.TryGetComponent<PlayerMovement>(out _)) {
             GameManager.Instance.EndGame();
-
         }
     }
 
