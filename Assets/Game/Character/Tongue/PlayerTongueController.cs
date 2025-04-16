@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Drawing;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -11,9 +12,7 @@ public class PlayerTongueController : MonoBehaviour {
 
     [SerializeField] Transform mouthTransform;
     Vector3 mouseWorldPosOnGrid;
-    [SerializeField] Transform tongueTip;
     Vector3 tongueTarget;
-    [SerializeField] CapsuleCollider capsuleColl;
     LineRenderer _lineRenderer;
 
     GameObject attachedObject;
@@ -35,15 +34,8 @@ public class PlayerTongueController : MonoBehaviour {
         _lineRenderer.SetPosition(1, mouthTransform.position);
 
         currentState = TongueState.Default;
-        capsuleColl.radius = config.thickness;
-        tongueTip.GetComponent<TongueCollider>().OnTriggerEntered += TongueCollider_OnTriggerEntered;
     }
 
-    private void TongueCollider_OnTriggerEntered(Collider obj) {
-        if (obj.TryGetComponent<ILickable>(out ILickable lickable)) {
-            attachedObject = obj.gameObject;
-        }
-    }
 
     private void Update() {
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
@@ -71,6 +63,21 @@ public class PlayerTongueController : MonoBehaviour {
     private void ExecuteDefaultState() {
         if (Input.GetKeyDown(KeyCode.Mouse0)) {
             tongueTarget = new Vector3(mouseWorldPosOnGrid.x, mouthTransform.position.y, mouseWorldPosOnGrid.z);
+            if (Vector3.Distance(tongueTarget, mouthTransform.position) <= config.range) {
+                RaycastHit[] hits = Physics.SphereCastAll(mouseWorldPosOnGrid, config.thickness, Vector3.up, 25f);
+                foreach (var hit in hits) {
+                    if (hit.collider.TryGetComponent<ILickable>(out _)) {
+                        Vector3 targetXZ = new Vector3(hit.collider.transform.position.x, mouthTransform.position.y, hit.collider.transform.position.z);
+                        if (Vector3.Distance(targetXZ, mouthTransform.position) <= config.range) {
+                            tongueTarget = hit.collider.gameObject.transform.position;
+                            attachedObject = hit.collider.gameObject;
+                            break;
+                        }
+                    }
+                }
+            }
+
+
             _lineRenderer.SetPosition(0, mouthTransform.position);
             _lineRenderer.SetPosition(1, mouthTransform.position);
             currentState = TongueState.Shooting;
@@ -82,26 +89,20 @@ public class PlayerTongueController : MonoBehaviour {
     private void ExecuteShootingState() {
         // Update LineRenderer positions
         _lineRenderer.enabled = true;
-        capsuleColl.enabled = true;
 
         _lineRenderer.SetPosition(0, mouthTransform.position);
         _lineRenderer.SetPosition(1, Vector3.MoveTowards(_lineRenderer.GetPosition(1), tongueTarget, config.snapSpeed * Time.deltaTime));
-        tongueTip.transform.position = _lineRenderer.GetPosition(1);
 
 
         // stop when at max radius or when target is reached
         if (Vector3.Distance(_lineRenderer.GetPosition(1), mouthTransform.position) >= config.range
-            || Vector3.Distance(_lineRenderer.GetPosition(1), tongueTarget) < 0.01f
-            || attachedObject) {
+            || Vector3.Distance(_lineRenderer.GetPosition(1), tongueTarget) < 0.01f) {
             currentState = TongueState.Retracting;
             return;
         }
     }
 
     private void ExecuteRetractingState() {
-        capsuleColl.enabled = false;
-        tongueTip.position = _lineRenderer.GetPosition(0);
-
         _lineRenderer.SetPosition(0, mouthTransform.position);
         _lineRenderer.SetPosition(1, Vector3.MoveTowards(_lineRenderer.GetPosition(1), mouthTransform.position, config.retractSpeed * Time.deltaTime));
         if (attachedObject != null) {
