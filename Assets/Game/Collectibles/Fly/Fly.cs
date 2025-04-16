@@ -7,7 +7,7 @@ public class Fly : MonoBehaviour, ILickable
     public Vector3 position;
     public Vector3 velocity;
     public Vector3 acceleration;
-    bool isEaten = false;
+    bool isHit = false;
 
     private Vector3 spawnPosition;
     Vector3 currentRandomDir = Vector3.zero;
@@ -16,11 +16,12 @@ public class Fly : MonoBehaviour, ILickable
 
     FlyConfigSO config;
 
+    public void TriggerOnHitAction() {
+        isHit = true;
+    }
+
     public void TriggerOnCollectedAction()
     {
-        if(isEaten) return;
-        isEaten = true;
-
         // Add points to the score
         HighScoreManager.Instance.AddScore(config.points);
         Destroy(gameObject);
@@ -44,7 +45,7 @@ public class Fly : MonoBehaviour, ILickable
     // Update is called once per frame
     void Update()
     {
-        if (isEaten) return;
+        if (isHit) return;
 
         // Fly Brain
         FlyMovement();
@@ -84,4 +85,6 @@ public class Fly : MonoBehaviour, ILickable
 
         position.y = Mathf.Max(position.y, 1f);
     }
+
+
 }

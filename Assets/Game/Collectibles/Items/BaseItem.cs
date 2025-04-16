@@ -14,5 +14,8 @@ public abstract class BaseItem : MonoBehaviour, ILickable {
         Destroy(gameObject);
     }
 
+    public virtual void TriggerOnHitAction() {
+        Debug.Log("hit item " + this.name);
+    }
 }
 

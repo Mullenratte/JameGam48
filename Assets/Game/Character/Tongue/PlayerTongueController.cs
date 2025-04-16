@@ -71,6 +71,7 @@ public class PlayerTongueController : MonoBehaviour {
                         if (Vector3.Distance(targetXZ, mouthTransform.position) <= config.range) {
                             tongueTarget = hit.collider.gameObject.transform.position;
                             attachedObject = hit.collider.gameObject;
+                            Debug.Log("obj: " + attachedObject);
                             break;
                         }
                     }
@@ -97,6 +98,9 @@ public class PlayerTongueController : MonoBehaviour {
         // stop when at max radius or when target is reached
         if (Vector3.Distance(_lineRenderer.GetPosition(1), mouthTransform.position) >= config.range
             || Vector3.Distance(_lineRenderer.GetPosition(1), tongueTarget) < 0.01f) {
+            if (attachedObject) {
+                attachedObject.GetComponent<ILickable>().TriggerOnHitAction();
+            }
             currentState = TongueState.Retracting;
             return;
         }
@@ -105,7 +109,7 @@ public class PlayerTongueController : MonoBehaviour {
     private void ExecuteRetractingState() {
         _lineRenderer.SetPosition(0, mouthTransform.position);
         _lineRenderer.SetPosition(1, Vector3.MoveTowards(_lineRenderer.GetPosition(1), mouthTransform.position, config.retractSpeed * Time.deltaTime));
-        if (attachedObject != null) {
+        if (attachedObject) {
             attachedObject.transform.position = _lineRenderer.GetPosition(1);
         }
 
