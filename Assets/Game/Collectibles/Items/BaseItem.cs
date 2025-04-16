@@ -1,17 +1,18 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
-public class BaseItem : MonoBehaviour, ILickable {
+public abstract class BaseItem : MonoBehaviour, ILickable {
 
-    Vector3 startPos;
+    [SerializeField] ItemData data;
+    public static event Action<ItemData> OnCollected;
 
-    private void Start() {
-        startPos = transform.position;
-    }
 
-    public virtual void TriggerOnLickedAction() {
+    public virtual void TriggerOnCollectedAction() {
         Debug.Log("collected " + this.name);
-
+        OnCollected?.Invoke(this.data);
+        Destroy(gameObject);
     }
+
 }
 

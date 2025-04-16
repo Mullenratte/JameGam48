@@ -16,7 +16,7 @@ public class Fly : MonoBehaviour, ILickable
 
     FlyConfigSO config;
 
-    public void TriggerOnLickedAction()
+    public void TriggerOnCollectedAction()
     {
         Debug.Log("collected " + this.name + ": +" + config.points + " points");
         isEaten = true;

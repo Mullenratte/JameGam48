@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -31,7 +32,11 @@ public class PlayerMovement : MonoBehaviour {
         directionMapping.Add(Direction.East, new GridPosition(1, 0));
         this.currentDirection = Direction.East;
 
-        Item_SpeedBoost.OnActionTriggered += Item_SpeedBoost_OnActionTriggered;
+        Effect_SpeedBoost.OnActionTriggered += Effect_SpeedBoost_OnActionTriggered;
+    }
+
+    private void Effect_SpeedBoost_OnActionTriggered(ItemConfigSO_SpeedBoost obj) {
+        StartCoroutine(HandleSpeedBoost(obj));
     }
 
     private void Update() {
@@ -56,6 +61,7 @@ public class PlayerMovement : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.S)) {
             UpdateBufferedDirection(Direction.South);
         }
+
     }
 
     private void UpdateBufferedDirection(Direction dir) {
@@ -136,10 +142,6 @@ public class PlayerMovement : MonoBehaviour {
         }
 
         isMoving = false;
-    }
-
-    private void Item_SpeedBoost_OnActionTriggered(object sender, ItemConfigSO_SpeedBoost e) {
-        StartCoroutine(HandleSpeedBoost(e));
     }
 
     IEnumerator HandleSpeedBoost(ItemConfigSO_SpeedBoost config) {

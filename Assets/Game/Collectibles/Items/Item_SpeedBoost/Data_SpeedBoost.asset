@@ -9,7 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e445498b548401a409bc249e3aa0c3ad, type: 3}
-  m_Name: ItemConfigSO_TimeStopper
+  m_Script: {fileID: 11500000, guid: 46660688513ffe0479652a22cfbc5053, type: 3}
+  m_Name: Data_SpeedBoost
   m_EditorClassIdentifier: 
-  duration: 3
+  itemName: Speed Boost
+  icon: {fileID: 0}
+  effect: {fileID: 11400000, guid: b8ed5706097a28946a35ebff0143583c, type: 2}

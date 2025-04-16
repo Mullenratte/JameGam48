@@ -112,7 +112,7 @@ public class PlayerTongueController : MonoBehaviour {
         if (Vector3.Distance(_lineRenderer.GetPosition(1), mouthTransform.position) < 0.1f) {
             _lineRenderer.enabled = false;
             if (attachedObject) {
-                attachedObject.GetComponent<ILickable>().TriggerOnLickedAction();
+                attachedObject.GetComponent<ILickable>().TriggerOnCollectedAction();
                 attachedObject = null;
             }
             currentState = TongueState.Default;
