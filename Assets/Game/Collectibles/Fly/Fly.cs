@@ -16,7 +16,7 @@ public class Fly : MonoBehaviour, ILickable
 
     FlyConfigSO config;
 
-    public void TriggerOnLickedAction()
+    public void TriggerOnCollectedAction()
     {
         if(isEaten) return;
         isEaten = true;

@@ -7,12 +7,12 @@ public class GameOverZone : MonoBehaviour {
     float pauseTimer;
 
     private void Start() {
-        Item_TimeStopper.OnActionTriggered += Item_TimeStopper_OnActionTriggered;
+        Effect_TimeStopper.OnActionTriggered += Effect_TimeStopper_OnActionTriggered;
     }
 
-    private void Item_TimeStopper_OnActionTriggered(object sender, float e) {
+    private void Effect_TimeStopper_OnActionTriggered(ItemConfigSO_TimeStopper obj) {
         paused = true;
-        pauseTimer = e;
+        pauseTimer = obj.duration;
     }
 
     void Update() {
