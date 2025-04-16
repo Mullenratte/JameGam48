@@ -120,11 +120,11 @@ public class DEBUG_GridObject : MonoBehaviour {
             // Bridge tiles
             case 16:
                 _spriteRenderer.sprite = sprites[6];
-                spriteDisplayObject.SetZRotation(0f);
+                spriteDisplayObject.SetZRotation(90f);
                 break;
             case 17:
                 _spriteRenderer.sprite = sprites[6];
-                spriteDisplayObject.SetZRotation(90f);
+                spriteDisplayObject.SetZRotation(0f);
                 break;
             
             // Blocked tiles
