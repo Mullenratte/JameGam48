@@ -213,7 +213,10 @@ public class PathGenerator
 
                 var tile = grid[next.x, next.z];
                 if (tile.isBlocked) continue; // skip spawn tiles
-                if (tile.GetConnections().Count >= 3) continue;
+                if (tile.GetConnections().Count >= 3 && !(current.z == 0 && direction == Direction.North))
+                {
+                    continue;                    
+                }
 
                 int score = Score(direction, next, start);
                 candidates.Add((next, direction, score));
@@ -253,22 +256,25 @@ public class PathGenerator
 
             var best = sorted[chosenIndex];
 
-            Vector3Int nextPos = best.pos;
-            Direction dir = best.dir;
-            Direction opp = Tile.Opposite(dir);
+            ConnectTiles(current, best.pos, best.dir);
 
-            Tile fromTile = grid[current.x, current.z];
-            Tile toTile = grid[nextPos.x, nextPos.z];
-
-            fromTile.SetNeighbor(dir, toTile);
-            toTile.SetNeighbor(opp, fromTile);
-
-            fromTile.MarkEntry(dir);
-            toTile.MarkEntry(opp);
-
-            visited.Add(nextPos);
-            stack.Push(nextPos);
+            visited.Add(best.pos);
+            stack.Push(best.pos);
         }
+    }
+
+    private void ConnectTiles(Vector3Int fromPos, Vector3Int toPos, Direction dir)
+    {
+        Direction opp = Tile.Opposite(dir);
+
+        Tile fromTile = grid[fromPos.x, fromPos.z];
+        Tile toTile = grid[toPos.x, toPos.z];
+
+        fromTile.SetNeighbor(dir, toTile);
+        toTile.SetNeighbor(opp, fromTile);
+
+        fromTile.MarkEntry(dir);
+        toTile.MarkEntry(opp);
     }
 
     private int Score(Direction dir, Vector3Int nextPos, Vector3Int start)

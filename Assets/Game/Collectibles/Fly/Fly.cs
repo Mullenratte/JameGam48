@@ -10,6 +10,7 @@ public class Fly : MonoBehaviour, ILickable
     bool isEaten = false;
 
     private Vector3 spawnPosition;
+    Vector3 currentRandomDir = Vector3.zero;
 
     [SerializeField] FlyConfigSO[] configs;
 
@@ -50,28 +51,33 @@ public class Fly : MonoBehaviour, ILickable
 
     void FlyMovement()
     {
-        Vector3 randomDirection = new Vector3(
+        Vector3 targetRandomDir = new Vector3(
             Random.Range(-1f, 1f),
-            Random.Range(-1f, 1f), 
+            Random.Range(-0.2f, 0.2f), 
             Random.Range(-1f, 1f)
         ).normalized;
 
-        // Calculate acceleration
-        acceleration = randomDirection * Time.deltaTime;
+        currentRandomDir = Vector3.Lerp(currentRandomDir, targetRandomDir, Time.deltaTime * 2f);
+
+        float targetHeight = 1.2f;
+        float heightDiff = targetHeight - position.y;
+        Vector3 heightAdjustment = new Vector3(0, heightDiff * 1f, 0);
 
         Vector3 toCenter = spawnPosition - position;
+        Vector3 centerForce = Vector3.zero;
         if (toCenter.magnitude > config.flyRadius)
         {
-            acceleration += toCenter.normalized;
+            float distanceRatio = Mathf.Clamp01(toCenter.magnitude / config.flyRadius);
+            centerForce = toCenter.normalized * distanceRatio * 1.5f;
         }
 
-        // Calculate velocity
-        velocity += acceleration;
+        acceleration = currentRandomDir * 1f + centerForce + heightAdjustment;
+
+        velocity += acceleration * Time.deltaTime;
         velocity = Vector3.ClampMagnitude(velocity, config.maxSpeed);
 
-        // Update position
         position += velocity * Time.deltaTime;
 
-        acceleration = Vector3.zero;
+        position.y = Mathf.Max(position.y, 1f);
     }
 }
