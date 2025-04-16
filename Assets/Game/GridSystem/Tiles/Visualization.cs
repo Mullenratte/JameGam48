@@ -8,7 +8,6 @@ public class Visualization : MonoBehaviour
     [SerializeField]public int yOffset;
     private PathGenerator generator;
 
-    private List<int> connectXs = new List<int> {};
 
     public PathGenerator Generator { get => generator; set => generator = value; }
 
@@ -16,34 +15,37 @@ public class Visualization : MonoBehaviour
     {
     }
 
-    public void setConnectXs(List<int> connectXs)
-    {
-        this.connectXs = connectXs;
-    }
-
     void OnDrawGizmos()
     {
-        if (!visualizeGrid) return;
-        if (generator?.grid == null) return;
+        if (!visualizeGrid || !Application.isPlaying) return;
+        Tile[,] grid = LevelGrid.Instance.GetTileGrid();
+        List<int> connectXs = LevelGrid.Instance.GetConnectXs();
+        if (grid == null) return;
 
         float size = 0.4f;
+        int width = grid.GetLength(0);
+        int depth = grid.GetLength(1);
 
-        for (int x = 0; x < generator.width; x++)
-            for (int z = 0; z < generator.depth; z++)
+        for (int x = 0; x < width; x++)
+            for (int z = 0; z < depth; z++)
             {
-                Tile tile = generator.grid[x, z];
+                Tile tile = grid[x, z];
                 Vector3 center = new Vector3(x, yOffset, z);
 
-                if (z == 0)
+                switch(tile.VisType)
                 {
-                    Gizmos.color = Color.yellow;
-                }
-                else if (z == (generator.depth-1) - generator.startZOfNextGeneration)
-                {
-                    Gizmos.color = (connectXs.Contains(x)) ? Color.red : Color.blue;
-                }
-                else{
-                    Gizmos.color = Color.white;
+                    case Tile.VisualType.SectionBeginning:
+                        Gizmos.color = Color.yellow;
+                        break;
+                    case Tile.VisualType.SectionEnding:
+                        Gizmos.color = Color.blue;
+                        break;
+                    case Tile.VisualType.SectionConnection:
+                        Gizmos.color = Color.red;
+                        break;
+                    default:
+                        Gizmos.color = Color.white;
+                        break;
                 }
 
                 Gizmos.DrawWireCube(center, Vector3.one * size);

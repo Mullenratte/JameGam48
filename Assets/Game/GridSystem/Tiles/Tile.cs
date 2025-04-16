@@ -23,7 +23,11 @@ public class Tile
     public HashSet<Direction> enteredFrom = new HashSet<Direction>();
     public bool hasBridge = false;
     public bool isBlocked = false;
-    public BlockType blockType = BlockType.None; // 0 = none, 1 = fly-spawn, 2 = item-spawn, 3 = deco element spawn
+    public bool isConnection = false;
+
+    public BlockType blockType = BlockType.None;
+    private VisualType visType = VisualType.None;
+
     public enum BlockType
     {
         None,
@@ -32,7 +36,17 @@ public class Tile
         DecoElementSpawn
     }
 
+    public enum VisualType
+    {
+        None,
+        SectionBeginning,
+        SectionEnding,
+        SectionConnection
+    }
+
     public BridgeOrientation bridgeVisual = BridgeOrientation.None;
+
+    public VisualType VisType { get => visType; set => visType = value; }
 
     public Dictionary<Direction, Tile> GetConnections()
     {

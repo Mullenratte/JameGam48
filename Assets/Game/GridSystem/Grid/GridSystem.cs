@@ -46,4 +46,10 @@ public class GridSystem {
     public int GetDepth() {
         return depth;
     }
+
+    public void UpdateDimensions(int width, int depth)
+    {
+        this.width = width;
+        this.depth = depth;
+    }
 }

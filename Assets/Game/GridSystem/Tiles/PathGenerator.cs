@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class PathGenerator
 {
-    public int width;
-    public int depth;
-    public Tile[,] grid;
+    private int width;
+    private int depth;
+    private Tile[,] grid;
 
     public int startZOfNextGeneration;
 
@@ -50,11 +50,37 @@ public class PathGenerator
         ScatterBlocks(startXs);
         foreach (int x in startXs)
         {
-            Vector3Int start = new Vector3Int(x, 0, startZ);
+            Vector3Int start = new Vector3Int(x, 0, 0);
             GenerateFlowAwarePathFrom(start);
         }
         OverwriteFreeTiles();
         startZOfNextGeneration = Random.Range(1, 4);
+        for (int x = 0; x < width; x++)
+        {
+            for (int z = 0; z < depth; z++)
+            {
+                Tile tile = grid[x, z];
+                bool isStart = z == 0;
+                bool isEnd = z == (depth - 1) - startZOfNextGeneration;
+
+                if (isStart || isEnd)
+                {
+                    if (tile.north == null)
+                    {
+                        tile.VisType = isStart ? Tile.VisualType.SectionBeginning : Tile.VisualType.SectionEnding;
+                    }
+                    else
+                    {
+                        tile.isConnection = true;
+                        tile.VisType = Tile.VisualType.SectionConnection;
+                    }
+                }
+
+                Vector3Int oldPos = tile.gridPosition;
+                Vector3Int newPos = new Vector3Int(oldPos.x, oldPos.y, oldPos.z + startZ);
+                tile.gridPosition = newPos;
+            }
+        }
         return CopyReducedGrid(grid);
     }
 
