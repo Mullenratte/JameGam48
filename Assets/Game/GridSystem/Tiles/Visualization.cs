@@ -1,22 +1,24 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Visualization : MonoBehaviour
 {
     [SerializeField]public bool visualizeGrid = true;
-    [SerializeField]public int width;
-    [SerializeField]public int depth;
     [SerializeField]public int yOffset;
-    [SerializeField]public List<int> startXs = new List<int> {};
     private PathGenerator generator;
+
+    private List<int> connectXs = new List<int> {};
 
     public PathGenerator Generator { get => generator; set => generator = value; }
 
     void Start()
     {
-        //generator = new PathGenerator(width, depth);
-        //generator.GeneratePaths(startXs);
-        //Debug.Log("Grid generated!");
+    }
+
+    public void setConnectXs(List<int> connectXs)
+    {
+        this.connectXs = connectXs;
     }
 
     void OnDrawGizmos()
@@ -36,9 +38,9 @@ public class Visualization : MonoBehaviour
                 {
                     Gizmos.color = Color.yellow;
                 }
-                else if (z == generator.startNextGeneration)
+                else if (z == (generator.depth-1) - generator.startZOfNextGeneration)
                 {
-                    Gizmos.color = Color.blue;
+                    Gizmos.color = (connectXs.Contains(x)) ? Color.red : Color.blue;
                 }
                 else{
                     Gizmos.color = Color.white;

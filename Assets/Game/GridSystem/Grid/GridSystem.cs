@@ -2,20 +2,19 @@ using UnityEngine;
 
 public class GridSystem {
 
-    private int width, height;
+    private int width, depth;
     private float cellSize;
 
 
 
-    public GridSystem(int width, int height, float cellSize) {
+    public GridSystem(int width, int depth, float cellSize) {
         this.width = width;
-        this.height = height;
+        this.depth = depth;
         this.cellSize = cellSize;
 
-        for (int z = 0; z < height; z++) {
+        for (int z = 0; z < depth; z++) {
             for (int x = 0; x < width; x++) {
                 GridPosition gridPos = new GridPosition(x, z);
-
             }
         }
     }
@@ -37,14 +36,14 @@ public class GridSystem {
         return gridPos.x >= 0 &&
                 gridPos.z >= 0 &&
                 gridPos.x < width &&
-                gridPos.z < height;
+                gridPos.z < depth;
     }
 
     public int GetWidth() {
         return width;
     }
 
-    public int GetHeight() {
-        return height;
+    public int GetDepth() {
+        return depth;
     }
 }

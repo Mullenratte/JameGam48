@@ -9,13 +9,13 @@ public class PathGenerator
     public int depth;
     public Tile[,] grid;
 
-    public int startNextGeneration;
+    public int startZOfNextGeneration;
 
-    public PathGenerator(int width, int height)
+    public PathGenerator(int width, int depth)
     {
         this.width = width;
-        this.depth = height;
-        grid = new Tile[width, height];
+        this.depth = depth;
+        grid = new Tile[width, depth];
         InitGrid();
     }
 
@@ -31,16 +31,17 @@ public class PathGenerator
             }
     }
 
-    public void GeneratePaths(List<int> startXs)
+    public List<int> GetConnectXs()
     {
-        foreach (int x in startXs)
+        List<int> connectionXs = new List<int>();
+        for (int x = 0; x < width; x++)
         {
-            Vector3Int start = new Vector3Int(x, 0, 0);
-            //GeneratePathFrom(start);
-            GenerateFlowAwarePathFrom(start);
+            if (grid[x, (depth-1) - startZOfNextGeneration].north != null)
+            {
+                connectionXs.Add(x);
+            }
         }
-
-        startNextGeneration = Random.Range(depth - 3, depth);
+        return connectionXs;
     }
 
     public Tile[,] GeneratePaths(List<int> startXs, int startZ)
@@ -53,15 +54,15 @@ public class PathGenerator
             GenerateFlowAwarePathFrom(start);
         }
         OverwriteFreeTiles();
-        startNextGeneration = Random.Range(depth - 3, depth);
-        return CopyGrid(grid);
+        startZOfNextGeneration = Random.Range(1, 4);
+        return CopyReducedGrid(grid);
     }
 
     // return a copy of the grid, not the reference
-    private Tile[,] CopyGrid(Tile[,] original)
+    private Tile[,] CopyReducedGrid(Tile[,] original)
     {
         int width = original.GetLength(0);
-        int depth = original.GetLength(1);
+        int depth = original.GetLength(1) - startZOfNextGeneration;
         Tile[,] copy = new Tile[width, depth];
 
         for (int x = 0; x < width; x++)
@@ -141,52 +142,6 @@ public class PathGenerator
         if (InBounds(pos + Vector3Int.right) && grid[pos.x + 1, pos.z].GetConnections().Count > 0) return true;
         if (InBounds(pos + Vector3Int.left) && grid[pos.x - 1, pos.z].GetConnections().Count > 0) return true;
         return false;
-    }
-
-    private void GeneratePathFrom(Vector3Int start)
-    {
-        Vector3Int current = start;
-
-        while (current.z < depth - 1)
-        {
-            List<Direction> directions;
-            if (current.z == 0)
-            {
-                directions = new List<Direction> { Direction.North };
-            }
-            else
-            {
-                directions = GetShuffledDirections(current);
-            }
-
-            foreach (var dir in directions)
-            {
-                Vector3Int next = current + ToVector(dir);
-
-                if (!InBounds(next)) continue;
-                if (next.z == 0) continue;
-
-                Tile fromTile = grid[current.x, current.z];
-                Tile toTile = grid[next.x, next.z];
-
-                float chance = Random.Range(0f, 1f);
-                if (toTile.GetConnections().Count > 0 && chance < 0.5f) continue;
-
-                chance = Random.Range(0f, 1f);
-                if (toTile.GetConnections().Count > 2 && chance < 0.9f) continue;
-
-
-                Direction opposite = Tile.Opposite(dir);
-                fromTile.SetNeighbor(dir, toTile);
-                toTile.SetNeighbor(opposite, fromTile);
-
-                toTile.MarkEntry(opposite);
-                fromTile.MarkEntry(dir);
-
-                current = next;
-                break;
-            }
-        }
     }
 
     private void GenerateFlowAwarePathFrom(Vector3Int start)
@@ -298,20 +253,6 @@ public class PathGenerator
         };
 
         return score;
-    }
-
-    private Vector3Int FindNearbyUnconnectedTile(Vector3Int start)
-    {
-        List<Direction> directions = GetShuffledDirections(start);
-        foreach (var dir in directions)
-        {
-            Vector3Int next = start + ToVector(dir);
-            if (InBounds(next) && grid[next.x, next.z].GetConnections().Count == 0)
-            {
-                return next;
-            }
-        }
-        return Vector3Int.zero;
     }
 
     private bool InBounds(Vector3Int pos)

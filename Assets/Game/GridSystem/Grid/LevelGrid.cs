@@ -5,10 +5,13 @@ using UnityEngine;
 public class LevelGrid : MonoBehaviour {
     public static LevelGrid Instance;
 
-    [SerializeField] int width, height;
+    [SerializeField] int width, depth;
     [SerializeField] float cellSize;
     public PathGenerator Generator { get; private set; }
     [SerializeField] public List<int> startXs = new List<int> { };
+
+    // List of X positions where the sections should be connected together
+    private List<int> connectXs = new List<int> { };
 
     public GridSystem GridSystem { get; private set; }
 
@@ -27,7 +30,7 @@ public class LevelGrid : MonoBehaviour {
             Destroy(gameObject);
         }
 
-        GridSystem = new GridSystem(width, height, cellSize);
+        GridSystem = new GridSystem(width, depth, cellSize);
     }
 
 
@@ -36,13 +39,15 @@ public class LevelGrid : MonoBehaviour {
 
 
     private void Start() {
-        Generator = new PathGenerator(width, height);
-        //Generator.GeneratePaths(startXs);
+        Generator = new PathGenerator(width, depth);
         tileGrid = Generator.GeneratePaths(startXs, 0);
+        connectXs = Generator.GetConnectXs();
+
         Debug.Log("Grid generated!");
 
         Visualization visualization = GetComponent<Visualization>();
         visualization.Generator = Generator;
+        visualization.setConnectXs(connectXs);
 
         for (int z = 0; z < tileGrid.GetLength(1); z++) {
             for (int x = 0; x < tileGrid.GetLength(0); x++) {
@@ -69,6 +74,8 @@ public class LevelGrid : MonoBehaviour {
             }
         }
 
+        //AppendNewSection(); -> noch nicht Funktionsfähig
+
         //for (int z = 0; z < GridSystem.GetHeight(); z++) {
         //    for (int x = 0; x < GridSystem.GetWidth(); x++) {
         //        GridPosition gridPos = new GridPosition(x, z);
@@ -90,7 +97,15 @@ public class LevelGrid : MonoBehaviour {
 
     }
 
+
     public Tile GetTileAt(GridPosition pos) {
         return tileGrid[pos.x, pos.z];
+    }
+
+    public void AppendNewSection()
+    {
+        Tile[,] newSection = Generator.GeneratePaths(connectXs, tileGrid.GetLength(1));
+
+
     }
 }
