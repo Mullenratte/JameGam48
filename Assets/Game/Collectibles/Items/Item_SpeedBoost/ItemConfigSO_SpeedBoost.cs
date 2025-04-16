@@ -5,4 +5,3 @@ public class ItemConfigSO_SpeedBoost : ScriptableObject {
     public float duration;
     public float speedMultiplier;
 }
-

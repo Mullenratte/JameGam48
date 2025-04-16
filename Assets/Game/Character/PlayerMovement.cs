@@ -17,7 +17,7 @@ public class PlayerMovement : MonoBehaviour {
 
     [SerializeField] float moveSpeed;
     bool isMoving;
-
+    bool canMove = true;
 
     private void Start() {
         transform.position = LevelGrid.Instance.GridSystem.GetWorldPosition(new GridPosition(LevelGrid.Instance.GridSystem.GetWidth() / 2, 0));
@@ -33,6 +33,27 @@ public class PlayerMovement : MonoBehaviour {
         this.currentDirection = Direction.East;
 
         Effect_SpeedBoost.OnActionTriggered += Effect_SpeedBoost_OnActionTriggered;
+        Effect_Jump.OnActionTriggered += Effect_Jump_OnActionTriggered;
+    }
+
+    private void Effect_Jump_OnActionTriggered(ItemConfigSO_Jump cfg) {
+        canMove = false;
+
+        Direction dir = currentDirection;
+        GridPosition currentTarget = this.gridPosition + directionMapping[dir];
+        int tilesTested = 0;
+
+        while (LevelGrid.Instance.GetTileAt(currentTarget) == null 
+            || LevelGrid.Instance.GetTileAt(currentTarget).isBlocked) {
+            tilesTested++;
+            currentTarget += directionMapping[dir];
+            if (tilesTested > cfg.maxTiles) {
+                currentTarget = this.gridPosition;
+                break;
+            }
+        }
+        Debug.Log("tested: " + tilesTested + " tiles");
+        JumpToGridPosition(currentTarget);
     }
 
     private void Effect_SpeedBoost_OnActionTriggered(ItemConfigSO_SpeedBoost obj) {
@@ -40,6 +61,8 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     private void Update() {
+        if (!canMove) return;
+
         this.gridPosition = LevelGrid.Instance.GridSystem.GetGridPosition(transform.position);
         currentTile = LevelGrid.Instance.GetTileAt(gridPosition);
 
@@ -70,6 +93,11 @@ public class PlayerMovement : MonoBehaviour {
         StartCoroutine(_HandleBufferedInputTimer = HandleBufferedInputTimer());
     }
 
+    private void JumpToGridPosition(GridPosition position) {
+        transform.position = LevelGrid.Instance.GridSystem.GetWorldPosition(position);
+        this.gridPosition = position;
+        this.canMove = true;
+    }
 
 
     void TryMoveOneTile() {
@@ -112,9 +140,8 @@ public class PlayerMovement : MonoBehaviour {
             if ((enterDirection == Direction.North || enterDirection == Direction.South)
                 && (dir == Direction.East || dir == Direction.West)) {
                 return false;
-            } 
-            else if ((enterDirection == Direction.East || enterDirection == Direction.West)
-                && (dir == Direction.North || dir == Direction.South)) {
+            } else if ((enterDirection == Direction.East || enterDirection == Direction.West)
+                  && (dir == Direction.North || dir == Direction.South)) {
                 return false;
             }
         }

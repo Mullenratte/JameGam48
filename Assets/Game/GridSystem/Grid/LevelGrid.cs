@@ -99,7 +99,12 @@ public class LevelGrid : MonoBehaviour {
 
 
     public Tile GetTileAt(GridPosition pos) {
-        return tileGrid[pos.x, pos.z];
+        try {
+            return tileGrid[pos.x, pos.z];
+        } catch (Exception) {
+            return null;
+        }
+
     }
 
     public void AppendNewSection()
