@@ -12,6 +12,8 @@ public class LevelGrid : MonoBehaviour {
 
     public GridSystem GridSystem { get; private set; }
 
+    private Tile[,] tileGrid;
+
     [SerializeField] Transform debug_tilePrefab1, debug_tilePrefab2;
     [SerializeField] private Transform gridDebugObjectPrefab;
     [SerializeField] private Transform flyPrefab;
@@ -36,16 +38,16 @@ public class LevelGrid : MonoBehaviour {
     private void Start() {
         Generator = new PathGenerator(width, height);
         //Generator.GeneratePaths(startXs);
-        Tile[,] grid = Generator.GeneratePaths(startXs, 0);
+        tileGrid = Generator.GeneratePaths(startXs, 0);
         Debug.Log("Grid generated!");
 
         Visualization visualization = GetComponent<Visualization>();
         visualization.Generator = Generator;
 
-        for (int z = 0; z < grid.GetLength(1); z++) {
-            for (int x = 0; x < grid.GetLength(0); x++) {
+        for (int z = 0; z < tileGrid.GetLength(1); z++) {
+            for (int x = 0; x < tileGrid.GetLength(0); x++) {
                 GridPosition gridPosition = new GridPosition(x, z);
-                GridObject gridObject = new GridObject(GridSystem, gridPosition, grid[x, z]);
+                GridObject gridObject = new GridObject(GridSystem, gridPosition, tileGrid[x, z]);
                 Transform debugObjTransform = Instantiate(gridDebugObjectPrefab, GridSystem.GetWorldPosition(gridPosition), Quaternion.identity);
                 DEBUG_GridObject debugObj = debugObjTransform.GetComponent<DEBUG_GridObject>();
                 debugObj.SetGridObject(gridObject);
@@ -54,12 +56,12 @@ public class LevelGrid : MonoBehaviour {
                     debugObjTransform.gameObject.layer = LayerMask.NameToLayer("Grid");
                 }
 
-                if (grid[x,z].blockType == Tile.BlockType.FlySpawn)
+                if (tileGrid[x,z].blockType == Tile.BlockType.FlySpawn)
                 {
                     Transform flyObjTransform = Instantiate(flyPrefab, GridSystem.GetWorldPosition(gridPosition), Quaternion.identity);
                 }
 
-                if (grid[x, z].blockType == Tile.BlockType.ItemSpawn) {
+                if (tileGrid[x, z].blockType == Tile.BlockType.ItemSpawn) {
                     int rnd = UnityEngine.Random.Range(0, items.Count);
                     Transform itemTransform = Instantiate(items[rnd].gameObject.transform, GridSystem.GetWorldPosition(gridPosition), Quaternion.identity);
                     itemTransform.position += Vector3.up;
@@ -86,5 +88,9 @@ public class LevelGrid : MonoBehaviour {
         //}
 
 
+    }
+
+    public Tile GetTileAt(GridPosition pos) {
+        return tileGrid[pos.x, pos.z];
     }
 }

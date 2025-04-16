@@ -11,7 +11,8 @@ public class PlayerMovement : MonoBehaviour {
     [SerializeField] float maxInputBufferTime;
     IEnumerator _HandleBufferedInputTimer;
 
-    private Direction enteredFrom; //im Spieler speichern, von wo er ein neues Tile betreten hat, um die Brücken Logik zu steuern
+    Tile currentTile;
+    private Direction enterDirection; //im Spieler speichern, von wo er ein neues Tile betreten hat, um die Brücken Logik zu steuern
 
     [SerializeField] float moveSpeed;
     bool isMoving;
@@ -34,6 +35,13 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     private void Update() {
+        this.gridPosition = LevelGrid.Instance.GridSystem.GetGridPosition(transform.position);
+        currentTile = LevelGrid.Instance.GetTileAt(gridPosition);
+
+        if (currentTile.hasBridge) {
+            enterDirection = currentDirection;
+        }
+
         TryMoveOneTile();
 
         if (Input.GetKeyDown(KeyCode.A)) {
@@ -56,22 +64,7 @@ public class PlayerMovement : MonoBehaviour {
         StartCoroutine(_HandleBufferedInputTimer = HandleBufferedInputTimer());
     }
 
-    private void Item_SpeedBoost_OnActionTriggered(object sender, ItemConfigSO_SpeedBoost e) {
-        StartCoroutine(HandleSpeedBoost(e));
-    }
 
-    IEnumerator HandleSpeedBoost(ItemConfigSO_SpeedBoost config) {
-        float t = 0;
-        float duration = config.duration;
-        float originalMoveSpeed = this.moveSpeed;
-        this.moveSpeed = this.moveSpeed * config.speedMultiplier;
-
-        while (t < duration) {
-            t += Time.deltaTime;
-            yield return null;
-        }
-        this.moveSpeed = originalMoveSpeed;
-    }
 
     void TryMoveOneTile() {
         if (isMoving) return;
@@ -108,6 +101,18 @@ public class PlayerMovement : MonoBehaviour {
 
     bool CanMoveInDirection(Direction dir) {
         if (dir == Direction.none) return false;
+
+        if (currentTile.hasBridge) {
+            if ((enterDirection == Direction.North || enterDirection == Direction.South)
+                && (dir == Direction.East || dir == Direction.West)) {
+                return false;
+            } 
+            else if ((enterDirection == Direction.East || enterDirection == Direction.West)
+                && (dir == Direction.North || dir == Direction.South)) {
+                return false;
+            }
+        }
+
         var neighborConnections = LevelGrid.Instance.Generator.grid[gridPosition.x, gridPosition.z].GetConnections();
         return neighborConnections.ContainsKey(dir);
     }
@@ -131,5 +136,22 @@ public class PlayerMovement : MonoBehaviour {
         }
 
         isMoving = false;
+    }
+
+    private void Item_SpeedBoost_OnActionTriggered(object sender, ItemConfigSO_SpeedBoost e) {
+        StartCoroutine(HandleSpeedBoost(e));
+    }
+
+    IEnumerator HandleSpeedBoost(ItemConfigSO_SpeedBoost config) {
+        float t = 0;
+        float duration = config.duration;
+        float originalMoveSpeed = this.moveSpeed;
+        this.moveSpeed = this.moveSpeed * config.speedMultiplier;
+
+        while (t < duration) {
+            t += Time.deltaTime;
+            yield return null;
+        }
+        this.moveSpeed = originalMoveSpeed;
     }
 }
