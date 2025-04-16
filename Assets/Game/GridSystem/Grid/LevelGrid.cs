@@ -113,4 +113,8 @@ public class LevelGrid : MonoBehaviour {
 
 
     }
+
+    public Tile[,] GetTileGrid() {
+        return tileGrid;
+    }
 }
