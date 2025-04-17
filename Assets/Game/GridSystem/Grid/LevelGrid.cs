@@ -37,9 +37,6 @@ public class LevelGrid : MonoBehaviour {
         }
 
         GridSystem = new GridSystem(width, depth, cellSize);
-    }
-
-    private void Start() {
         Generator = new PathGenerator(width, depth);
         tileGrid = Generator.GeneratePaths(startXs, 0);
         connectXs = Generator.GetConnectXs();
@@ -50,10 +47,12 @@ public class LevelGrid : MonoBehaviour {
         visualization.Generator = Generator;
 
         GenerateStartObjects(0);
+    }
 
-        for (int i = 0; i < TestAppends; i++) {
+    private void Start() {
+        /*for (int i = 0; i < TestAppends; i++) {
             TryAppendAsync();
-        }
+        }*/
     }
 
     private void GenerateStartObjects(int startZ) {

@@ -4,6 +4,7 @@ using UnityEngine;
 public class GameOverZone : MonoBehaviour {
     public static GameOverZone Instance;
     [SerializeField] float _scrollSpeed;
+    [SerializeField] int _scrollSpeedIncreaseInterval = 5;
     [SerializeField] float _defaultScrollSpeedIncrease;
 
     public int rowToDelete = 0;
@@ -43,6 +44,10 @@ public class GameOverZone : MonoBehaviour {
         if (transform.position.z - 1 > rowToDelete)
         {
             //LevelGrid.Instance.RemoveFirstRow();
+            if(rowToDelete % _scrollSpeedIncreaseInterval == 0)
+            {
+                _scrollSpeed += _defaultScrollSpeedIncrease;
+            }
             rowToDelete++;
         }
     }

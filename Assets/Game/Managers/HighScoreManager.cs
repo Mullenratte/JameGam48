@@ -51,7 +51,7 @@ public class HighScoreManager : MonoBehaviour
     {
         score += points;
         Debug.Log("Score: " + score);
-        GameOverZone.Instance.SpeedUp((points/100) * speedIncreasPer100Points); // increase per 100 points
+        PlayerMovement.Instance.MoveSpeed += (points / 100) * speedIncreasPer100Points; // increase per 100 points
     }
 
     public bool SetHighscore()

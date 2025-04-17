@@ -42,6 +42,8 @@ public class PlayerMovement : MonoBehaviour {
         this.gridPosition = LevelGrid.Instance.GridSystem.GetGridPosition(transform.position);
         this.targetGridPosition = this.gridPosition;
 
+        this.currentTile = LevelGrid.Instance.GetTileAt(gridPosition);
+
         directionMapping = new Dictionary<Direction, GridPosition>();
         directionMapping.Add(Direction.none, new GridPosition(0, 0));
         directionMapping.Add(Direction.North, new GridPosition(0, 1));
