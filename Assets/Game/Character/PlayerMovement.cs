@@ -21,6 +21,7 @@ public class PlayerMovement : MonoBehaviour {
 
     private Rigidbody rb;
     [SerializeField] float moveSpeed;
+    public float MoveSpeed { get; set; }
     bool canUpdateTargetPosition = true;
     bool canMove = true;
 
@@ -111,7 +112,7 @@ public class PlayerMovement : MonoBehaviour {
 
 
 
-        transform.position = Vector3.MoveTowards(transform.position, LevelGrid.Instance.GridSystem.GetWorldPosition(targetGridPosition), Time.deltaTime * moveSpeed);
+        transform.position = Vector3.MoveTowards(transform.position, LevelGrid.Instance.GridSystem.GetWorldPosition(targetGridPosition), Time.deltaTime * MoveSpeed);
 
 
         if (Input.GetKeyDown(KeyCode.A)) {
@@ -258,7 +259,7 @@ public class PlayerMovement : MonoBehaviour {
         canUpdateTargetPosition = true;
 
         while (t < 1) {
-            t += Time.deltaTime * moveSpeed;
+            t += Time.deltaTime * MoveSpeed;
 
             if (t > 1) {
                 t = 1;
@@ -274,13 +275,13 @@ public class PlayerMovement : MonoBehaviour {
     IEnumerator HandleSpeedBoost(ItemConfigSO_SpeedBoost config) {
         float t = 0;
         float duration = config.duration;
-        float originalMoveSpeed = this.moveSpeed;
-        this.moveSpeed = this.moveSpeed * config.speedMultiplier;
+        float originalMoveSpeed = this.MoveSpeed;
+        this.MoveSpeed = this.MoveSpeed * config.speedMultiplier;
 
         while (t < duration) {
             t += Time.deltaTime;
             yield return null;
         }
-        this.moveSpeed = originalMoveSpeed;
+        this.MoveSpeed = originalMoveSpeed;
     }
 }
