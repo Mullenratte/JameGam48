@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d3e1186e85dc4c4c957f15f45988f8f, type: 3}
   m_Name: Effect_SpeedBoost
   m_EditorClassIdentifier: 
+  ActivatedAudio: {fileID: 8300000, guid: 8448061d454affd4db3503cf52631ceb, type: 3}
   config: {fileID: 11400000, guid: d30150ee2d1262b4d9fca4fe3b263173, type: 2}

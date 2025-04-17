@@ -7,7 +7,10 @@ public class Effect_SpeedBoost : ItemEffect {
 
     public static event Action<ItemConfigSO_SpeedBoost> OnActionTriggered;
 
+    
+
     public override void Activate() {
         OnActionTriggered?.Invoke(config);
+        SoundFXManager.instance.PlaySoundFXClip(ActivatedAudio, PlayerMovement.Instance.transform.position, .2f, 0.8f, 1.2f);
     }
 }
