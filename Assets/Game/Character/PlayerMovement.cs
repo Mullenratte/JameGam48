@@ -44,12 +44,12 @@ public class PlayerMovement : MonoBehaviour {
     private void Effect_Jump_OnActionTriggered(ItemConfigSO_Jump cfg) {
         canMove = false;
 
-        Debug.Log("buffered: " + bufferedDirection);
+        //Debug.Log("buffered: " + bufferedDirection);
         Direction dir = bufferedDirection != Direction.none ? bufferedDirection : currentDirection;
         GridPosition currentTarget = this.gridPosition + directionMapping[dir] * cfg.maxTiles;
-        Debug.Log("current pos: " + transform.position);
-        Debug.Log("target world pos: " + new Vector3(transform.position.x + directionMapping[dir].x * cfg.maxTiles, transform.position.y, transform.position.z + directionMapping[dir].z * cfg.maxTiles));
-        Debug.Log("nearest GRID pos: " + currentTarget);
+        //Debug.Log("current pos: " + transform.position);
+        //Debug.Log("target world pos: " + new Vector3(transform.position.x + directionMapping[dir].x * cfg.maxTiles, transform.position.y, transform.position.z + directionMapping[dir].z * cfg.maxTiles));
+        //Debug.Log("nearest GRID pos: " + currentTarget);
 
         for (int tileTested = cfg.maxTiles; tileTested >= 0; tileTested--) {
             Vector3 targetWorldPos = new Vector3(transform.position.x + directionMapping[dir].x * tileTested, transform.position.y, transform.position.z + directionMapping[dir].z * tileTested);
