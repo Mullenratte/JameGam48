@@ -85,8 +85,6 @@ public class PlayerMovement : MonoBehaviour {
         if (Vector3.Distance(transform.position, LevelGrid.Instance.GridSystem.GetWorldPosition(targetGridPosition)) <= cutCornerDistance) {
             canUpdateTargetPosition = true;
         }
-        Debug.Log("Pos: " + transform.position + " / " + LevelGrid.Instance.GridSystem.GetWorldPosition(targetGridPosition));
-        Debug.Log("canUpdateTargetPosition: " + canUpdateTargetPosition);
 
         this.gridPosition = LevelGrid.Instance.GridSystem.GetGridPosition(transform.position);
         currentTile = LevelGrid.Instance.GetTileAt(gridPosition);
@@ -126,9 +124,9 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     private void JumpToGridPosition(GridPosition position) {
-        Debug.Log("jumping to " + position);
+        //Debug.Log("jumping to " + position);
         transform.position = LevelGrid.Instance.GridSystem.GetWorldPosition(position);
-        Debug.Log("which is in gridPos: " + LevelGrid.Instance.GridSystem.GetWorldPosition(position));
+        //Debug.Log("which is in gridPos: " + LevelGrid.Instance.GridSystem.GetWorldPosition(position));
         this.gridPosition = position;
         this.canMove = true;
     }
@@ -161,7 +159,6 @@ public class PlayerMovement : MonoBehaviour {
             this.targetGridPosition = newPos;
             //StartCoroutine(LerpToNewTile(newPos));
         }
-        Debug.Log("NEW target Pos: " + newPos);
     }
 
     //void TryMoveOneTile() {

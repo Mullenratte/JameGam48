@@ -67,11 +67,18 @@ public class LevelGrid : MonoBehaviour {
             {
                 GridPosition gridPosition = new GridPosition(x, z);
                 GridObject gridObject = new GridObject(GridSystem, gridPosition, tileGrid[x, z]);
+
+                //Transform model = Instantiate(debug_tilePrefab1, GridSystem.GetWorldPosition(gridPosition), Quaternion.identity);
+                //if (model != null) {
+                //    model.SetParent(this.transform);
+                //    model.gameObject.layer = LayerMask.NameToLayer("Grid");
+                //}
+
+
                 Transform debugObjTransform = Instantiate(gridDebugObjectPrefab, GridSystem.GetWorldPosition(gridPosition), Quaternion.identity);
                 DEBUG_GridObject debugObj = debugObjTransform.GetComponent<DEBUG_GridObject>();
                 debugObj.SetGridObject(gridObject);
-                if (debugObjTransform != null)
-                {
+                if (debugObjTransform != null) {
                     debugObjTransform.SetParent(this.transform);
                     debugObjTransform.gameObject.layer = LayerMask.NameToLayer("Grid");
                 }

@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Config_Jump
   m_EditorClassIdentifier: 
   speedMultiplier: 2
-  maxTiles: 2
+  maxTiles: 3
