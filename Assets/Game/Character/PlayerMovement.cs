@@ -21,7 +21,7 @@ public class PlayerMovement : MonoBehaviour {
 
     private Rigidbody rb;
     [SerializeField] float moveSpeed;
-    public float MoveSpeed { get; set; }
+    public float MoveSpeed { get { return moveSpeed; } set { moveSpeed = value; } }
     bool canUpdateTargetPosition = true;
     bool canMove = true;
 
