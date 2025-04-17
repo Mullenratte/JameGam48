@@ -112,14 +112,21 @@ public class LevelGrid : MonoBehaviour {
                 //    model.gameObject.layer = LayerMask.NameToLayer("Grid");
                 //}
 
-
-                Transform debugObjTransform = Instantiate(gridDebugObjectPrefab, GridSystem.GetWorldPosition(gridPosition), Quaternion.identity);
-                DEBUG_GridObject debugObj = debugObjTransform.GetComponent<DEBUG_GridObject>();
-                debugObj.SetGridObject(gridObject);
-                if (debugObjTransform != null) {
-                    debugObjTransform.SetParent(this.transform);
-                    debugObjTransform.gameObject.layer = LayerMask.NameToLayer("Grid");
+                Transform objTransform = Instantiate(gridMeshObjectPrefab, GridSystem.GetWorldPosition(gridPosition), Quaternion.identity);
+                MeshGridObject meshObj = objTransform.GetComponent<MeshGridObject>();
+                meshObj.SetGridObject(gridObject);
+                if (objTransform != null) {
+                    objTransform.SetParent(this.transform);
+                    objTransform.gameObject.layer = LayerMask.NameToLayer("Grid");
                 }
+
+                //Transform debugObjTransform = Instantiate(gridDebugObjectPrefab, GridSystem.GetWorldPosition(gridPosition), Quaternion.identity);
+                //DEBUG_GridObject debugObj = debugObjTransform.GetComponent<DEBUG_GridObject>();
+                //debugObj.SetGridObject(gridObject);
+                //if (debugObjTransform != null) {
+                //    debugObjTransform.SetParent(this.transform);
+                //    debugObjTransform.gameObject.layer = LayerMask.NameToLayer("Grid");
+                //}
 
                 if (tileGrid[x, z].blockType == Tile.BlockType.FlySpawn) {
                     Transform flyObjTransform = Instantiate(flyPrefab, GridSystem.GetWorldPosition(gridPosition), Quaternion.identity);
