@@ -210,6 +210,7 @@ public class LevelGrid : MonoBehaviour {
             }
         }
         tileGrid = newGrid;
+        zOffset++;
     }
 
     Tile[,] CombineTileGrids(Tile[,] original, Tile[,] toAppend)

@@ -168,6 +168,22 @@ public class PlayerMovement : MonoBehaviour {
         }
     }
 
+    public GridPosition GetGridPosition()
+    {
+        return this.gridPosition;
+    }
+
+    public GridPosition GetTargetGridPosition()
+    {
+        return this.targetGridPosition;
+    }
+
+    public void UpdateGridPositions(GridPosition gridPos, GridPosition targetGridPos)
+    {
+        this.gridPosition = gridPos;
+        this.targetGridPosition = targetGridPos;
+    }
+
     //void TryMoveOneTile() {
     //    if (isMoving) return;
 

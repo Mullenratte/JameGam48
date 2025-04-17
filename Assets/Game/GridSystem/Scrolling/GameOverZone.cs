@@ -5,6 +5,8 @@ public class GameOverZone : MonoBehaviour {
     public static GameOverZone Instance;
     [SerializeField] float _scrollSpeed;
 
+    public int rowToDelete = 0;
+
     bool paused = false;
     float pauseTimer;
     private void Awake()
@@ -37,6 +39,11 @@ public class GameOverZone : MonoBehaviour {
                 paused = false;
             }
         }
+        if (transform.position.z - 1 > rowToDelete)
+        {
+            //LevelGrid.Instance.RemoveFirstRow();
+            rowToDelete++;
+        }
     }
 
     public Vector3 GetPosition()
@@ -46,7 +53,7 @@ public class GameOverZone : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other) {
         if (other.TryGetComponent<PlayerMovement>(out _)) {
-            GameManager.Instance.EndGame();
+            //GameManager.Instance.EndGame();
         }
 
         if (other.TryGetComponent<ILickable>(out _))

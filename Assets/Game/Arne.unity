@@ -1208,7 +1208,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3421812975684533478, guid: d3f26479480416c4dbd1106867902cd0, type: 3}
       propertyPath: _scrollSpeed
-      value: 0
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 8556118533559032550, guid: d3f26479480416c4dbd1106867902cd0, type: 3}
       propertyPath: m_LocalPosition.x
