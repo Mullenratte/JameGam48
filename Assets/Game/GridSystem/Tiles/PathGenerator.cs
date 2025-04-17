@@ -11,6 +11,8 @@ public class PathGenerator
 
     public int startZOfNextGeneration;
 
+    System.Random rnd = new System.Random();
+
     public PathGenerator(int width, int depth)
     {
         this.width = width;
@@ -66,7 +68,7 @@ public class PathGenerator
 
         while (tries < 5)
         {
-            startZOfNextGeneration = Random.Range(1, 4);
+            startZOfNextGeneration = rnd.Next(1, 5);
             if (GetConnectXs().Count >= 3)
             {
                 success = true;
@@ -146,7 +148,7 @@ public class PathGenerator
                     continue;
                 }
                 Tile tile = grid[x, z];
-                if (Random.Range(0f, 1f) < 0.1f)
+                if (rnd.NextDouble() < 0.1)
                 {
                     tile.isBlocked = true;
                 }else {
@@ -174,7 +176,7 @@ public class PathGenerator
                         // 3 = deco element  -> 40 %
                         // 1 = fly-spawn     -> 15 %
                         // 2 = item-spawn    -> 5 %
-                        float r = Random.value;
+                        float r = (float)rnd.NextDouble();
                         if (r < 0.4f)
                             tile.blockType = Tile.BlockType.None;
                         else if (r < 0.8f)
@@ -224,7 +226,7 @@ public class PathGenerator
                 Vector3Int next = current + ToVector(direction);
                 if (!InBounds(next)) continue;
                 if (next.z == 0) continue;
-                if (visited.Contains(next) && Random.Range(0f, 1f) < 0.9f) continue;
+                if (visited.Contains(next) && rnd.NextDouble() < 0.9) continue;
 
                 var tile = grid[next.x, next.z];
                 if (tile.isBlocked) continue; // skip spawn tiles
@@ -257,7 +259,7 @@ public class PathGenerator
                 cumulativeWeights.Add(totalWeight);
             }
 
-            float rand = Random.Range(0f, totalWeight);
+            float rand = (float)(rnd.NextDouble() * totalWeight);
 
             int chosenIndex = 0;
             for (int i = 0; i < topCount; i++)
@@ -329,7 +331,7 @@ public class PathGenerator
         };
         for (int i = 0; i < dirs.Count; i++)
         {
-            int r = Random.Range(i, dirs.Count);
+            int r = rnd.Next(i, dirs.Count);
             (dirs[i], dirs[r]) = (dirs[r], dirs[i]);
         }
         return dirs;

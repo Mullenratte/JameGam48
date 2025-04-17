@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -8,6 +9,7 @@ public class DEBUG_GridObject : MonoBehaviour {
     private GridObject gridObject;    
     public Sprite[] sprites;
     private Color activeColor;
+    private bool hasFallen = false;
 
     GameObject spriteDisplayObject;
     MeshRenderer _meshRenderer;
@@ -155,15 +157,107 @@ public class DEBUG_GridObject : MonoBehaviour {
 
     private void Update()
     {
+        if (hasFallen) return;
+
         Vector3 zonePosition = GameOverZone.Instance.GetPosition();
         if (zonePosition.z > transform.position.z)
         {
-            if (gridObject.GetGridPosition().x == LevelGrid.Instance.GetWidth() - 1)
-            {
-                //LevelGrid.Instance.RemoveFirstRow(); -> TODO: Fix Player Movement when used
-            }
-            Destroy(gameObject);
-        } 
+            hasFallen = true;
+
+            float baseDelay = 0.05f;
+            int gridWidth = LevelGrid.Instance.GetWidth();
+            int centerX = Mathf.FloorToInt(gridWidth / 2f);
+            int x = Mathf.RoundToInt(transform.position.x);
+            int dist = Mathf.Abs(x - centerX);
+
+            // Variante 1: innen → außen
+            //float delay = dist * baseDelay;
+
+            // Variante 2: außen → innen (optional)
+            int maxDist = Mathf.Max(centerX, gridWidth - centerX - 1);
+            float delay = (maxDist - dist) * baseDelay;
+
+            MonoBehaviour mb = GetComponent<MonoBehaviour>();
+            mb.StartCoroutine(DelayedFallAndDestroy(gameObject, delay));
+        }
+    }
+
+    IEnumerator DelayedFallAndDestroy(GameObject obj, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        // Kombinierbare Voranimationen:
+        //yield return StartCoroutine(PlayShakeAnimation(obj));
+        yield return StartCoroutine(PlayBounceAnimation(obj));
+
+        // Hauptfall
+        yield return StartCoroutine(PlayFallAnimation(obj));
+
+        // Danach zerstören (oder deaktivieren)
+        GameObject.Destroy(obj);
+    }
+
+    IEnumerator PlayShakeAnimation(GameObject obj)
+    {
+        float shakeDuration = 0.3f;
+        float shakeStrength = 0.1f;
+        float time = 0f;
+        Vector3 originalPos = obj.transform.position;
+
+        while (time < shakeDuration)
+        {
+            float offsetX = Mathf.Sin(time * 40f) * shakeStrength;
+            obj.transform.position = originalPos + new Vector3(offsetX, 0f, 0f);
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        obj.transform.position = originalPos;
+    }
+
+    IEnumerator PlayBounceAnimation(GameObject obj)
+    {
+        float bounceHeight = 0.3f;
+        float bounceDuration = 0.2f;
+        Vector3 originalPos = obj.transform.position;
+        Vector3 bounceUpPos = originalPos + Vector3.up * bounceHeight;
+
+        float time = 0f;
+        while (time < bounceDuration)
+        {
+            obj.transform.position = Vector3.Lerp(originalPos, bounceUpPos, time / bounceDuration);
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        time = 0f;
+        while (time < bounceDuration)
+        {
+            obj.transform.position = Vector3.Lerp(bounceUpPos, originalPos, time / bounceDuration);
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        obj.transform.position = originalPos;
+    }
+
+    IEnumerator PlayFallAnimation(GameObject obj)
+    {
+        float fallDistance = 2f;
+        float fallDuration = 0.5f;
+
+        Vector3 startPos = obj.transform.position;
+        Vector3 targetPos = startPos + Vector3.down * fallDistance;
+
+        float time = 0f;
+        while (time < fallDuration)
+        {
+            obj.transform.position = Vector3.Lerp(startPos, targetPos, time / fallDuration);
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        obj.transform.position = targetPos;
     }
 }
 

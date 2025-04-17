@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -26,6 +27,8 @@ public class LevelGrid : MonoBehaviour {
 
     [SerializeField] private List<BaseItem> items = new List<BaseItem>();
 
+    private bool isAppending = false;
+
     private void Awake() {
         if (Instance == null) {
             Instance = this;
@@ -35,11 +38,6 @@ public class LevelGrid : MonoBehaviour {
 
         GridSystem = new GridSystem(width, depth, cellSize);
     }
-
-
-
-
-
 
     private void Start() {
         Generator = new PathGenerator(width, depth);
@@ -51,15 +49,55 @@ public class LevelGrid : MonoBehaviour {
         visualization = GetComponent<Visualization>();
         visualization.Generator = Generator;
 
-        GenerateObjects(0);
+        GenerateStartObjects(0);
 
         for (int i = 0; i < TestAppends; i++)
         {
-            AppendNewSection();
+            TryAppendAsync();
         }
     }
 
-    private void GenerateObjects(int startZ)
+    private void GenerateStartObjects(int startZ)
+    {
+        for (int z = startZ; z < tileGrid.GetLength(1); z++)
+        {
+            for (int x = 0; x < tileGrid.GetLength(0); x++)
+            {
+                GridPosition gridPosition = new GridPosition(x, z);
+                GridObject gridObject = new GridObject(GridSystem, gridPosition, tileGrid[x, z]);
+
+                //Transform model = Instantiate(debug_tilePrefab1, GridSystem.GetWorldPosition(gridPosition), Quaternion.identity);
+                //if (model != null) {
+                //    model.SetParent(this.transform);
+                //    model.gameObject.layer = LayerMask.NameToLayer("Grid");
+                //}
+
+
+                Transform debugObjTransform = Instantiate(gridDebugObjectPrefab, GridSystem.GetWorldPosition(gridPosition), Quaternion.identity);
+                DEBUG_GridObject debugObj = debugObjTransform.GetComponent<DEBUG_GridObject>();
+                debugObj.SetGridObject(gridObject);
+                if (debugObjTransform != null)
+                {
+                    debugObjTransform.SetParent(this.transform);
+                    debugObjTransform.gameObject.layer = LayerMask.NameToLayer("Grid");
+                }
+
+                if (tileGrid[x, z].blockType == Tile.BlockType.FlySpawn)
+                {
+                    Transform flyObjTransform = Instantiate(flyPrefab, GridSystem.GetWorldPosition(gridPosition), Quaternion.identity);
+                }
+
+                if (tileGrid[x, z].blockType == Tile.BlockType.ItemSpawn)
+                {
+                    int rnd = UnityEngine.Random.Range(0, items.Count);
+                    Transform itemTransform = Instantiate(items[rnd].gameObject.transform, GridSystem.GetWorldPosition(gridPosition), Quaternion.identity);
+                    itemTransform.position += Vector3.up;
+                }
+            }
+        }
+    }
+
+    private IEnumerator GenerateObjects(int startZ)
     {
         for (int z = startZ; z < tileGrid.GetLength(1); z++)
         {
@@ -94,15 +132,10 @@ public class LevelGrid : MonoBehaviour {
                     Transform itemTransform = Instantiate(items[rnd].gameObject.transform, GridSystem.GetWorldPosition(gridPosition), Quaternion.identity);
                     itemTransform.position += Vector3.up;
                 }
+                yield return null;
             }
         }
     }
-
-    private void Update()
-    {
-        
-    }
-
     public Tile GetTileAt(GridPosition pos) {
         try {
             return tileGrid[pos.x, pos.z];
@@ -112,10 +145,28 @@ public class LevelGrid : MonoBehaviour {
 
     }
 
-    public void AppendNewSection()
+    public void TryAppendAsync()
+    {   
+        if (!isAppending)
+        {
+            StartCoroutine(AppendNewSectionAsync());
+        }
+    }
+
+    private IEnumerator AppendNewSectionAsync()
     {
-        Tile[,] newSection = Generator.GeneratePaths(connectXs, tileGrid.GetLength(1));
-        connectXs = Generator.GetConnectXs();
+        isAppending = true;
+
+        Tile[,] newSection = null;
+
+        Debug.Log("Appending new section...");
+        yield return RunInBackground(() =>
+        {
+            newSection = Generator.GeneratePaths(connectXs, tileGrid.GetLength(1));
+            connectXs = Generator.GetConnectXs();
+        });
+        Debug.Log("New section generated!");
+
         int oldDepth = tileGrid.GetLength(1);
         tileGrid = CombineTileGrids(tileGrid, newSection);
         GridSystem.UpdateDimensions(tileGrid.GetLength(0), tileGrid.GetLength(1));
@@ -128,8 +179,24 @@ public class LevelGrid : MonoBehaviour {
             southTile.SetNeighbor(Direction.North, northTile);
             northTile.SetNeighbor(Direction.South, southTile);
         }
+        
+        StartCoroutine(GenerateObjects(oldDepth));
 
-        GenerateObjects(oldDepth);
+        isAppending = false;
+    }
+
+    private IEnumerator RunInBackground(Action action)
+    {
+        bool done = false;
+        System.Threading.Thread thread = new System.Threading.Thread(() =>
+        {
+            action();
+            done = true;
+        });
+        thread.Start();
+
+        while (!done)
+            yield return null;
     }
 
     public void RemoveFirstRow()
@@ -192,5 +259,10 @@ public class LevelGrid : MonoBehaviour {
     public int GetWidth()
     {
         return tileGrid.GetLength(0);
+    }
+
+    public int GetDepth()
+    {
+        return tileGrid.GetLength(1);
     }
 }

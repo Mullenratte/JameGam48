@@ -93,6 +93,13 @@ public class PlayerMovement : MonoBehaviour {
             enterDirection = currentDirection;
         }
 
+        // check for new generation
+        if (this.gridPosition.z > LevelGrid.Instance.GetDepth() - 10)
+        {
+            Debug.Log("new section");
+            LevelGrid.Instance.TryAppendAsync();
+        }
+
 
 
         transform.position = Vector3.MoveTowards(transform.position, LevelGrid.Instance.GridSystem.GetWorldPosition(targetGridPosition), Time.deltaTime * moveSpeed);

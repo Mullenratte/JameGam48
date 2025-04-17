@@ -28,6 +28,8 @@ public class Tile
     public BlockType blockType = BlockType.None;
     private VisualType visType = VisualType.None;
 
+    System.Random rnd = new System.Random();
+
     public enum BlockType
     {
         None,
@@ -87,13 +89,13 @@ public class Tile
 
         if (enteredFrom.Count == 4)
         {
-            hasBridge = UnityEngine.Random.Range(0f, 1f) < 0.5f;
+            hasBridge = rnd.NextDouble() < 0.5;
 
             if (hasBridge)
             {
-                bridgeVisual = UnityEngine.Random.Range(0, 2) == 0
-                    ? BridgeOrientation.NSOver_EWUnder
-                    : BridgeOrientation.EWOver_NSUnder;
+                bridgeVisual = rnd.Next(0, 2) == 0
+                        ? BridgeOrientation.NSOver_EWUnder
+                        : BridgeOrientation.EWOver_NSUnder;
             }
             else
             {

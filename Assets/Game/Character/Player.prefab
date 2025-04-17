@@ -51,6 +51,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a956f8811fc35c64eba1f2403774fdb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxInputBufferTime: 0
+  cutCornerDistance: 0.01
   moveSpeed: 4
 --- !u!136 &1148089441859210863
 CapsuleCollider:
@@ -116,7 +118,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   config: {fileID: 11400000, guid: 5db351a6cf5560a468c11190f1647278, type: 2}
   mouthTransform: {fileID: 295935685264825909}
-  tongueTip: {fileID: 1316575871137480746}
 --- !u!120 &6564295871563980302
 LineRenderer:
   serializedVersion: 2
