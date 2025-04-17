@@ -477,7 +477,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3421812975684533478, guid: d3f26479480416c4dbd1106867902cd0, type: 3}
       propertyPath: _scrollSpeed
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8556118533559032550, guid: d3f26479480416c4dbd1106867902cd0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1269,7 +1269,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1507262268764262839, guid: 202e8750a5109524b96e2ceb44a6bc6b, type: 3}
       propertyPath: visualizeGridPos
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2655453450124476327, guid: 202e8750a5109524b96e2ceb44a6bc6b, type: 3}
       propertyPath: depth
@@ -1310,6 +1310,14 @@ PrefabInstance:
     - target: {fileID: 7866089647434446713, guid: 202e8750a5109524b96e2ceb44a6bc6b, type: 3}
       propertyPath: moveSpeed
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7866089647434446713, guid: 202e8750a5109524b96e2ceb44a6bc6b, type: 3}
+      propertyPath: cutCornerDistance
+      value: 0.131
+      objectReference: {fileID: 0}
+    - target: {fileID: 7866089647434446713, guid: 202e8750a5109524b96e2ceb44a6bc6b, type: 3}
+      propertyPath: targetTileDistanceToMove
+      value: 0.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:

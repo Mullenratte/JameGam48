@@ -6,18 +6,21 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour {
 
     private GridPosition gridPosition;
+    private GridPosition targetGridPosition;
     private Dictionary<Direction, GridPosition> directionMapping;
     private Direction currentDirection;
     private Direction bufferedDirection;
     [SerializeField] float maxInputBufferTime;
     IEnumerator _HandleBufferedInputTimer;
 
+    [SerializeField, Range(0.01f, 1f)] float cutCornerDistance;
+
     Tile currentTile;
     private Direction enterDirection; //im Spieler speichern, von wo er ein neues Tile betreten hat, um die Brücken Logik zu steuern
 
     private Rigidbody rb;
     [SerializeField] float moveSpeed;
-    bool isMoving;
+    bool canUpdateTargetPosition = true;
     bool canMove = true;
 
     private void Awake() {
@@ -27,7 +30,7 @@ public class PlayerMovement : MonoBehaviour {
     private void Start() {
         transform.position = LevelGrid.Instance.GridSystem.GetWorldPosition(new GridPosition(LevelGrid.Instance.GridSystem.GetWidth() / 2, 0));
         this.gridPosition = LevelGrid.Instance.GridSystem.GetGridPosition(transform.position);
-
+        this.targetGridPosition = this.gridPosition;
 
         directionMapping = new Dictionary<Direction, GridPosition>();
         directionMapping.Add(Direction.none, new GridPosition(0, 0));
@@ -63,7 +66,7 @@ public class PlayerMovement : MonoBehaviour {
             }
         }
 
-
+        this.targetGridPosition = currentTarget;
         JumpToGridPosition(currentTarget);
     }
 
@@ -77,6 +80,14 @@ public class PlayerMovement : MonoBehaviour {
         }
         if (!canMove) return;
 
+        UpdateTargetGridPosition();
+
+        if (Vector3.Distance(transform.position, LevelGrid.Instance.GridSystem.GetWorldPosition(targetGridPosition)) <= cutCornerDistance) {
+            canUpdateTargetPosition = true;
+        }
+        Debug.Log("Pos: " + transform.position + " / " + LevelGrid.Instance.GridSystem.GetWorldPosition(targetGridPosition));
+        Debug.Log("canUpdateTargetPosition: " + canUpdateTargetPosition);
+
         this.gridPosition = LevelGrid.Instance.GridSystem.GetGridPosition(transform.position);
         currentTile = LevelGrid.Instance.GetTileAt(gridPosition);
 
@@ -84,9 +95,9 @@ public class PlayerMovement : MonoBehaviour {
             enterDirection = currentDirection;
         }
 
-        if (!isMoving) TryMoveOneTile();
 
-        transform.position = Vector3.MoveTowards(transform.position, LevelGrid.Instance.GridSystem.GetWorldPosition(gridPosition), Time.deltaTime * moveSpeed);
+
+        transform.position = Vector3.MoveTowards(transform.position, LevelGrid.Instance.GridSystem.GetWorldPosition(targetGridPosition), Time.deltaTime * moveSpeed);
 
 
         if (Input.GetKeyDown(KeyCode.A)) {
@@ -122,9 +133,13 @@ public class PlayerMovement : MonoBehaviour {
         this.canMove = true;
     }
 
-
-    void TryMoveOneTile() {
-        if (isMoving) return;
+    void UpdateTargetGridPosition() {
+        if (!canUpdateTargetPosition
+            && directionMapping[bufferedDirection] != directionMapping[currentDirection] * -1) {  // allows the player to turn around on the spot, but not cut corners
+            return;
+        }
+        canUpdateTargetPosition = false;
+        //isMoving = true;
 
         Direction dir = currentDirection;
         if (CanMoveInDirection(bufferedDirection)
@@ -143,10 +158,39 @@ public class PlayerMovement : MonoBehaviour {
             //Vector3 velocity = new Vector3(directionMapping[dir].x, 0f, directionMapping[dir].z) * moveSpeed * Time.fixedDeltaTime;
             //rb.MovePosition(rb.position + velocity);
 
-            this.gridPosition = newPos;
+            this.targetGridPosition = newPos;
             //StartCoroutine(LerpToNewTile(newPos));
         }
+        Debug.Log("NEW target Pos: " + newPos);
     }
+
+    //void TryMoveOneTile() {
+    //    if (isMoving) return;
+
+    //    //isMoving = true;
+
+    //    Direction dir = currentDirection;
+    //    if (CanMoveInDirection(bufferedDirection)
+    //        && bufferedDirection != currentDirection) {
+    //        currentDirection = bufferedDirection;
+    //        dir = bufferedDirection;
+    //        bufferedDirection = Direction.none;
+
+    //    } else if (!CanMoveInDirection(dir)) {
+    //        return;
+    //    }
+
+    //    GridPosition newPos = gridPosition + directionMapping[dir];
+    //    if (LevelGrid.Instance.GridSystem.IsValidGridPosition(newPos)) {
+    //        //Debug.Log("force: " + new Vector3(directionMapping[dir].x, 0f, directionMapping[dir].z) * moveSpeed);
+    //        //Vector3 velocity = new Vector3(directionMapping[dir].x, 0f, directionMapping[dir].z) * moveSpeed * Time.fixedDeltaTime;
+    //        //rb.MovePosition(rb.position + velocity);
+
+    //        this.gridPosition = newPos;
+    //        //StartCoroutine(LerpToNewTile(newPos));
+    //    }
+    //    Debug.Log("target Pos: " + newPos);
+    //}
 
     IEnumerator HandleBufferedInputTimer() {
         float t = 0;
@@ -182,7 +226,7 @@ public class PlayerMovement : MonoBehaviour {
         Vector3 startPos = transform.position;
         Vector3 endPos = LevelGrid.Instance.GridSystem.GetWorldPosition(newPos);
 
-        isMoving = true;
+        canUpdateTargetPosition = true;
 
         while (t < 1) {
             t += Time.deltaTime * moveSpeed;
@@ -195,7 +239,7 @@ public class PlayerMovement : MonoBehaviour {
             yield return null;
         }
 
-        isMoving = false;
+        canUpdateTargetPosition = false;
     }
 
     IEnumerator HandleSpeedBoost(ItemConfigSO_SpeedBoost config) {
