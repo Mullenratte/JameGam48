@@ -9,6 +9,7 @@ public class LevelGrid : MonoBehaviour {
     [SerializeField] float cellSize;
     public PathGenerator Generator { get; private set; }
     [SerializeField] public List<int> startXs = new List<int> { };
+    [SerializeField] public int TestAppends = 0; // Number of sections to append at the start of the game
 
     // List of X positions where the sections should be connected together
     private List<int> connectXs = new List<int> { };
@@ -52,8 +53,10 @@ public class LevelGrid : MonoBehaviour {
 
         GenerateObjects(0);
 
-        AppendNewSection();
-        AppendNewSection();
+        for (int i = 0; i < TestAppends; i++)
+        {
+            AppendNewSection();
+        }
     }
 
     private void GenerateObjects(int startZ)

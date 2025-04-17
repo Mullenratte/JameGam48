@@ -36,7 +36,8 @@ public class PathGenerator
         List<int> connectionXs = new List<int>();
         for (int x = 0; x < width; x++)
         {
-            if (grid[x, (depth-1) - startZOfNextGeneration].north != null)
+            Tile tile = grid[x, (depth - 1) - startZOfNextGeneration];
+            if (tile.north != null)
             {
                 connectionXs.Add(x);
             }
@@ -46,15 +47,44 @@ public class PathGenerator
 
     public Tile[,] GeneratePaths(List<int> startXs, int startZ)
     {
-        InitGrid();
-        ScatterBlocks(startXs);
-        foreach (int x in startXs)
+        int successfulPaths = 0;        
+        while (successfulPaths < 3)
         {
-            Vector3Int start = new Vector3Int(x, 0, 0);
-            GenerateFlowAwarePathFrom(start);
+            InitGrid();
+            ScatterBlocks(startXs);
+            foreach (int x in startXs)
+            {
+                Vector3Int start = new Vector3Int(x, 0, 0);
+                if (GenerateFlowAwarePathFrom(start)) successfulPaths++;
+            }
+            //Debug.Log($"Generated {successfulPaths} paths from {startXs.Count} start positions.");
         }
         OverwriteFreeTiles();
-        startZOfNextGeneration = Random.Range(1, 4);
+
+        int tries = 0;
+        bool success = false;
+
+        while (tries < 5)
+        {
+            startZOfNextGeneration = Random.Range(1, 4);
+            if (GetConnectXs().Count >= 3)
+            {
+                success = true;
+                break;
+            }
+            tries++;
+        }
+
+        if (!success)
+        {
+            for (int t = 0; t < depth; t++)
+            {
+                startZOfNextGeneration = t;
+                if (GetConnectXs().Count >= 3) break;
+            }
+        }
+
+
         for (int x = 0; x < width; x++)
         {
             for (int z = 0; z < depth; z++)
@@ -63,6 +93,7 @@ public class PathGenerator
                 bool isStart = z == 0;
                 bool isEnd = z == (depth - 1) - startZOfNextGeneration;
 
+                // set visual type
                 if (isStart || isEnd)
                 {
                     if (tile.north == null)
@@ -76,6 +107,7 @@ public class PathGenerator
                     }
                 }
 
+                // update grid position
                 Vector3Int oldPos = tile.gridPosition;
                 Vector3Int newPos = new Vector3Int(oldPos.x, oldPos.y, oldPos.z + startZ);
                 tile.gridPosition = newPos;
@@ -170,7 +202,7 @@ public class PathGenerator
         return false;
     }
 
-    private void GenerateFlowAwarePathFrom(Vector3Int start)
+    private bool GenerateFlowAwarePathFrom(Vector3Int start)
     {
         Stack<Vector3Int> stack = new();
         HashSet<Vector3Int> visited = new();
@@ -183,7 +215,9 @@ public class PathGenerator
             List<(Vector3Int pos, Direction dir, int score)> candidates = new();
 
             if (current.z == depth - 1)
-                break;
+            {
+                return true; // reached end of path
+            }
 
             foreach (Direction direction in GetShuffledDirections(current))
             {
@@ -242,6 +276,7 @@ public class PathGenerator
             visited.Add(best.pos);
             stack.Push(best.pos);
         }
+        return false; // no path found
     }
 
     private void ConnectTiles(Vector3Int fromPos, Vector3Int toPos, Direction dir)
@@ -268,6 +303,7 @@ public class PathGenerator
         int score = 0;
         score += (2 - connections); // less connections = better
         //score += Mathf.FloorToInt(startDist);   // distance to start
+        score += Mathf.FloorToInt(Mathf.InverseLerp(0, depth - 1, nextPos.z) * 5f) * 2; // distance to end
         score -= Mathf.FloorToInt(centerDist) * 2;  // wide distance to center = worse
         score -= dir switch
         {
