@@ -40,4 +40,8 @@ public struct GridPosition {
     public static GridPosition operator -(GridPosition a, GridPosition b) {
         return new GridPosition(a.x - b.x, a.z - b.z);
     }
+
+    public static GridPosition operator *(GridPosition a, float b) {
+        return new GridPosition((int)(a.x * b), (int)(a.z * b));
+    }
 }

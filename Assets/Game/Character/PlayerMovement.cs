@@ -15,9 +15,14 @@ public class PlayerMovement : MonoBehaviour {
     Tile currentTile;
     private Direction enterDirection; //im Spieler speichern, von wo er ein neues Tile betreten hat, um die Brücken Logik zu steuern
 
+    private Rigidbody rb;
     [SerializeField] float moveSpeed;
     bool isMoving;
     bool canMove = true;
+
+    private void Awake() {
+        rb = GetComponent<Rigidbody>();
+    }
 
     private void Start() {
         transform.position = LevelGrid.Instance.GridSystem.GetWorldPosition(new GridPosition(LevelGrid.Instance.GridSystem.GetWidth() / 2, 0));
@@ -39,20 +44,26 @@ public class PlayerMovement : MonoBehaviour {
     private void Effect_Jump_OnActionTriggered(ItemConfigSO_Jump cfg) {
         canMove = false;
 
-        Direction dir = currentDirection;
-        GridPosition currentTarget = this.gridPosition + directionMapping[dir];
-        int tilesTested = 0;
+        Debug.Log("buffered: " + bufferedDirection);
+        Direction dir = bufferedDirection != Direction.none ? bufferedDirection : currentDirection;
+        GridPosition currentTarget = this.gridPosition + directionMapping[dir] * cfg.maxTiles;
+        Debug.Log("current pos: " + transform.position);
+        Debug.Log("target world pos: " + new Vector3(transform.position.x + directionMapping[dir].x * cfg.maxTiles, transform.position.y, transform.position.z + directionMapping[dir].z * cfg.maxTiles));
+        Debug.Log("nearest GRID pos: " + currentTarget);
 
-        while (LevelGrid.Instance.GetTileAt(currentTarget) == null 
-            || LevelGrid.Instance.GetTileAt(currentTarget).isBlocked) {
-            tilesTested++;
-            currentTarget += directionMapping[dir];
-            if (tilesTested > cfg.maxTiles) {
-                currentTarget = this.gridPosition;
+        for (int tileTested = cfg.maxTiles; tileTested >= 0; tileTested--) {
+            Vector3 targetWorldPos = new Vector3(transform.position.x + directionMapping[dir].x * tileTested, transform.position.y, transform.position.z + directionMapping[dir].z * tileTested);
+            currentTarget = new GridPosition((int)Mathf.Round(targetWorldPos.x), (int)Mathf.Round(targetWorldPos.z));
+
+
+
+            if (LevelGrid.Instance.GetTileAt(currentTarget) != null
+            && !LevelGrid.Instance.GetTileAt(currentTarget).isBlocked) {
                 break;
             }
         }
-        Debug.Log("tested: " + tilesTested + " tiles");
+
+
         JumpToGridPosition(currentTarget);
     }
 
@@ -61,6 +72,9 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     private void Update() {
+        if (Input.GetKeyDown(KeyCode.F)) {
+            Debug.Log(transform.position);
+        }
         if (!canMove) return;
 
         this.gridPosition = LevelGrid.Instance.GridSystem.GetGridPosition(transform.position);
@@ -70,7 +84,10 @@ public class PlayerMovement : MonoBehaviour {
             enterDirection = currentDirection;
         }
 
-        TryMoveOneTile();
+        if (!isMoving) TryMoveOneTile();
+
+        transform.position = Vector3.MoveTowards(transform.position, LevelGrid.Instance.GridSystem.GetWorldPosition(gridPosition), Time.deltaTime * moveSpeed);
+
 
         if (Input.GetKeyDown(KeyCode.A)) {
             UpdateBufferedDirection(Direction.West);
@@ -87,6 +104,10 @@ public class PlayerMovement : MonoBehaviour {
 
     }
 
+    //private void FixedUpdate() {
+    //    TryMoveOneTile();
+    //}
+
     private void UpdateBufferedDirection(Direction dir) {
         if (_HandleBufferedInputTimer != null) StopCoroutine(_HandleBufferedInputTimer);
         bufferedDirection = dir;
@@ -94,7 +115,9 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     private void JumpToGridPosition(GridPosition position) {
+        Debug.Log("jumping to " + position);
         transform.position = LevelGrid.Instance.GridSystem.GetWorldPosition(position);
+        Debug.Log("which is in gridPos: " + LevelGrid.Instance.GridSystem.GetWorldPosition(position));
         this.gridPosition = position;
         this.canMove = true;
     }
@@ -116,8 +139,12 @@ public class PlayerMovement : MonoBehaviour {
 
         GridPosition newPos = gridPosition + directionMapping[dir];
         if (LevelGrid.Instance.GridSystem.IsValidGridPosition(newPos)) {
+            //Debug.Log("force: " + new Vector3(directionMapping[dir].x, 0f, directionMapping[dir].z) * moveSpeed);
+            //Vector3 velocity = new Vector3(directionMapping[dir].x, 0f, directionMapping[dir].z) * moveSpeed * Time.fixedDeltaTime;
+            //rb.MovePosition(rb.position + velocity);
+
             this.gridPosition = newPos;
-            StartCoroutine(LerpToNewTile(newPos));
+            //StartCoroutine(LerpToNewTile(newPos));
         }
     }
 
