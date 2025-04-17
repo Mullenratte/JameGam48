@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            HighScoreManager.Instance.LoadHighscore();
         }
         else
         {
@@ -22,5 +23,6 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("GAME OVER");
         Time.timeScale = 0;
+        HighScoreManager.Instance.SetHighscore();
     }
 }

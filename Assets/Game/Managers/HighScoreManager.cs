@@ -6,6 +6,7 @@ public class HighScoreManager : MonoBehaviour
     public static HighScoreManager Instance;
 
     [SerializeField] TMP_Text scoreText;
+    [SerializeField] float speedIncreasPer100Points = 0.01f; // 0.01 increase per 100 points
 
     private int score;
     private int highScore;
@@ -50,6 +51,7 @@ public class HighScoreManager : MonoBehaviour
     {
         score += points;
         Debug.Log("Score: " + score);
+        GameOverZone.Instance.SpeedUp((points/100) * speedIncreasPer100Points); // increase per 100 points
     }
 
     public bool SetHighscore()
@@ -57,6 +59,7 @@ public class HighScoreManager : MonoBehaviour
         if (score > highScore)
         {
             highScore = score;
+            SaveHighscore();
             return true;
         }
         return false;

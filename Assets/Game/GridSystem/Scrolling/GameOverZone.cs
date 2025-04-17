@@ -4,6 +4,7 @@ using UnityEngine;
 public class GameOverZone : MonoBehaviour {
     public static GameOverZone Instance;
     [SerializeField] float _scrollSpeed;
+    [SerializeField] float _defaultScrollSpeedIncrease;
 
     public int rowToDelete = 0;
 
@@ -49,6 +50,16 @@ public class GameOverZone : MonoBehaviour {
     public Vector3 GetPosition()
     {
         return transform.position;
+    }
+
+    public void SpeedUp()
+    {
+        _scrollSpeed += _defaultScrollSpeedIncrease;
+    }
+
+    public void SpeedUp(float amount)
+    {
+        _scrollSpeed += amount;
     }
 
     private void OnTriggerEnter(Collider other) {

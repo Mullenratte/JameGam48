@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
+    public static PlayerMovement Instance { get; private set; } = null;
 
     private GridPosition gridPosition;
     private GridPosition targetGridPosition;
@@ -24,7 +25,15 @@ public class PlayerMovement : MonoBehaviour {
     bool canMove = true;
 
     private void Awake() {
-        rb = GetComponent<Rigidbody>();
+        if (Instance == null)
+        {
+            Instance = this;
+            rb = GetComponent<Rigidbody>();
+        }
+        else
+        {
+            Destroy(gameObject);
+        }        
     }
 
     private void Start() {

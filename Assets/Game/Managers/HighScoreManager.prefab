@@ -284,3 +284,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreText: {fileID: 4673599349118598640}
+  speedIncreasPer100Points: 0.01

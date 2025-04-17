@@ -155,6 +155,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scrollSpeed: 1.2
+  _defaultScrollSpeedIncrease: 0.02
+  rowToDelete: 0
 --- !u!54 &6184538753766135605
 Rigidbody:
   m_ObjectHideFlags: 0
