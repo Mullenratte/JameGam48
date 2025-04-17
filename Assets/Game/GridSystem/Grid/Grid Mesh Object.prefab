@@ -1,0 +1,87 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &327178712089158844
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3076870476131196674}
+  - component: {fileID: 3713654219376398111}
+  m_Layer: 0
+  m_Name: Grid Mesh Object
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3076870476131196674
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 327178712089158844}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7185647895881126063}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3713654219376398111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 327178712089158844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b9347b8d070284dadc26bc0007c6ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tileMeshPrefabs:
+  - {fileID: 168945166914405371, guid: f39605488eaf23046ba13c6b9d4c6037, type: 3}
+  - {fileID: 2552323334929936033, guid: 0e05254e21357c84aace940308224148, type: 3}
+  - {fileID: 7946659753203507455, guid: 94708b4680da90b4587e92e82269613f, type: 3}
+  - {fileID: 5314011448711657967, guid: 07148712491ff704bbaf8ab98a8e46e9, type: 3}
+  - {fileID: 3227791937270058935, guid: 866a570d81dbfbe4380983800ac01f68, type: 3}
+  - {fileID: 1669522002520237431, guid: f330bb00f0ab4fa4f85ec5bd1b46cd5d, type: 3}
+  - {fileID: 2144767335861923319, guid: f572f9d610c8581469135851a8a2761a, type: 3}
+  activeMeshPrefab: {fileID: 532767253757185247}
+--- !u!1 &532767253757185247
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7185647895881126063}
+  m_Layer: 0
+  m_Name: 'Active Mesh Prefab '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7185647895881126063
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 532767253757185247}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3076870476131196674}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
