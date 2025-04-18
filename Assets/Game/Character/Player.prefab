@@ -54,6 +54,7 @@ MonoBehaviour:
   maxInputBufferTime: 0
   cutCornerDistance: 0.01
   moveSpeed: 4
+  rotateSpeed: 0
 --- !u!136 &1148089441859210863
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -118,6 +119,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   config: {fileID: 11400000, guid: 5db351a6cf5560a468c11190f1647278, type: 2}
   mouthTransform: {fileID: 295935685264825909}
+  tongueLight: {fileID: 0}
 --- !u!120 &6564295871563980302
 LineRenderer:
   serializedVersion: 2
@@ -142,7 +144,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 92af1f86ff51a4b489101b9f24ee3401, type: 2}
+  - {fileID: 2100000, guid: dd2f4fa1566631e459c4120e3ba91b63, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

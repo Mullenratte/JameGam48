@@ -6,7 +6,7 @@ public class HighScoreManager : MonoBehaviour
     public static HighScoreManager Instance;
 
     [SerializeField] TMP_Text scoreText;
-    [SerializeField] float speedIncreasPer100Points = 0.01f; // 0.01 increase per 100 points
+    [SerializeField] float speedIncreasePer100Points = 0.01f; // 0.01 increase per 100 points
 
     private int score;
     private int highScore;
@@ -50,7 +50,7 @@ public class HighScoreManager : MonoBehaviour
     public void AddScore(int points)
     {
         score += points;
-        PlayerMovement.Instance.MoveSpeed += (points / 100) * speedIncreasPer100Points; // increase per 100 points
+        PlayerMovement.Instance.MoveSpeed += (points / 100) * speedIncreasePer100Points; // increase per 100 points
     }
 
     public bool SetHighscore()

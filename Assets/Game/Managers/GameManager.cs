@@ -10,12 +10,16 @@ public class GameManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            HighScoreManager.Instance.LoadHighscore();
         }
         else
         {
             Destroy(gameObject);
         }
+
+    }
+
+    private void Start() {
+        HighScoreManager.Instance.LoadHighscore();
 
     }
 
