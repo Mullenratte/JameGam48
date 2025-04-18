@@ -15,6 +15,7 @@ public class PlayerTongueController : MonoBehaviour {
     Vector3 tongueTarget;
     LineRenderer _lineRenderer;
 
+    [SerializeField] Light tongueLight;
     GameObject attachedObject;
 
     public enum TongueState {
@@ -36,14 +37,14 @@ public class PlayerTongueController : MonoBehaviour {
         currentState = TongueState.Default;
     }
 
-
-    private void Update() {
+    private void FixedUpdate() {
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-
-        if (Physics.Raycast(ray, out RaycastHit hit, 1 << LayerMask.NameToLayer("Grid"))) {
+        if (Physics.Raycast(ray, out RaycastHit hit, 50f, 1 << LayerMask.NameToLayer("Grid"))) {
             mouseWorldPosOnGrid = new Vector3(hit.point.x, 0, hit.point.z);
         }
+    }
 
+    private void Update() {
         switch (currentState) {
             case TongueState.Default:
                 ExecuteDefaultState();
@@ -57,7 +58,6 @@ public class PlayerTongueController : MonoBehaviour {
             default:
                 break;
         }
-
     }
 
     private void ExecuteDefaultState() {
@@ -81,6 +81,8 @@ public class PlayerTongueController : MonoBehaviour {
 
             _lineRenderer.SetPosition(0, mouthTransform.position);
             _lineRenderer.SetPosition(1, mouthTransform.position);
+            tongueLight.gameObject.SetActive(true);
+            tongueLight.transform.position = _lineRenderer.GetPosition(1);
             currentState = TongueState.Shooting;
 
             if (attachedObject != null) {
@@ -99,7 +101,7 @@ public class PlayerTongueController : MonoBehaviour {
 
         _lineRenderer.SetPosition(0, mouthTransform.position);
         _lineRenderer.SetPosition(1, Vector3.MoveTowards(_lineRenderer.GetPosition(1), tongueTarget, config.snapSpeed * Time.deltaTime));
-
+        tongueLight.transform.position = _lineRenderer.GetPosition(1);
 
         // stop when at max radius or when target is reached
         if (Vector3.Distance(_lineRenderer.GetPosition(1), mouthTransform.position) >= config.range
@@ -115,6 +117,7 @@ public class PlayerTongueController : MonoBehaviour {
     private void ExecuteRetractingState() {
         _lineRenderer.SetPosition(0, mouthTransform.position);
         _lineRenderer.SetPosition(1, Vector3.MoveTowards(_lineRenderer.GetPosition(1), mouthTransform.position, config.retractSpeed * Time.deltaTime));
+        tongueLight.transform.position = _lineRenderer.GetPosition(1);
         if (attachedObject) {
             attachedObject.transform.position = _lineRenderer.GetPosition(1);
         }
@@ -126,6 +129,7 @@ public class PlayerTongueController : MonoBehaviour {
                 attachedObject.GetComponent<ILickable>().TriggerOnCollectedAction();
                 attachedObject = null;
             }
+            tongueLight.gameObject.SetActive(false);
             currentState = TongueState.Default;
         }
     }

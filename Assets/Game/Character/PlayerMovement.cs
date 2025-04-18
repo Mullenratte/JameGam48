@@ -22,6 +22,10 @@ public class PlayerMovement : MonoBehaviour {
     private Rigidbody rb;
     [SerializeField] float moveSpeed;
     public float MoveSpeed { get { return moveSpeed; } set { moveSpeed = value; } }
+
+    [SerializeField] float rotateSpeed;
+    public float RotateSpeed { get { return rotateSpeed; } set { rotateSpeed = value; } }
+
     bool canUpdateTargetPosition = true;
     bool canMove = true;
 
@@ -115,7 +119,7 @@ public class PlayerMovement : MonoBehaviour {
 
 
         transform.position = Vector3.MoveTowards(transform.position, LevelGrid.Instance.GridSystem.GetWorldPosition(targetGridPosition), Time.deltaTime * MoveSpeed);
-
+        transform.forward = Vector3.MoveTowards(transform.forward, new Vector3(directionMapping[currentDirection].x, 0f, directionMapping[currentDirection].z), Time.deltaTime * RotateSpeed);
 
         if (Input.GetKeyDown(KeyCode.A)) {
             UpdateBufferedDirection(Direction.West);
