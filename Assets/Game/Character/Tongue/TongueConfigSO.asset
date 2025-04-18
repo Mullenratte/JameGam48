@@ -14,5 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TongueConfigSO
   range: 6
   thickness: 0.8
-  snapSpeed: 12
-  retractSpeed: 20
+  snapSpeed: 5.5
+  retractSpeed: 14
+  hitClips:
+  - {fileID: 8300000, guid: 4295e003db656b0499a6d7c0108662dd, type: 3}
+  - {fileID: 8300000, guid: 2e9c86f681a1e5d47b7c1c1789858a1f, type: 3}
+  - {fileID: 8300000, guid: b4d232305cf542645b6abd803ca62009, type: 3}
+  - {fileID: 8300000, guid: 3962e8ec12d606a4a9cddd2304e564a8, type: 3}
+  missClips:
+  - {fileID: 8300000, guid: 59070c7821925f94eb1c5b512cebc67c, type: 3}
+  - {fileID: 8300000, guid: d1d988829a8125d46a68116503f1716e, type: 3}

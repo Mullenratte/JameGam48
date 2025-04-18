@@ -50,7 +50,6 @@ public class HighScoreManager : MonoBehaviour
     public void AddScore(int points)
     {
         score += points;
-        Debug.Log("Score: " + score);
         PlayerMovement.Instance.MoveSpeed += (points / 100) * speedIncreasPer100Points; // increase per 100 points
     }
 
