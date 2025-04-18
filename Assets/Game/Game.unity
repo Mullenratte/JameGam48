@@ -965,10 +965,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: GridSystem
       objectReference: {fileID: 0}
-    - target: {fileID: 8959914192611677140, guid: 202e8750a5109524b96e2ceb44a6bc6b, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 25
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

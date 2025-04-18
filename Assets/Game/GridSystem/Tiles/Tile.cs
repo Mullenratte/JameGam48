@@ -1,10 +1,6 @@
-using NUnit.Framework.Internal;
 using System;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.InputSystem.EnhancedTouch;
-using UnityEngine.Splines;
 
 public enum Direction { North, East, South, West, none}
 

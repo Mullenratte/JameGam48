@@ -6,6 +6,7 @@ public class MeshGridObject : MonoBehaviour {
     private GridObject gridObject;
     [SerializeField] GameObject[] tileMeshPrefabs;
 
+    [SerializeField] ParticleSystem _onDestroyPartSys;
     GameObject activeMeshPrefab;
     private bool hasFallen = false;
 
@@ -150,6 +151,7 @@ public class MeshGridObject : MonoBehaviour {
         {
             hasFallen = true;
 
+
             float baseDelay = 0.05f;
             int gridWidth = LevelGrid.Instance.GetWidth();
             int centerX = Mathf.FloorToInt(gridWidth / 2f);
@@ -165,6 +167,8 @@ public class MeshGridObject : MonoBehaviour {
 
             MonoBehaviour mb = GetComponent<MonoBehaviour>();
             mb.StartCoroutine(DelayedFallAndDestroy(gameObject, delay));
+
+            _onDestroyPartSys.Play();
         }
     }
 

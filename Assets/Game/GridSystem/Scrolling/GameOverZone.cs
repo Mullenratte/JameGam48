@@ -6,7 +6,6 @@ public class GameOverZone : MonoBehaviour {
     [SerializeField] float _scrollSpeed;
     [SerializeField] int _scrollSpeedIncreaseInterval = 5;
     [SerializeField] float _defaultScrollSpeedIncrease;
-
     public int rowToDelete = 0;
 
     bool paused = false;

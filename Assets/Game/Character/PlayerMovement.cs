@@ -91,6 +91,12 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     private void Update() {
+        if (transform.position.z <= GameOverZone.Instance.transform.position.z) {
+            this.rb.useGravity = true;
+            this.canMove = false;
+            GameManager.Instance.EndGame();
+        }
+
         if (Input.GetKeyDown(KeyCode.F)) {
             Debug.Log(transform.position);
         }
