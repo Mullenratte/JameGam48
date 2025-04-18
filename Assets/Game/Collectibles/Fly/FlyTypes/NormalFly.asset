@@ -16,3 +16,8 @@ MonoBehaviour:
   flyRadius: 5
   maxSpeed: 3
   points: 100
+  OnHitClips:
+  - {fileID: 8300000, guid: 62fec206d610db54cb059ec520ae3941, type: 3}
+  - {fileID: 8300000, guid: 13cdc420bc05b8849904a8660e47fb98, type: 3}
+  - {fileID: 8300000, guid: d03213fd79c166d4f9474285d9561b18, type: 3}
+  OnCollectedClips: []
