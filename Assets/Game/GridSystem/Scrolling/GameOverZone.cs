@@ -33,6 +33,7 @@ public class GameOverZone : MonoBehaviour {
     }
 
     void Update() {
+        transform.position = new Vector3(PlayerMovement.Instance.transform.position.x, transform.position.y, transform.position.z);
         if (!paused) {
             transform.position += Vector3.forward * Time.deltaTime * _scrollSpeed;
         } else {

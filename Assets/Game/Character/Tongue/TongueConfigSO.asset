@@ -9,18 +9,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 464244c22c8b7df429e687b6580b4c94, type: 3}
   m_Name: TongueConfigSO
   m_EditorClassIdentifier: Assembly-CSharp::TongueConfigSO
-  range: 2.5
+  range: 1.65
   thickness: 1
-  snapSpeed: 5.5
-  retractSpeed: 14
+  snapSpeed: 5
+  retractSpeed: 12
   hitClips:
-  - {fileID: 8300000, guid: 4295e003db656b0499a6d7c0108662dd, type: 3}
-  - {fileID: 8300000, guid: 2e9c86f681a1e5d47b7c1c1789858a1f, type: 3}
-  - {fileID: 8300000, guid: b4d232305cf542645b6abd803ca62009, type: 3}
-  - {fileID: 8300000, guid: 3962e8ec12d606a4a9cddd2304e564a8, type: 3}
+  - {fileID: 8300000, guid: 5967640b2dce7cd49b5d0b5afdf508cd, type: 3}
+  - {fileID: 8300000, guid: 6332a78111cbab0439380317e5dee2be, type: 3}
+  - {fileID: 8300000, guid: 97ec9eb01232f1c4284fffc82025427f, type: 3}
   missClips:
-  - {fileID: 8300000, guid: 59070c7821925f94eb1c5b512cebc67c, type: 3}
-  - {fileID: 8300000, guid: d1d988829a8125d46a68116503f1716e, type: 3}
+  - {fileID: 8300000, guid: 5967640b2dce7cd49b5d0b5afdf508cd, type: 3}
+  - {fileID: 8300000, guid: 97ec9eb01232f1c4284fffc82025427f, type: 3}
