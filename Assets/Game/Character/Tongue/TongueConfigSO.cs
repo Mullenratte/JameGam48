@@ -7,7 +7,8 @@ public class TongueConfigSO : ScriptableObject {
     public float snapSpeed;
     public float retractSpeed;
 
-
+    public AudioClip[] hitClips;
+    public AudioClip[] missClips;
 
 }
 

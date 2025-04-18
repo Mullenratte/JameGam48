@@ -18,12 +18,16 @@ public class Fly : MonoBehaviour, ILickable
 
     public void TriggerOnHitAction() {
         isHit = true;
+        SoundFXManager.instance.PlayRandomSoundFXClipPitchVariation(config.OnHitClips, transform.position, 1f, 0.8f, 1.3f);
     }
 
     public void TriggerOnCollectedAction()
     {
         // Add points to the score
         HighScoreManager.Instance.AddScore(config.points);
+
+       // SoundFXManager.instance.PlayRandomSoundFXClipPitchVariation(config.OnCollectedClips, transform.position, 1f, 0.8f, 1.3f);
+
         Destroy(gameObject);
     }
 

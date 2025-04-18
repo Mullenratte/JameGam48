@@ -82,6 +82,12 @@ public class PlayerTongueController : MonoBehaviour {
             _lineRenderer.SetPosition(0, mouthTransform.position);
             _lineRenderer.SetPosition(1, mouthTransform.position);
             currentState = TongueState.Shooting;
+
+            if (attachedObject != null) {
+                SoundFXManager.instance.PlayRandomSoundFXClipPitchVariation(config.hitClips, transform.position, 1f, 0.7f, 1.2f);
+            } else {
+                SoundFXManager.instance.PlayRandomSoundFXClipPitchVariation(config.missClips, transform.position, 1f, 0.7f, 1f);
+            }
         }
     }
 
