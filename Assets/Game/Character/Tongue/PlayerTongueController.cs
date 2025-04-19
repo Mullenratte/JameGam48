@@ -9,7 +9,8 @@ using UnityEngine.InputSystem;
 public class PlayerTongueController : MonoBehaviour {
 
     [SerializeField] TongueConfigSO config;
-
+    float range;
+    [SerializeField] float rangeIncresePer100;
     [SerializeField] Transform mouthTransform;
     Vector3 mouseWorldPosOnGrid;
     Vector3 tongueTarget;
@@ -31,10 +32,16 @@ public class PlayerTongueController : MonoBehaviour {
     }
 
     private void Start() {
+        range = config.range;
         _lineRenderer.SetPosition(0, mouthTransform.position);   // Always follow frog mouth
         _lineRenderer.SetPosition(1, mouthTransform.position);
 
         currentState = TongueState.Default;
+        HighScoreManager.Instance.OnScoreChange += HighScoreManager_OnScoreChange;
+    }
+
+    private void HighScoreManager_OnScoreChange(int score) {
+        range = config.range + (score / 100) * rangeIncresePer100;
     }
 
     private void FixedUpdate() {
@@ -63,12 +70,12 @@ public class PlayerTongueController : MonoBehaviour {
     private void ExecuteDefaultState() {
         if (Input.GetKeyDown(KeyCode.Mouse0)) {
             tongueTarget = new Vector3(mouseWorldPosOnGrid.x, mouthTransform.position.y, mouseWorldPosOnGrid.z);
-            if (Vector3.Distance(tongueTarget, mouthTransform.position) <= config.range) {
+            if (Vector3.Distance(tongueTarget, mouthTransform.position) <= range) {
                 RaycastHit[] hits = Physics.SphereCastAll(mouseWorldPosOnGrid, config.thickness, Vector3.up, 25f);
                 foreach (var hit in hits) {
                     if (hit.collider.TryGetComponent<ILickable>(out _)) {
                         Vector3 targetXZ = new Vector3(hit.collider.transform.position.x, mouthTransform.position.y, hit.collider.transform.position.z);
-                        if (Vector3.Distance(targetXZ, mouthTransform.position) <= config.range) {
+                        if (Vector3.Distance(targetXZ, mouthTransform.position) <= range) {
                             tongueTarget = hit.collider.gameObject.transform.position;
                             attachedObject = hit.collider.gameObject;
                             Debug.Log("obj: " + attachedObject);
@@ -104,7 +111,7 @@ public class PlayerTongueController : MonoBehaviour {
         tongueLight.transform.position = _lineRenderer.GetPosition(1);
 
         // stop when at max radius or when target is reached
-        if (Vector3.Distance(_lineRenderer.GetPosition(1), mouthTransform.position) >= config.range
+        if (Vector3.Distance(_lineRenderer.GetPosition(1), mouthTransform.position) >= range
             || Vector3.Distance(_lineRenderer.GetPosition(1), tongueTarget) < 0.01f) {
             if (attachedObject) {
                 attachedObject.GetComponent<ILickable>().TriggerOnHitAction();

@@ -6,6 +6,7 @@ public class CameraController : MonoBehaviour
     public static CameraController Instance;
     CinemachineCamera cam;
     [SerializeField] float originalCameraDistance;
+    [SerializeField] float maxCameraDistance;
     CinemachinePositionComposer positionComposer;
 
     private void Awake() {
@@ -24,6 +25,6 @@ public class CameraController : MonoBehaviour
     }
 
     private void Update() {
-        positionComposer.CameraDistance = originalCameraDistance + PlayerMovement.Instance.MoveSpeed;
+        positionComposer.CameraDistance = Mathf.Min(originalCameraDistance + PlayerMovement.Instance.MoveSpeed, maxCameraDistance);
     }
 }

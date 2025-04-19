@@ -64,7 +64,7 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     private void HighScoreManager_OnScoreChange(int score) {
-        moveSpeedModifier += (score / 100) * speedIncreasePer100; // increase per 100 points
+        moveSpeedModifier = 1 + (score / 100) * speedIncreasePer100; // increase per 100 points
     }
 
     private void Effect_Jump_OnActionTriggered(ItemConfigSO_Jump cfg) {
@@ -104,9 +104,6 @@ public class PlayerMovement : MonoBehaviour {
             GameManager.Instance.EndGame();
         }
 
-        if (Input.GetKeyDown(KeyCode.F)) {
-            Debug.Log(transform.position);
-        }
         if (!canMove) return;
 
         UpdateTargetGridPosition();
@@ -128,8 +125,6 @@ public class PlayerMovement : MonoBehaviour {
             Debug.Log("new section");
             LevelGrid.Instance.TryAppendAsync();
         }
-
-
 
         transform.position = Vector3.MoveTowards(transform.position, LevelGrid.Instance.GridSystem.GetWorldPosition(targetGridPosition), Time.deltaTime * MoveSpeed * moveSpeedModifier);
         transform.forward = Vector3.MoveTowards(transform.forward, new Vector3(directionMapping[currentDirection].x, 0f, directionMapping[currentDirection].z), Time.deltaTime * RotateSpeed);
