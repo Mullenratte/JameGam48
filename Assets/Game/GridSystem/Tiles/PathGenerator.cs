@@ -172,16 +172,16 @@ public class PathGenerator
                     if (HasStreetNeighbour(tile.gridPosition))
                     {
                         // Verteilung:
-                        // 0 = none          -> 30 %
-                        // 3 = deco element  -> 35 %
-                        // 1 = fly-spawn     -> 27 %
-                        // 2 = item-spawn    -> 8 %
+                        // 0 = none          -> 20 %
+                        // 3 = deco element  -> 10 %
+                        // 1 = fly-spawn     -> 54 %
+                        // 2 = item-spawn    -> 16 %
                         float r = (float)rnd.NextDouble();
-                        if (r < 0.3f)
+                        if (r < 0.2f)
                             tile.blockType = Tile.BlockType.None;
-                        else if (r < 0.65f)
+                        else if (r < 0.3f)
                             tile.blockType = Tile.BlockType.DecoElementSpawn;
-                        else if (r < 0.92f)
+                        else if (r < 0.84f)
                             tile.blockType = Tile.BlockType.FlySpawn;
                         else
                             tile.blockType = Tile.BlockType.ItemSpawn;

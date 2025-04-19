@@ -9,13 +9,13 @@ public abstract class BaseItem : MonoBehaviour, ILickable {
 
 
     public virtual void TriggerOnCollectedAction() {
-        Debug.Log("collected " + this.name);
+        //Debug.Log("collected " + this.name);
         OnCollected?.Invoke(this.data);
         Destroy(gameObject);
     }
 
     public virtual void TriggerOnHitAction() {
-        Debug.Log("hit item " + this.name);
+        //Debug.Log("hit item " + this.name);
     }
 }
 

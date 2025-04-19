@@ -13,11 +13,13 @@ MonoBehaviour:
   m_Name: LegendaryFly
   m_EditorClassIdentifier: 
   spawnChance: 0.01
-  size: 0.015
-  flyRadius: 10
+  size: 0.03
+  flyRadius: 6.8
   baseSpeed: 25
   maxSpeed: 35
   points: 600
+  material: {fileID: 2100000, guid: de51c72daea7f954995a8c2302f16718, type: 2}
+  lightIntensity: 0.025
   OnHitClips:
   - {fileID: 8300000, guid: 62fec206d610db54cb059ec520ae3941, type: 3}
   - {fileID: 8300000, guid: 13cdc420bc05b8849904a8660e47fb98, type: 3}

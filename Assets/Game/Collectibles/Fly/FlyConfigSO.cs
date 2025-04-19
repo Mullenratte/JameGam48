@@ -10,6 +10,9 @@ public class FlyConfigSO : ScriptableObject
     public float maxSpeed;
     public int points;
 
+    public Material material;
+    public float lightIntensity;
+
     public AudioClip[] OnHitClips;
     public AudioClip[] OnCollectedClips;
 }

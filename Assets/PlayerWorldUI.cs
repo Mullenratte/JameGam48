@@ -52,7 +52,7 @@ public class PlayerWorldUI : MonoBehaviour
                 break;
             case ScoreQuality.Awesome:
                 ending = "!!";
-                qualityColor = Color.blue;
+                qualityColor = Color.cyan;
                 textSize = 3.8f;
                 break;
             case ScoreQuality.Legendary:

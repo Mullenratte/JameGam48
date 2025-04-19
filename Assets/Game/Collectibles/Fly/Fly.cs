@@ -15,6 +15,7 @@ public class Fly : MonoBehaviour, ILickable, IScoreObject
     [SerializeField] FlyConfigSO[] configs;
 
     FlyConfigSO config;
+    Light lightObj;
 
     public void TriggerOnHitAction() {
         isHit = true;
@@ -44,6 +45,7 @@ public class Fly : MonoBehaviour, ILickable, IScoreObject
         }
 
         config = configs[configToLoad];
+        lightObj = GetComponentInChildren<Light>();
     }
 
     void Start()
@@ -53,6 +55,9 @@ public class Fly : MonoBehaviour, ILickable, IScoreObject
         position = transform.position;
         position.y = 0.5f;
         transform.localScale = new Vector3(config.size, config.size, config.size);
+        GetComponent<MeshRenderer>().material = config.material;
+        lightObj.color = Color.Lerp(config.material.color, config.material.GetColor("_EmissionColor"), 0.3f);
+        lightObj.intensity = config.lightIntensity;
     }
 
     // Update is called once per frame

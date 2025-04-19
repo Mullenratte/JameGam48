@@ -14,10 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnChance: 0.1
   size: 0.1
-  flyRadius: 7
+  flyRadius: 5
   baseSpeed: 10
   maxSpeed: 15
   points: 350
+  material: {fileID: 2100000, guid: 1baada6f503a6b14da6f02a8dd8f6954, type: 2}
+  lightIntensity: 0.014
   OnHitClips:
   - {fileID: 8300000, guid: 62fec206d610db54cb059ec520ae3941, type: 3}
   - {fileID: 8300000, guid: 13cdc420bc05b8849904a8660e47fb98, type: 3}

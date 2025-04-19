@@ -12,12 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a959c37efec97ff45a62e66849861d5d, type: 3}
   m_Name: NormalFly
   m_EditorClassIdentifier: 
-  spawnChance: 0.75
-  size: 0.35
-  flyRadius: 5
-  baseSpeed: 2
-  maxSpeed: 3
+  spawnChance: 0.99
+  size: 0.2
+  flyRadius: 1
+  baseSpeed: 2.5
+  maxSpeed: 3.5
   points: 100
+  material: {fileID: 2100000, guid: af4ee66886e4fc54eb783ef758fa26fb, type: 2}
+  lightIntensity: 0.006
   OnHitClips:
   - {fileID: 8300000, guid: 62fec206d610db54cb059ec520ae3941, type: 3}
   - {fileID: 8300000, guid: 13cdc420bc05b8849904a8660e47fb98, type: 3}
