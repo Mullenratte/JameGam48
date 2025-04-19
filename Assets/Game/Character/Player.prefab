@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2681483320662194295}
   - component: {fileID: 8222686950610692273}
+  - component: {fileID: 8602884310531733905}
   - component: {fileID: 1148089441859210863}
   - component: {fileID: 8412884242960168074}
-  - component: {fileID: 8602884310531733905}
   - component: {fileID: 6564295871563980302}
   m_Layer: 3
   m_Name: Player
@@ -54,7 +54,24 @@ MonoBehaviour:
   maxInputBufferTime: 0
   cutCornerDistance: 0.01
   moveSpeed: 4
+  speedIncreasePer100: 0.01
   rotateSpeed: 0
+--- !u!114 &8602884310531733905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3953170631071879522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 037431bd2d5038a41bc7d493afff2a5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  config: {fileID: 11400000, guid: 5db351a6cf5560a468c11190f1647278, type: 2}
+  rangeIncresePer100: 0
+  mouthTransform: {fileID: 295935685264825909}
+  tongueLight: {fileID: 0}
 --- !u!136 &1148089441859210863
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -105,21 +122,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &8602884310531733905
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3953170631071879522}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 037431bd2d5038a41bc7d493afff2a5b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  config: {fileID: 11400000, guid: 5db351a6cf5560a468c11190f1647278, type: 2}
-  mouthTransform: {fileID: 295935685264825909}
-  tongueLight: {fileID: 0}
 --- !u!120 &6564295871563980302
 LineRenderer:
   serializedVersion: 2

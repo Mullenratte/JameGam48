@@ -128,7 +128,10 @@ public class PlayerMovement : MonoBehaviour {
         }
 
         transform.position = Vector3.MoveTowards(transform.position, LevelGrid.Instance.GridSystem.GetWorldPosition(targetGridPosition), Time.deltaTime * MoveSpeed * moveSpeedModifier);
-        transform.forward = Vector3.MoveTowards(transform.forward, new Vector3(directionMapping[currentDirection].x, 0f, directionMapping[currentDirection].z), Time.deltaTime * RotateSpeed);
+        transform.rotation = Quaternion.RotateTowards(
+            transform.rotation, 
+            Quaternion.LookRotation(new Vector3(directionMapping[currentDirection].x, 0f, directionMapping[currentDirection].z)), 
+            Time.deltaTime * RotateSpeed);
 
         if (Input.GetKeyDown(KeyCode.A)) {
             UpdateBufferedDirection(Direction.West);
@@ -293,5 +296,9 @@ public class PlayerMovement : MonoBehaviour {
             yield return null;
         }
         MoveSpeed = originalMoveSpeed;
+    }
+
+    public float GetEffectiveMoveSpeed() {
+        return MoveSpeed * moveSpeedModifier;
     }
 }

@@ -25,6 +25,6 @@ public class CameraController : MonoBehaviour
     }
 
     private void Update() {
-        positionComposer.CameraDistance = Mathf.Min(originalCameraDistance + PlayerMovement.Instance.MoveSpeed, maxCameraDistance);
+        positionComposer.CameraDistance = Mathf.Min(originalCameraDistance + PlayerMovement.Instance.GetEffectiveMoveSpeed(), maxCameraDistance);
     }
 }
