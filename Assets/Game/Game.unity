@@ -1281,6 +1281,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2709419577947338196, guid: 202e8750a5109524b96e2ceb44a6bc6b, type: 3}
+      propertyPath: volumeFalloffMultiplier
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2709419577947338196, guid: 202e8750a5109524b96e2ceb44a6bc6b, type: 3}
+      propertyPath: _rowDeleteClips.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2709419577947338196, guid: 202e8750a5109524b96e2ceb44a6bc6b, type: 3}
+      propertyPath: '_rowDeleteClips.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: e3b152b15a1311447a6f4c91cce5e490, type: 3}
+    - target: {fileID: 2709419577947338196, guid: 202e8750a5109524b96e2ceb44a6bc6b, type: 3}
+      propertyPath: '_rowDeleteClips.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 76446bb73d85fee4a859161034f2c547, type: 3}
+    - target: {fileID: 2709419577947338196, guid: 202e8750a5109524b96e2ceb44a6bc6b, type: 3}
+      propertyPath: '_rowDeleteClips.Array.data[2]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 6fb52e01b0f029a45ab42b8a5c6de38d, type: 3}
+    - target: {fileID: 2709419577947338196, guid: 202e8750a5109524b96e2ceb44a6bc6b, type: 3}
+      propertyPath: '_rowDeleteClips.Array.data[3]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 0a0164820751bbe41b8ff8bff2af2622, type: 3}
+    - target: {fileID: 2709419577947338196, guid: 202e8750a5109524b96e2ceb44a6bc6b, type: 3}
+      propertyPath: '_rowDeleteClips.Array.data[4]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 3f9ebae6f4e55e64aa79215ec9e4eedb, type: 3}
     - target: {fileID: 3699088265981899117, guid: 202e8750a5109524b96e2ceb44a6bc6b, type: 3}
       propertyPath: m_Center.z
       value: -0.64

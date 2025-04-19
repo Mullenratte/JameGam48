@@ -36,8 +36,6 @@ public class CinemachineCameraShake : MonoBehaviour
         float elapsed = 0f;
         float intensityFalloff = intensityFalloffMultiplier * Mathf.Abs(PlayerMovement.Instance.transform.position.z - GameOverZone.Instance.transform.position.z);
 
-        Debug.Log("falloff " + intensityFalloff);
-        Debug.Log("overall " + (intensity - intensityFalloff));
         while (elapsed < duration) {
             elapsed += Time.deltaTime;
             float strength = curve.Evaluate(elapsed / duration);

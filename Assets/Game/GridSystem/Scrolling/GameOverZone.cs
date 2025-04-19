@@ -12,6 +12,8 @@ public class GameOverZone : MonoBehaviour {
     bool paused = false;
     float pauseTimer;
 
+    [SerializeField] AudioClip[] _rowDeleteClips;
+    [SerializeField] float volumeFalloffMultiplier;
     public event Action OnHitPlayer;
     private void Awake()
     {
@@ -52,6 +54,14 @@ public class GameOverZone : MonoBehaviour {
                 _scrollSpeed += _defaultScrollSpeedIncrease;
             }
             rowToDelete++;
+
+            float volumeFalloff = volumeFalloffMultiplier * Mathf.Abs(PlayerMovement.Instance.transform.position.z - GameOverZone.Instance.transform.position.z);
+            SoundFXManager.instance.PlayRandomSoundFXClipPitchVariation(
+                _rowDeleteClips, 
+                transform.position, 
+                Mathf.Max(0f, 1f - volumeFalloff),
+                .6f,
+                1f);
             CinemachineCameraShake.Instance.ScreenshakeDefault();
         }
     }

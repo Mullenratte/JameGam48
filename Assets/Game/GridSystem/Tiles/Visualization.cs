@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -24,7 +23,7 @@ public class Visualization : MonoBehaviour
     void Start()
     {
     }
-
+#if UNITY_EDITOR
     void OnDrawGizmos()
     {
         if (!visualizeGrid || !Application.isPlaying) return;
@@ -82,4 +81,5 @@ public class Visualization : MonoBehaviour
                 }
             }
     }
+#endif
 }
