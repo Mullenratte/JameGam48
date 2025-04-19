@@ -361,6 +361,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 367309316525677478}
     m_Modifications:
+    - target: {fileID: 978070407636385758, guid: f571d8a6585ea0b4997d4ab6724bd21a, type: 3}
+      propertyPath: headlightMaxRange
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 978070407636385758, guid: f571d8a6585ea0b4997d4ab6724bd21a, type: 3}
+      propertyPath: headlightRadiusIncreasePer100
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 978070407636385758, guid: f571d8a6585ea0b4997d4ab6724bd21a, type: 3}
+      propertyPath: headlightIntensityIncreasePer100
+      value: 0.085
+      objectReference: {fileID: 0}
     - target: {fileID: 1387526475584506158, guid: f571d8a6585ea0b4997d4ab6724bd21a, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -433,6 +445,14 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: ca80bb0a5e31b294fb7dfca2cfe9503f, type: 2}
+    - target: {fileID: 8055931903550096504, guid: f571d8a6585ea0b4997d4ab6724bd21a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.296
+      objectReference: {fileID: 0}
+    - target: {fileID: 8760167945398999655, guid: f571d8a6585ea0b4997d4ab6724bd21a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

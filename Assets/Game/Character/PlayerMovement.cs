@@ -31,6 +31,12 @@ public class PlayerMovement : MonoBehaviour {
     bool canUpdateTargetPosition = true;
     bool canMove = true;
 
+
+    AudioSource vehicleAudioSource;
+    [SerializeField] AudioClip vehicleLoopClip;
+    [SerializeField] float vehicleLoopBasePitch; 
+    [SerializeField] float vehicleLoopBaseVolume; 
+
     private void Awake() {
         if (Instance == null)
         {
@@ -62,6 +68,8 @@ public class PlayerMovement : MonoBehaviour {
         Effect_Jump.OnActionTriggered += Effect_Jump_OnActionTriggered;
         HighScoreManager.Instance.OnScoreChange += HighScoreManager_OnScoreChange;
         GameOverZone.Instance.OnHitPlayer += GameOverZone_OnHitPlayer;
+
+        vehicleAudioSource = SoundFXManager.instance.PlaySoundFXClipContinuously(vehicleLoopClip, transform, vehicleLoopBaseVolume, vehicleLoopBasePitch, vehicleLoopBasePitch);
     }
 
     private void GameOverZone_OnHitPlayer() {
@@ -160,6 +168,10 @@ public class PlayerMovement : MonoBehaviour {
             UpdateBufferedDirection(Direction.South);
         }
 
+        vehicleAudioSource.pitch = Mathf.Min(2f, vehicleLoopBasePitch + GetEffectiveMoveSpeed() * 0.1f);
+        vehicleAudioSource.volume = Mathf.Min(0.15f, vehicleLoopBaseVolume + GetEffectiveMoveSpeed() * 0.015f);
+        Debug.Log(vehicleAudioSource.pitch);
+        Debug.Log("volume " + vehicleAudioSource.volume);
     }
 
     //private void FixedUpdate() {

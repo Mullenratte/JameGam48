@@ -94,9 +94,9 @@ public class PlayerTongueController : MonoBehaviour {
             currentState = TongueState.Shooting;
 
             if (attachedObject != null) {
-                SoundFXManager.instance.PlayRandomSoundFXClipPitchVariation(config.hitClips, transform.position, 1f, 0.7f, 1.2f);
+                SoundFXManager.instance.PlayRandomSoundFXClipPitchVariation(config.hitClips, transform.position, .9f, 0.7f, 1.2f);
             } else {
-                SoundFXManager.instance.PlayRandomSoundFXClipPitchVariation(config.missClips, transform.position, 1f, 0.7f, 1f);
+                SoundFXManager.instance.PlayRandomSoundFXClipPitchVariation(config.missClips, transform.position, .9f, 0.7f, 1f);
             }
         }
     }

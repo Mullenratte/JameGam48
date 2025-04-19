@@ -19,7 +19,7 @@ public class Fly : MonoBehaviour, ILickable, IScoreObject
 
     public void TriggerOnHitAction() {
         isHit = true;
-        SoundFXManager.instance.PlayRandomSoundFXClipPitchVariation(config.OnHitClips, transform.position, 1f, 0.8f, 1.3f);
+        SoundFXManager.instance.PlayRandomSoundFXClipPitchVariation(config.OnHitClips, transform.position, 0.3f, 0.8f, 1.3f);
     }
 
     public void TriggerOnCollectedAction()

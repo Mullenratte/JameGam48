@@ -74,7 +74,7 @@ public class GameOverZone : MonoBehaviour {
             SoundFXManager.instance.PlayRandomSoundFXClipPitchVariation(
                 _rowDeleteClips, 
                 transform.position, 
-                Mathf.Max(0f, 1f - volumeFalloff),
+                Mathf.Max(0f, 0.5f - volumeFalloff),
                 .6f,
                 1f);
             CinemachineCameraShake.Instance.ScreenshakeDefault();
