@@ -1,9 +1,20 @@
+using System;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour {
 
+    public static Inventory Instance;
     ItemData _heldItem;
+    public event Action<ItemData> OnItemCollected;
+    public event Action OnItemUsed;
 
+    private void Awake() {
+        if (Instance == null) {
+            Instance = this;
+        } else {
+            Destroy(gameObject);
+        }
+    }
 
     private void Start() {
         InputHandler.OnUseItem += UseItem;
@@ -13,7 +24,7 @@ public class Inventory : MonoBehaviour {
     private void BaseItem_OnCollected(ItemData data) {
         UseItem();
         AddItem(data);
-        Debug.Log(_heldItem);
+        OnItemCollected?.Invoke(data);
     }
 
     private void Update() {
@@ -25,6 +36,7 @@ public class Inventory : MonoBehaviour {
         if (_heldItem == null) return;
         _heldItem.effect.Activate();
         RemoveItem();
+        OnItemUsed?.Invoke();
     }
 
 
@@ -34,5 +46,9 @@ public class Inventory : MonoBehaviour {
 
     public void RemoveItem() {
         _heldItem = null;
+    }
+
+    public ItemData GetItemData() {
+        return _heldItem;
     }
 }
