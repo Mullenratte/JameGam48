@@ -9,12 +9,18 @@ public class GameOverZone : MonoBehaviour {
     [SerializeField] float _defaultScrollSpeedIncrease;
     public int rowToDelete = 0;
 
+    [SerializeField] int baseScorePerRow;
+    int scorePerRow;
+    [SerializeField, Range(1f, 5f)] float scorePerRowMultiplier;
+    [SerializeField] int scorePerRowIncreaseRowCount;
+
     bool paused = false;
     float pauseTimer;
 
     [SerializeField] AudioClip[] _rowDeleteClips;
     [SerializeField] float volumeFalloffMultiplier;
     public event Action OnHitPlayer;
+
     private void Awake()
     {
         if (Instance == null)
@@ -29,6 +35,8 @@ public class GameOverZone : MonoBehaviour {
 
     private void Start() {
         Effect_TimeStopper.OnActionTriggered += Effect_TimeStopper_OnActionTriggered;
+
+        scorePerRow = baseScorePerRow;
     }
 
     private void Effect_TimeStopper_OnActionTriggered(ItemConfigSO_TimeStopper obj) {
@@ -54,6 +62,13 @@ public class GameOverZone : MonoBehaviour {
                 _scrollSpeed += _defaultScrollSpeedIncrease;
             }
             rowToDelete++;
+
+            if (rowToDelete % scorePerRowIncreaseRowCount == 0) {
+                scorePerRow = (int)(baseScorePerRow * scorePerRowMultiplier);
+            }
+
+            HighScoreManager.Instance.AddScore(scorePerRow);
+
 
             float volumeFalloff = volumeFalloffMultiplier * Mathf.Abs(PlayerMovement.Instance.transform.position.z - GameOverZone.Instance.transform.position.z);
             SoundFXManager.instance.PlayRandomSoundFXClipPitchVariation(

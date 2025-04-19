@@ -19,6 +19,8 @@ public class PlayerTongueController : MonoBehaviour {
     [SerializeField] Light tongueLight;
     GameObject attachedObject;
 
+    public static event Action<int> OnScoreObjectEaten;
+
     public enum TongueState {
         Default,
         Shooting,
@@ -78,7 +80,6 @@ public class PlayerTongueController : MonoBehaviour {
                         if (Vector3.Distance(targetXZ, mouthTransform.position) <= range) {
                             tongueTarget = hit.collider.gameObject.transform.position;
                             attachedObject = hit.collider.gameObject;
-                            Debug.Log("obj: " + attachedObject);
                             break;
                         }
                     }
@@ -134,6 +135,9 @@ public class PlayerTongueController : MonoBehaviour {
             _lineRenderer.enabled = false;
             if (attachedObject) {
                 attachedObject.GetComponent<ILickable>().TriggerOnCollectedAction();
+                if (attachedObject.TryGetComponent<IScoreObject>(out IScoreObject scoreObj)) {
+                    OnScoreObjectEaten?.Invoke(scoreObj.GetScoreAmount());
+                }
                 attachedObject = null;
             }
             tongueLight.gameObject.SetActive(false);

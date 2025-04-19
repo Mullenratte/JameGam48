@@ -4,10 +4,10 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     public static CameraController Instance;
-    CinemachineCamera cam;
+    [NoSaveDuringPlay] CinemachineCamera cam;
     [SerializeField] float originalCameraDistance;
     [SerializeField] float maxCameraDistance;
-    CinemachinePositionComposer positionComposer;
+    [NoSaveDuringPlay] CinemachinePositionComposer positionComposer;
 
     private void Awake() {
         if (Instance == null) {

@@ -128,7 +128,11 @@ MonoBehaviour:
   velocity: {x: 0, y: 0, z: 0}
   acceleration: {x: 0, y: 0, z: 0}
   configs:
+  - {fileID: 11400000, guid: 99b38fdde683969408ebf93f1ddb4433, type: 2}
   - {fileID: 11400000, guid: 03cbfb8466b1ac24bb6afddcf3492c5a, type: 2}
+  - {fileID: 11400000, guid: 412ecb8e12fd7b64783290fa62969b2d, type: 2}
+  - {fileID: 11400000, guid: e8ac6b956e9898d4288c77b48905222b, type: 2}
+  - {fileID: 11400000, guid: f308b4d7766448747a644959775798de, type: 2}
 --- !u!1 &8747113993109137106
 GameObject:
   m_ObjectHideFlags: 0

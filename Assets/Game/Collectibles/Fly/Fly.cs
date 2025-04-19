@@ -1,12 +1,12 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Fly : MonoBehaviour, ILickable
+public class Fly : MonoBehaviour, ILickable, IScoreObject
 {
     // Start is called once before the first execution of Update after the BaseItem is created
-    public Vector3 position;
-    public Vector3 velocity;
-    public Vector3 acceleration;
+    private Vector3 position;
+    private Vector3 velocity;
+    private Vector3 acceleration;
     bool isHit = false;
 
     private Vector3 spawnPosition;
@@ -34,7 +34,16 @@ public class Fly : MonoBehaviour, ILickable
     void Awake()
     {
         // config laden
-        config = configs[Random.Range(0, configs.Length)];
+        float rnd = Random.Range(0.01f, .99f);
+        int configToLoad = 0;
+        for (int i = 0; i < configs.Length; i++) { 
+            var cfg = configs[i];
+            if (cfg.spawnChance > rnd) {
+                configToLoad = i;
+            }
+        }
+
+        config = configs[configToLoad];
     }
 
     void Start()
@@ -80,7 +89,7 @@ public class Fly : MonoBehaviour, ILickable
             centerForce = toCenter.normalized * distanceRatio * 1.5f;
         }
 
-        acceleration = currentRandomDir * 1f + centerForce + heightAdjustment;
+        acceleration = currentRandomDir * config.baseSpeed + centerForce + heightAdjustment;
 
         velocity += acceleration * Time.deltaTime;
         velocity = Vector3.ClampMagnitude(velocity, config.maxSpeed);
@@ -90,5 +99,7 @@ public class Fly : MonoBehaviour, ILickable
         position.y = Mathf.Max(position.y, 1f);
     }
 
-
+    public int GetScoreAmount() {
+        return this.config.points;
+    }
 }

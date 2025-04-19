@@ -6,8 +6,8 @@ public class CinemachineCameraShake : MonoBehaviour
 {
     public static CinemachineCameraShake Instance;
 
-    CinemachineCamera cam;
-    [SerializeField] CinemachineBasicMultiChannelPerlin noise;
+    [NoSaveDuringPlay] CinemachineCamera cam;
+    [NoSaveDuringPlay] [SerializeField] CinemachineBasicMultiChannelPerlin noise;
     [SerializeField] AnimationCurve defaultCurve;
     [SerializeField] float defaultDuration = 0.7f;
     [SerializeField] float defaultIntensity = 1.0f;
@@ -22,7 +22,6 @@ public class CinemachineCameraShake : MonoBehaviour
     }
 
     public void ScreenshakeDefault() {
-        Debug.Log("her");
         StartCoroutine(Shake(defaultCurve, defaultDuration, defaultIntensity));
     }
 
