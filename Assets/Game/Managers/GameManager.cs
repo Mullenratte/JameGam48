@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -25,8 +26,8 @@ public class GameManager : MonoBehaviour
 
     public void EndGame()
     {
-        Debug.Log("GAME OVER");
         Time.timeScale = 0;
         HighScoreManager.Instance.SetHighscore();
+        //SceneManager.LoadSceneAsync("GameOverScene");
     }
 }

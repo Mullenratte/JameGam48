@@ -61,6 +61,26 @@ public class PlayerMovement : MonoBehaviour {
         Effect_SpeedBoost.OnActionTriggered += Effect_SpeedBoost_OnActionTriggered;
         Effect_Jump.OnActionTriggered += Effect_Jump_OnActionTriggered;
         HighScoreManager.Instance.OnScoreChange += HighScoreManager_OnScoreChange;
+        GameOverZone.Instance.OnHitPlayer += GameOverZone_OnHitPlayer;
+    }
+
+    private void GameOverZone_OnHitPlayer() {
+        StartCoroutine(HandleGameOverState(1.5f));
+    }
+
+    IEnumerator HandleGameOverState(float secondsToSceneChange) {
+        this.rb.useGravity = true;
+        this.canMove = false;
+        float t = 0;
+
+        // start animation
+
+        while (t < secondsToSceneChange) {
+            t += Time.deltaTime;
+            yield return null;
+        }
+
+        GameManager.Instance.EndGame();
     }
 
     private void HighScoreManager_OnScoreChange(int score) {
@@ -99,12 +119,6 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     private void Update() {
-        if (transform.position.z <= GameOverZone.Instance.transform.position.z) {
-            this.rb.useGravity = true;
-            this.canMove = false;
-            GameManager.Instance.EndGame();
-        }
-
         if (!canMove) return;
 
         UpdateTargetGridPosition();

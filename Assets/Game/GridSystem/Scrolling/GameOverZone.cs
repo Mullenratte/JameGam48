@@ -1,3 +1,4 @@
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -10,6 +11,8 @@ public class GameOverZone : MonoBehaviour {
 
     bool paused = false;
     float pauseTimer;
+
+    public event Action OnHitPlayer;
     private void Awake()
     {
         if (Instance == null)
@@ -41,7 +44,7 @@ public class GameOverZone : MonoBehaviour {
                 paused = false;
             }
         }
-        if (transform.position.z - 1 > rowToDelete)
+        if (transform.position.z > rowToDelete)
         {
             //LevelGrid.Instance.RemoveFirstRow();
             if(rowToDelete % _scrollSpeedIncreaseInterval == 0)
@@ -49,6 +52,7 @@ public class GameOverZone : MonoBehaviour {
                 _scrollSpeed += _defaultScrollSpeedIncrease;
             }
             rowToDelete++;
+            CinemachineCameraShake.Instance.ScreenshakeDefault();
         }
     }
 
@@ -69,7 +73,7 @@ public class GameOverZone : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other) {
         if (other.TryGetComponent<PlayerMovement>(out _)) {
-            //GameManager.Instance.EndGame();
+            OnHitPlayer?.Invoke();
         }
 
         if (other.TryGetComponent<ILickable>(out _))
