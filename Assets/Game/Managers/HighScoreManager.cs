@@ -39,6 +39,9 @@ public class HighScoreManager : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.G)) {
+            AddScore(500);
+        }
         if (scoreText != null) scoreText.text = "Score: " + score;
     }
 

@@ -65,6 +65,7 @@ public class PlayerMovement : MonoBehaviour {
 
     private void HighScoreManager_OnScoreChange(int score) {
         moveSpeedModifier = 1 + (score / 100) * speedIncreasePer100; // increase per 100 points
+
     }
 
     private void Effect_Jump_OnActionTriggered(ItemConfigSO_Jump cfg) {
