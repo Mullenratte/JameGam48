@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 464244c22c8b7df429e687b6580b4c94, type: 3}
   m_Name: TongueConfigSO
   m_EditorClassIdentifier: Assembly-CSharp::TongueConfigSO
-  range: 0.9
+  range: 1
   thickness: 0.55
   snapSpeed: 5
   retractSpeed: 12

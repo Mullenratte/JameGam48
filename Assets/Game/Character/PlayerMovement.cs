@@ -289,13 +289,13 @@ public class PlayerMovement : MonoBehaviour {
     IEnumerator HandleSpeedBoost(ItemConfigSO_SpeedBoost config) {
         float t = 0;
         float duration = config.duration;
-        float originalMoveSpeed = MoveSpeed;
-        MoveSpeed *= config.speedMultiplier;
+        float addedSpeedBoost = (MoveSpeed * config.speedMultiplier) - MoveSpeed;
+        MoveSpeed += addedSpeedBoost;
         while (t < duration) {
             t += Time.deltaTime;
             yield return null;
         }
-        MoveSpeed = originalMoveSpeed;
+        MoveSpeed -= addedSpeedBoost;
     }
 
     public float GetEffectiveMoveSpeed() {
