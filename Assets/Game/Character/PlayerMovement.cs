@@ -22,6 +22,8 @@ public class PlayerMovement : MonoBehaviour {
     private Rigidbody rb;
     [SerializeField] float moveSpeed;
     public float MoveSpeed { get { return moveSpeed; } set { moveSpeed = value; } }
+    [SerializeField] float speedIncreasePer100 = 0.01f; // 0.01 increase per 100 points
+    float moveSpeedModifier = 1f;
 
     [SerializeField] float rotateSpeed;
     public float RotateSpeed { get { return rotateSpeed; } set { rotateSpeed = value; } }
@@ -58,6 +60,11 @@ public class PlayerMovement : MonoBehaviour {
 
         Effect_SpeedBoost.OnActionTriggered += Effect_SpeedBoost_OnActionTriggered;
         Effect_Jump.OnActionTriggered += Effect_Jump_OnActionTriggered;
+        HighScoreManager.Instance.OnScoreChange += HighScoreManager_OnScoreChange;
+    }
+
+    private void HighScoreManager_OnScoreChange(int score) {
+        moveSpeedModifier += (score / 100) * speedIncreasePer100; // increase per 100 points
     }
 
     private void Effect_Jump_OnActionTriggered(ItemConfigSO_Jump cfg) {
@@ -124,7 +131,7 @@ public class PlayerMovement : MonoBehaviour {
 
 
 
-        transform.position = Vector3.MoveTowards(transform.position, LevelGrid.Instance.GridSystem.GetWorldPosition(targetGridPosition), Time.deltaTime * MoveSpeed);
+        transform.position = Vector3.MoveTowards(transform.position, LevelGrid.Instance.GridSystem.GetWorldPosition(targetGridPosition), Time.deltaTime * MoveSpeed * moveSpeedModifier);
         transform.forward = Vector3.MoveTowards(transform.forward, new Vector3(directionMapping[currentDirection].x, 0f, directionMapping[currentDirection].z), Time.deltaTime * RotateSpeed);
 
         if (Input.GetKeyDown(KeyCode.A)) {
@@ -181,10 +188,6 @@ public class PlayerMovement : MonoBehaviour {
 
         GridPosition newPos = gridPosition + directionMapping[dir];
         if (LevelGrid.Instance.GridSystem.IsValidGridPosition(newPos)) {
-            //Debug.Log("force: " + new Vector3(directionMapping[dir].x, 0f, directionMapping[dir].z) * moveSpeed);
-            //Vector3 velocity = new Vector3(directionMapping[dir].x, 0f, directionMapping[dir].z) * moveSpeed * Time.fixedDeltaTime;
-            //rb.MovePosition(rb.position + velocity);
-
             this.targetGridPosition = newPos;
             //StartCoroutine(LerpToNewTile(newPos));
         }
@@ -287,13 +290,12 @@ public class PlayerMovement : MonoBehaviour {
     IEnumerator HandleSpeedBoost(ItemConfigSO_SpeedBoost config) {
         float t = 0;
         float duration = config.duration;
-        float originalMoveSpeed = this.MoveSpeed;
-        this.MoveSpeed = this.MoveSpeed * config.speedMultiplier;
-
+        float originalMoveSpeed = MoveSpeed;
+        MoveSpeed *= config.speedMultiplier;
         while (t < duration) {
             t += Time.deltaTime;
             yield return null;
         }
-        this.MoveSpeed = originalMoveSpeed;
+        MoveSpeed = originalMoveSpeed;
     }
 }

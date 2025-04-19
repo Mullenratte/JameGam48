@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -6,8 +7,7 @@ public class HighScoreManager : MonoBehaviour
     public static HighScoreManager Instance;
 
     [SerializeField] TMP_Text scoreText;
-    [SerializeField] float speedIncreasePer100Points = 0.01f; // 0.01 increase per 100 points
-
+    public event Action<int> OnScoreChange; 
     private int score;
     private int highScore;
     private string highScoreName;
@@ -50,7 +50,7 @@ public class HighScoreManager : MonoBehaviour
     public void AddScore(int points)
     {
         score += points;
-        PlayerMovement.Instance.MoveSpeed += (points / 100) * speedIncreasePer100Points; // increase per 100 points
+        OnScoreChange?.Invoke(score);
     }
 
     public bool SetHighscore()
