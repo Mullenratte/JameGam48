@@ -250,10 +250,7 @@ public class PlayerMovement : MonoBehaviour {
             currentDirection = bufferedDirection;
             dir = bufferedDirection;
             bufferedDirection = Direction.none;
-            if (currentTile.hasBridge) Debug.Log("can move in dir " + dir);
         } else if (!CanMoveInDirection(dir)) {
-            if (currentTile.hasBridge) Debug.Log("can NOT move in dir " + dir);
-
             return;
         }
 
