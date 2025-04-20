@@ -42,6 +42,10 @@ public class PlayerTongueController : MonoBehaviour {
         HighScoreManager.Instance.OnScoreChange += HighScoreManager_OnScoreChange;
     }
 
+    private void OnDestroy() {
+        HighScoreManager.Instance.OnScoreChange -= HighScoreManager_OnScoreChange;
+    }
+
     private void HighScoreManager_OnScoreChange(int score) {
         range = config.range + (score / 100) * rangeIncresePer100;
     }

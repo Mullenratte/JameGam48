@@ -39,6 +39,10 @@ public class GameOverZone : MonoBehaviour {
         scorePerRow = baseScorePerRow;
     }
 
+    private void OnDestroy() {
+        Effect_TimeStopper.OnActionTriggered -= Effect_TimeStopper_OnActionTriggered;
+    }
+
     private void Effect_TimeStopper_OnActionTriggered(ItemConfigSO_TimeStopper obj) {
         paused = true;
         pauseTimer = obj.duration;

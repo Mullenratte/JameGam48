@@ -23,6 +23,10 @@ public class PlayerLights : MonoBehaviour {
         headlightBaseIntensity = headlight.intensity;
     }
 
+    private void OnDestroy() {
+        HighScoreManager.Instance.OnScoreChange -= HighScoreManager_OnScoreChange;
+    }
+
     private void HighScoreManager_OnScoreChange(int score) {
         headlight.range = Mathf.Min(headlightBaseRange + (score / 100) * headlightRangeIncreasePer100, headlightMaxRange);
         headlight.spotAngle = Mathf.Min(headlightBaseOuterAngle + (score / 100) * headlightRadiusIncreasePer100, headlightMaxRadius);

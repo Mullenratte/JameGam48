@@ -72,6 +72,13 @@ public class PlayerMovement : MonoBehaviour {
         vehicleAudioSource = SoundFXManager.instance.PlaySoundFXClipContinuously(vehicleLoopClip, transform, vehicleLoopBaseVolume, vehicleLoopBasePitch, vehicleLoopBasePitch);
     }
 
+    private void OnDestroy() {
+        Effect_SpeedBoost.OnActionTriggered -= Effect_SpeedBoost_OnActionTriggered;
+        Effect_Jump.OnActionTriggered -= Effect_Jump_OnActionTriggered;
+        HighScoreManager.Instance.OnScoreChange -= HighScoreManager_OnScoreChange;
+        GameOverZone.Instance.OnHitPlayer -= GameOverZone_OnHitPlayer;
+    }
+
     private void GameOverZone_OnHitPlayer() {
         StartCoroutine(HandleGameOverState(1.5f));
     }

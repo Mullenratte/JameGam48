@@ -13,6 +13,10 @@ public class NamePromptUI : MonoBehaviour {
         GameManager.Instance.OnGameOver += GameManager_OnGameOver;
     }
 
+    private void OnDestroy() {
+        GameManager.Instance.OnGameOver -= GameManager_OnGameOver;
+    }
+
     private void GameManager_OnGameOver(int score) {
         Show(score);
     }

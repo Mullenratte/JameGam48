@@ -18,6 +18,10 @@ public class PlayerWorldUI : MonoBehaviour
         PlayerTongueController.OnScoreObjectEaten += PlayerTongueController_OnScoreObjectEaten;
     }
 
+    private void OnDestroy() {
+        PlayerTongueController.OnScoreObjectEaten -= PlayerTongueController_OnScoreObjectEaten;
+    }
+
     private void PlayerTongueController_OnScoreObjectEaten(int score) {
         GameObject spawnedObj = Instantiate(gainedScoreUIObjectPrefab, this.transform);
 

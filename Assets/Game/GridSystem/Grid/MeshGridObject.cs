@@ -18,6 +18,11 @@ public class MeshGridObject : MonoBehaviour {
         gridObject.tile.OnHideHighlight += Tile_OnHideHighlight;
     }
 
+    private void OnDestroy() {
+        gridObject.tile.OnShowHighlight -= Tile_OnShowHighlight;
+        gridObject.tile.OnHideHighlight -= Tile_OnHideHighlight;
+    }
+
     private void Tile_OnHideHighlight() {
         highlightPrefab.SetActive(false);
     }

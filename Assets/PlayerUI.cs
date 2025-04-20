@@ -19,6 +19,11 @@ public class PlayerUI : MonoBehaviour
         ClearStoredItem();
     }
 
+    private void OnDestroy() {
+        Inventory.Instance.OnItemCollected -= Inventory_OnItemCollected;
+        Inventory.Instance.OnItemUsed -= Inventory_OnItemUsed;
+    }
+
     private void Inventory_OnItemUsed() {
         ClearStoredItem();
     }

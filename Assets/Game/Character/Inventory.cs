@@ -21,6 +21,11 @@ public class Inventory : MonoBehaviour {
         BaseItem.OnCollected += BaseItem_OnCollected;
     }
 
+    private void OnDestroy() {
+        InputHandler.OnUseItem -= UseItem;
+        BaseItem.OnCollected -= BaseItem_OnCollected;
+    }
+
     private void BaseItem_OnCollected(ItemData data) {
         UseItem();
         AddItem(data);

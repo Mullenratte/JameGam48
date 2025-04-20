@@ -20,6 +20,17 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
 
+        SceneManager.activeSceneChanged += SceneManager_activeSceneChanged;
+    }
+
+    private void OnDestroy() {
+        SceneManager.activeSceneChanged -= SceneManager_activeSceneChanged;
+    }
+
+    private void SceneManager_activeSceneChanged(Scene oldScene, Scene newScene) {
+        if (newScene == SceneManager.GetSceneByName("Game")) {
+            Time.timeScale = 1;
+        }
     }
 
     private void Start() {
