@@ -101,6 +101,8 @@ public class PlayerMovement : MonoBehaviour {
 
         this.targetGridPosition = jumpTarget;
         JumpToGridPosition(jumpTarget);
+        highlightTile?.HideHighlight();
+        highlightTile = null;
     }
 
     private void Effect_SpeedBoost_OnActionTriggered(ItemConfigSO_SpeedBoost obj) {
