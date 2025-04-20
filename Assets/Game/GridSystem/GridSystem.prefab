@@ -1765,7 +1765,7 @@ PrefabInstance:
       objectReference: {fileID: 8300000, guid: 056c6144e0f89a5459921283533b9b8a, type: 3}
     - target: {fileID: 1858841663777452796, guid: f571d8a6585ea0b4997d4ab6724bd21a, type: 3}
       propertyPath: speedIncreasePer100
-      value: 0.02
+      value: 0.025
       objectReference: {fileID: 0}
     - target: {fileID: 1858841663777452796, guid: f571d8a6585ea0b4997d4ab6724bd21a, type: 3}
       propertyPath: vehicleLoopBasePitch
@@ -1774,6 +1774,10 @@ PrefabInstance:
     - target: {fileID: 1858841663777452796, guid: f571d8a6585ea0b4997d4ab6724bd21a, type: 3}
       propertyPath: vehicleLoopBaseVolume
       value: 0.025
+      objectReference: {fileID: 0}
+    - target: {fileID: 2068455292181619676, guid: f571d8a6585ea0b4997d4ab6724bd21a, type: 3}
+      propertyPath: rangeIncresePer100
+      value: 0.02
       objectReference: {fileID: 0}
     - target: {fileID: 3286259089341507157, guid: f571d8a6585ea0b4997d4ab6724bd21a, type: 3}
       propertyPath: AnyItemActivatedClip

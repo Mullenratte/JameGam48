@@ -76,7 +76,7 @@ public class LevelGrid : MonoBehaviour {
                 if (tileGrid[x, z].blockType == Tile.BlockType.ItemSpawn) {
                     int rnd = UnityEngine.Random.Range(0, items.Count);
                     Transform itemTransform = Instantiate(items[rnd].gameObject.transform, GridSystem.GetWorldPosition(gridPosition), Quaternion.identity);
-                    itemTransform.position += Vector3.up;
+                    itemTransform.position += Vector3.up * 0.5f;
                 }
             }
         }

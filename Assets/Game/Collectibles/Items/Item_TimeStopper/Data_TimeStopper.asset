@@ -13,6 +13,5 @@ MonoBehaviour:
   m_Name: Data_TimeStopper
   m_EditorClassIdentifier: 
   itemName: Time Stopper
-  icon: {fileID: 21300000, guid: 8e1af585046f7e74bb0fc48d5c363e72, type: 3}
+  icon: {fileID: 21300000, guid: 638a526e8f876144ba788b6ab89ed969, type: 3}
   effect: {fileID: 11400000, guid: 8d7d662d05dbcf940bbea0f0de7ba428, type: 2}
-  OnActivatedClip: {fileID: 8300000, guid: 76400bdf8fbf2ca4a8c1d260befc2904, type: 3}

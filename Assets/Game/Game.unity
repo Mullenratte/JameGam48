@@ -1235,6 +1235,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2709419577947338196, guid: 202e8750a5109524b96e2ceb44a6bc6b, type: 3}
+      propertyPath: _scrollSpeed
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2709419577947338196, guid: 202e8750a5109524b96e2ceb44a6bc6b, type: 3}
+      propertyPath: _defaultScrollSpeedIncrease
+      value: 0.025
+      objectReference: {fileID: 0}
+    - target: {fileID: 2709419577947338196, guid: 202e8750a5109524b96e2ceb44a6bc6b, type: 3}
+      propertyPath: _scrollSpeedIncreaseInterval
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 5137124322098467968, guid: 202e8750a5109524b96e2ceb44a6bc6b, type: 3}
       propertyPath: m_Name
       value: GridSystem
