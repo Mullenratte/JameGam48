@@ -8,6 +8,9 @@ public class Inventory : MonoBehaviour {
     public event Action<ItemData> OnItemCollected;
     public event Action OnItemUsed;
 
+    [SerializeField] AudioClip AnyItemActivatedClip;
+    [SerializeField] AudioClip AnyItemCollectedClip;
+
     private void Awake() {
         if (Instance == null) {
             Instance = this;
@@ -30,6 +33,7 @@ public class Inventory : MonoBehaviour {
         UseItem();
         AddItem(data);
         OnItemCollected?.Invoke(data);
+        SoundFXManager.instance.PlaySoundFXClip(AnyItemCollectedClip, transform.position, 0.5f, 1f, 1f);
     }
 
     private void Update() {
@@ -40,8 +44,28 @@ public class Inventory : MonoBehaviour {
     private void UseItem() {
         if (_heldItem == null) return;
         _heldItem.effect.Activate();
-        RemoveItem();
         OnItemUsed?.Invoke();
+
+        switch (_heldItem.name) {
+            case "Jump":
+                CinemachineCameraShake.Instance.ScreenshakeDefault(.3f, 25f);
+
+                break;
+            case "Speed Boost":
+                CinemachineCameraShake.Instance.ScreenshakeDefault(((Effect_SpeedBoost)_heldItem.effect).config.duration, 5f);
+
+                break;
+            case "Time Stopper":
+                CinemachineCameraShake.Instance.ScreenshakeDefault(0.1f, 8f);
+
+                break;
+            default:
+                break;
+        }
+
+        SoundFXManager.instance.PlaySoundFXClip(AnyItemActivatedClip, transform.position, 0.35f, 1f, 1f);
+        RemoveItem();
+
     }
 
 

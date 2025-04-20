@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 213dc8a807818584880dcc3663261b92, type: 3}
   m_Name: Effect_Jump
   m_EditorClassIdentifier: 
+  ActivatedAudio: {fileID: 8300000, guid: 7ea4de3367def5149a10708d54ed5eb7, type: 3}
   config: {fileID: 11400000, guid: facbcaa8684b809479b106bff1c8e0e6, type: 2}

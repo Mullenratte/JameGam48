@@ -10,6 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2af4e5cd0ad5f804fbf6c6fe30038ef3, type: 3}
-  m_Name: TimeStopper
+  m_Name: Effect_TimeStopper
   m_EditorClassIdentifier: 
+  ActivatedAudio: {fileID: 8300000, guid: 76400bdf8fbf2ca4a8c1d260befc2904, type: 3}
   config: {fileID: 11400000, guid: aaf864f1749e8db4eb07b2ba14750a83, type: 2}

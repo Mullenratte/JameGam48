@@ -41,7 +41,7 @@ public class LevelGrid : MonoBehaviour {
         tileGrid = Generator.GeneratePaths(startXs, 0);
         connectXs = Generator.GetConnectXs();
 
-        Debug.Log("Grid generated!");
+        //Debug.Log("Grid generated!");
 
         visualization = GetComponent<Visualization>();
         visualization.Generator = Generator;

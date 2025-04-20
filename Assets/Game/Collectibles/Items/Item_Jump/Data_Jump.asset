@@ -15,3 +15,4 @@ MonoBehaviour:
   itemName: Jump
   icon: {fileID: 0}
   effect: {fileID: 11400000, guid: e11ab68a35dc44443af66386c452e011, type: 2}
+  OnActivatedClip: {fileID: 8300000, guid: bef344c9c61c141418aa7ad5249c2fd1, type: 3}

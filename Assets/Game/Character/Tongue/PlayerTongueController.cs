@@ -139,6 +139,9 @@ public class PlayerTongueController : MonoBehaviour {
             _lineRenderer.enabled = false;
             if (attachedObject) {
                 attachedObject.GetComponent<ILickable>().TriggerOnCollectedAction();
+
+                CinemachineCameraShake.Instance.ScreenshakeDefault(0.25f, 7f);
+
                 if (attachedObject.TryGetComponent<IScoreObject>(out IScoreObject scoreObj)) {
                     OnScoreObjectEaten?.Invoke(scoreObj.GetScoreAmount());
                 }

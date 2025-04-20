@@ -1293,6 +1293,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: GridSystem
       objectReference: {fileID: 0}
+    - target: {fileID: 6447249506370773968, guid: 202e8750a5109524b96e2ceb44a6bc6b, type: 3}
+      propertyPath: AnyItemActivatedClip
+      value: 
+      objectReference: {fileID: 8300000, guid: b9f4d4fd9a69c324e9da6c2874c56bca, type: 3}
+    - target: {fileID: 6447249506370773968, guid: 202e8750a5109524b96e2ceb44a6bc6b, type: 3}
+      propertyPath: AnyItemCollectedClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 6105d30eb578cd242bcce8b1e4c0d527, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

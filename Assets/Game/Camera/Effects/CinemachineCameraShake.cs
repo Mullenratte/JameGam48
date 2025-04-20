@@ -9,8 +9,8 @@ public class CinemachineCameraShake : MonoBehaviour
     [NoSaveDuringPlay] CinemachineCamera cam;
     [NoSaveDuringPlay] [SerializeField] CinemachineBasicMultiChannelPerlin noise;
     [SerializeField] AnimationCurve defaultCurve;
-    [SerializeField] float defaultDuration = 0.7f;
-    [SerializeField] float defaultIntensity = 1.0f;
+    [SerializeField] float defaultDuration;
+    [SerializeField] float defaultIntensity;
     [SerializeField] float intensityFalloffMultiplier; // 
 
     private void Awake() {
@@ -23,6 +23,10 @@ public class CinemachineCameraShake : MonoBehaviour
 
     public void ScreenshakeDefault() {
         StartCoroutine(Shake(defaultCurve, defaultDuration, defaultIntensity));
+    }
+
+    public void ScreenshakeDefault(float duration, float intensity) {
+        StartCoroutine(Shake(defaultCurve, duration, intensity));
     }
 
     public void Screenshake(AnimationCurve curve, float duration, float intensity) {
