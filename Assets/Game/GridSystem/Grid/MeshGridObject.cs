@@ -10,6 +10,22 @@ public class MeshGridObject : MonoBehaviour {
     GameObject activeMeshPrefab;
     private bool hasFallen = false;
 
+    [SerializeField] GameObject highlightPrefab;
+
+
+    private void Start() {
+        gridObject.tile.OnShowHighlight += Tile_OnShowHighlight;
+        gridObject.tile.OnHideHighlight += Tile_OnHideHighlight;
+    }
+
+    private void Tile_OnHideHighlight() {
+        highlightPrefab.SetActive(false);
+    }
+
+    private void Tile_OnShowHighlight() {
+        highlightPrefab.SetActive(true);
+    }
+
     public void SetGridObject(GridObject gridObject) {
         this.gridObject = gridObject;
 

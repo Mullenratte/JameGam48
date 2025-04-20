@@ -56,6 +56,16 @@ public class Tile
         return dict;
     }
 
+    public event Action OnShowHighlight;
+    public event Action OnHideHighlight;
+    public void ShowHighlight() {
+        OnShowHighlight?.Invoke();
+    }
+
+    public void HideHighlight() {
+        OnHideHighlight?.Invoke();
+    }
+
     public void SetNeighbor(Direction dir, Tile neighbor)
     {
         switch (dir)
