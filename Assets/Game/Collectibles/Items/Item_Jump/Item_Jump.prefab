@@ -222,6 +222,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4049498465758913219, guid: e2cfe5354dfe76b48b216590db7f531f, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 33
+      objectReference: {fileID: 0}
     - target: {fileID: 6617331931127607678, guid: e2cfe5354dfe76b48b216590db7f531f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

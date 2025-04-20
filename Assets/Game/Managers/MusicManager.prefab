@@ -29,7 +29,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -46,11 +46,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainMenuPlaylist:
-  - {fileID: 8300000, guid: 9ad87a1cb56737d46b5a37364c152cbc, type: 3}
   - {fileID: 8300000, guid: e20f0d4192e0e264f878c0274cef66da, type: 3}
   gamePlaylist:
-  - {fileID: 8300000, guid: 1f894ed5c33db864fb64a5494300ba1c, type: 3}
-  musicVolume: 0.4
+  - {fileID: 8300000, guid: 76c81a60fe81dc44ebc11a1118e24ffa, type: 3}
+  musicVolume: 0.2
   fadeDuration: 1
 --- !u!82 &4812325808755095848
 AudioSource:

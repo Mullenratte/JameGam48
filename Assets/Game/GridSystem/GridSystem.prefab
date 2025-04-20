@@ -56,7 +56,7 @@ MonoBehaviour:
   flyPrefab: {fileID: 3110303992313591602, guid: fd4070140be43a045bec61ee7ab95648, type: 3}
   items:
   - {fileID: 4145291427937277733, guid: 497e73d34b90c4d42b2cdeec0d16c74f, type: 3}
-  - {fileID: 1639113645858368962, guid: 0c173073963a14941a80ee2591df51e3, type: 3}
+  - {fileID: 4183733430578580745, guid: 288d77bc7d030054f8c986fe449d4320, type: 3}
   - {fileID: 521641367470374357, guid: 7c41353b597f8084496ed56dc1732b31, type: 3}
 --- !u!114 &1507262268764262839
 MonoBehaviour:
@@ -1775,6 +1775,14 @@ PrefabInstance:
       propertyPath: vehicleLoopBaseVolume
       value: 0.025
       objectReference: {fileID: 0}
+    - target: {fileID: 3286259089341507157, guid: f571d8a6585ea0b4997d4ab6724bd21a, type: 3}
+      propertyPath: AnyItemActivatedClip
+      value: 
+      objectReference: {fileID: 8300000, guid: b9f4d4fd9a69c324e9da6c2874c56bca, type: 3}
+    - target: {fileID: 3286259089341507157, guid: f571d8a6585ea0b4997d4ab6724bd21a, type: 3}
+      propertyPath: AnyItemCollectedClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 6105d30eb578cd242bcce8b1e4c0d527, type: 3}
     - target: {fileID: 3516788777490515011, guid: f571d8a6585ea0b4997d4ab6724bd21a, type: 3}
       propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[2].time
       value: 0.60094273
@@ -1837,7 +1845,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: ca80bb0a5e31b294fb7dfca2cfe9503f, type: 2}
     - target: {fileID: 8055931903550096504, guid: f571d8a6585ea0b4997d4ab6724bd21a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.296
+      value: 2.707
       objectReference: {fileID: 0}
     - target: {fileID: 8760167945398999655, guid: f571d8a6585ea0b4997d4ab6724bd21a, type: 3}
       propertyPath: m_LocalPosition.y
