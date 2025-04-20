@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour {
 
     private GridPosition gridPosition;
     private GridPosition targetGridPosition;
+    private Tile highlightTile;
     private Vector3 targetWorldPos;
     private Dictionary<Direction, GridPosition> directionMapping;
     private Direction currentDirection;
@@ -32,6 +33,7 @@ public class PlayerMovement : MonoBehaviour {
     bool canUpdateTargetPosition = true;
     bool canMove = true;
 
+    GridPosition jumpTarget;
 
     AudioSource vehicleAudioSource;
     [SerializeField] AudioClip vehicleLoopClip;
@@ -97,27 +99,8 @@ public class PlayerMovement : MonoBehaviour {
     private void Effect_Jump_OnActionTriggered(ItemConfigSO_Jump cfg) {
         canMove = false;
 
-        //Debug.Log("buffered: " + bufferedDirection);
-        Direction dir = bufferedDirection != Direction.none ? bufferedDirection : currentDirection;
-        GridPosition currentTarget = this.gridPosition + directionMapping[dir] * cfg.maxTiles;
-        //Debug.Log("current pos: " + transform.position);
-        //Debug.Log("target world pos: " + new Vector3(transform.position.x + directionMapping[dir].x * cfg.maxTiles, transform.position.y, transform.position.z + directionMapping[dir].z * cfg.maxTiles));
-        //Debug.Log("nearest GRID pos: " + currentTarget);
-
-        for (int tileTested = cfg.maxTiles; tileTested >= 0; tileTested--) {
-            Vector3 targetWorldPos = new Vector3(transform.position.x + directionMapping[dir].x * tileTested, transform.position.y, transform.position.z + directionMapping[dir].z * tileTested);
-            currentTarget = new GridPosition((int)Mathf.Round(targetWorldPos.x), (int)Mathf.Round(targetWorldPos.z));
-
-
-
-            if (LevelGrid.Instance.GetTileAt(currentTarget) != null
-            && !LevelGrid.Instance.GetTileAt(currentTarget).isBlocked) {
-                break;
-            }
-        }
-
-        this.targetGridPosition = currentTarget;
-        JumpToGridPosition(currentTarget);
+        this.targetGridPosition = jumpTarget;
+        JumpToGridPosition(jumpTarget);
     }
 
     private void Effect_SpeedBoost_OnActionTriggered(ItemConfigSO_SpeedBoost obj) {
@@ -133,13 +116,30 @@ public class PlayerMovement : MonoBehaviour {
         targetWorldPos = LevelGrid.Instance.GridSystem.GetWorldPosition(targetGridPosition);
 
         this.gridPosition = LevelGrid.Instance.GridSystem.GetGridPosition(transform.position);
-        if (currentTile != LevelGrid.Instance.GetTileAt(gridPosition)) {
-            currentTile.HideHighlight();
-            currentTile = LevelGrid.Instance.GetTileAt(gridPosition);
-            currentTile.ShowHighlight();
+
+        if (Inventory.Instance.GetItemData()?.itemName == "Jump") {
+            Direction dir = bufferedDirection != Direction.none ? bufferedDirection : currentDirection;
+            ItemConfigSO_Jump cfg = ((Effect_Jump)Inventory.Instance.GetItemData()?.effect).config;
+            GridPosition jumpTargetGridPos = this.gridPosition + directionMapping[dir] *  cfg.maxTiles;
+
+            for (int tileTested = cfg.maxTiles; tileTested >= 0; tileTested--) {
+                Vector3 targetWorldPos = new Vector3(transform.position.x + directionMapping[dir].x * tileTested, transform.position.y, transform.position.z + directionMapping[dir].z * tileTested);
+                jumpTargetGridPos = new GridPosition((int)Mathf.Round(targetWorldPos.x), (int)Mathf.Round(targetWorldPos.z));
+
+
+
+                if (LevelGrid.Instance.GetTileAt(jumpTargetGridPos) != null
+                && !LevelGrid.Instance.GetTileAt(jumpTargetGridPos).isBlocked) {
+                    break;
+                }
+            }
+
+            highlightTile?.HideHighlight();
+            highlightTile = LevelGrid.Instance.GetTileAt(jumpTargetGridPos);
+            highlightTile?.ShowHighlight();
+            this.jumpTarget = jumpTargetGridPos;
         }
-
-
+        currentTile = LevelGrid.Instance.GetTileAt(gridPosition);
 
         if (currentTile.hasBridge) {
             enterDirection = currentDirection;
