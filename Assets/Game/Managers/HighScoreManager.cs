@@ -89,4 +89,41 @@ public class HighScoreManager : MonoBehaviour
         PlayerPrefs.SetString("HighscoreName", highScoreName);
         PlayerPrefs.Save();
     }
+
+
+    private const string HighscoreListKey = "HighscoreList";
+
+    public void AddToHighscoreList(string name, int score) {
+        var currentList = LoadHighscoreList();
+
+        // Add new entry
+        var newList = new System.Collections.Generic.List<HighscoreEntry>(currentList);
+        newList.Add(new HighscoreEntry { playerName = name, score = score });
+
+        // Sort descending
+        newList.Sort((a, b) => b.score.CompareTo(a.score));
+
+        // Optionally limit to top 10
+        if (newList.Count > 10)
+            newList.RemoveRange(10, newList.Count - 10);
+
+        // Save
+        SaveHighscoreList(newList.ToArray());
+    }
+
+    public HighscoreEntry[] LoadHighscoreList() {
+        string json = PlayerPrefs.GetString(HighscoreListKey, "");
+        if (string.IsNullOrEmpty(json)) return new HighscoreEntry[0];
+
+        HighscoreList loaded = JsonUtility.FromJson<HighscoreList>(json);
+        return loaded.entries ?? new HighscoreEntry[0];
+    }
+
+    private void SaveHighscoreList(HighscoreEntry[] entries) {
+        HighscoreList wrapper = new HighscoreList { entries = entries };
+        string json = JsonUtility.ToJson(wrapper);
+        PlayerPrefs.SetString(HighscoreListKey, json);
+        PlayerPrefs.Save();
+    }
 }
+

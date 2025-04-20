@@ -10,6 +10,8 @@ public class PlayerUI : MonoBehaviour
 
     [SerializeField] Sprite nullItemSprite;
 
+    [SerializeField] GameObject gameOverPanel;
+
     private void Start() {
         Inventory.Instance.OnItemCollected += Inventory_OnItemCollected;
         Inventory.Instance.OnItemUsed += Inventory_OnItemUsed;
@@ -33,5 +35,9 @@ public class PlayerUI : MonoBehaviour
     void ClearStoredItem() {
         storedItemImage.sprite = nullItemSprite;
         storedItemNameText.text = string.Empty;
+    }
+
+    void ShowGameOverPanel() {
+        gameOverPanel.SetActive(true);
     }
 }

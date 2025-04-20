@@ -170,13 +170,7 @@ public class PlayerMovement : MonoBehaviour {
 
         vehicleAudioSource.pitch = Mathf.Min(2f, vehicleLoopBasePitch + GetEffectiveMoveSpeed() * 0.1f);
         vehicleAudioSource.volume = Mathf.Min(0.15f, vehicleLoopBaseVolume + GetEffectiveMoveSpeed() * 0.015f);
-        Debug.Log(vehicleAudioSource.pitch);
-        Debug.Log("volume " + vehicleAudioSource.volume);
     }
-
-    //private void FixedUpdate() {
-    //    TryMoveOneTile();
-    //}
 
     private void UpdateBufferedDirection(Direction dir) {
         if (_HandleBufferedInputTimer != null) StopCoroutine(_HandleBufferedInputTimer);
